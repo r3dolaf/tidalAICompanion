@@ -1,0 +1,648 @@
+# Corpus Personalizado - Basado en Samples Instalados del Usuario
+# Generado a partir de la lista real de samples de SuperDirt
+
+# ============================================
+# DRUMS - Kicks
+# ============================================
+sound "bd sn"
+sound "bd sn hh sn"
+sound "bd sn cp hh"
+sound "bd*4 sn*2"
+sound "bd*4 sn*2 hh*8"
+sound "bd(3,8)"
+sound "bd(5,8)"
+sound "bd(3,8) sn(5,8)"
+sound "bd(3,8) sn(5,8) hh*16"
+sound "808bd*4 sn*2"
+sound "808bd(3,8) 808sd(5,8)"
+sound "clubkick*4"
+sound "hardkick(3,8)"
+
+# ============================================
+# DRUMS - Snares
+# ============================================
+sound "sn*4"
+sound "sn(3,8)"
+sound "sn ~ sn ~"
+sound "808sd*2"
+sound "808sd(5,8)"
+
+# ============================================
+# DRUMS - Hi-hats
+# ============================================
+sound "hh*8"
+sound "hh*16"
+sound "hh(11,16)"
+sound "hh27*16"
+sound "808hc*8"
+sound "808oh*4"
+
+# ============================================
+# DRUMS - Claps
+# ============================================
+sound "cp*4"
+sound "cp(3,8)"
+sound "cp ~ cp ~"
+sound "realclaps*2"
+
+# ============================================
+# DRUMS - Cymbals
+# ============================================
+sound "808cy*2"
+
+# ============================================
+# DRUMS - Toms
+# ============================================
+sound "ht mt lt"
+sound "808ht 808mt 808lt"
+
+# ============================================
+# PERCUSSION
+# ============================================
+sound "tabla*8"
+sound "tabla*8" # speed 1.5
+sound "tabla(7,16)"
+sound "tabla2*8"
+sound "tabla2(5,8)"
+
+# ============================================
+# BASS SYNTHS
+# ============================================
+
+# ============================================
+# MELODY - Arpy
+# ============================================
+
+# ============================================
+# MELODY - Otros
+# ============================================
+
+# ============================================
+# EFECTOS BÁSICOS
+# ============================================
+sound "bd sn" # speed 1.2
+sound "bd*4 sn*2" # room 0.3
+sound "hh*16" # gain 0.8
+sound "bd sn cp hh" # speed 1.1
+sound "bd*4" # room 0.4
+sound "bd sn" # lpf 1000
+sound "hh*16" # cutoff 2000
+sound "sn*4" # room 0.3 # size 0.8
+
+# ============================================
+# PATTERNS ESTRUCTURADOS
+# ============================================
+sound "[bd sn] [bd cp]"
+sound "[bd bd] [sn cp]"
+sound "bd [sn sn] hh [cp cp]"
+sound "[hh hh] [hh ~]"
+sound "[808bd 808bd] [808sd cp]"
+
+# ============================================
+# COMBINACIONES
+# ============================================
+sound "bd sn hh cp"
+sound "bd*4 sn*2 hh*8 cp*2"
+sound "bd(3,8) sn(5,8) hh(11,16)"
+sound "bd sn ~ cp"
+sound "bd*4 [sn cp] hh*8"
+sound "808bd*4 808sd*2 808hc*8"
+
+# ============================================
+# EUCLIDEAN RHYTHMS
+# ============================================
+sound "bd(5,8) cp(3,8)"
+sound "sn(3,8) hh(11,16)"
+sound "808bd(7,16) 808sd(5,16)"
+
+# ============================================
+# CON SILENCIOS (~)
+# ============================================
+sound "bd ~ sn ~"
+sound "bd ~ ~ sn"
+sound "~ bd sn ~"
+sound "bd bd ~ sn"
+sound "bd ~ sn sn"
+sound "~ hh ~ hh"
+
+# ============================================
+# EFECTOS AVANZADOS
+# ============================================
+sound "bd sn" # speed (range 0.8 1.2 $ slow 4 sine)
+sound "hh*16" # pan (range 0 1 $ slow 8 sine)
+sound "bd*4" # gain (range 0.8 1 $ slow 2 sine)
+sound "bd sn" # lpf (range 200 2000 $ slow 8 sine)
+sound "hh*16" # hpf 1000
+
+# ============================================
+# BREAKS Y JUNGLE
+# ============================================
+sound "jungle*4"
+sound "jungle(5,8)"
+sound "amencutup*8"
+
+# ============================================
+# TECHNO
+# ============================================
+sound "techno*4"
+sound "tech*8"
+
+# ============================================
+# GLITCH
+# ============================================
+sound "glitch*8"
+sound "glitch(7,16)"
+sound "glitch2*4"
+
+# ============================================
+# AMBIENT / FX
+# ============================================
+sound "wind" # gain 0.5
+sound "space" # room 0.8
+sound "birds" # gain 0.4
+
+# ============================================
+# VOCALES
+# ============================================
+sound "yeah*4"
+sound "speech*2"
+
+# ============================================
+# NÚMEROS (para secuencias)
+# ============================================
+sound "numbers*8"
+
+
+# ============================================
+# IMPORTADO DESDE DOCUMENTACION GENEROS
+# ============================================
+s "bd*4" # lpf 800 # resonance 0.3 # shape 0.5 # gain 1.2
+s "bd*4" # cut 1
+s "hh*16" # gain 0.7 # hpf 8000 # pan (slow 4 sine)
+s "oh(3,8)" # gain 0.6 # cut 1
+s "cp(3,8,2)" # room 0.3 # gain 0.8
+s "rim*8" # gain (range 0.4 0.7 rand) # pan (rand)
+s "metal(5,16)" # speed (range 1 2 rand) # hpf 2000 # gain 0.5
+slow 4 $ n "60 64 67" # s "supersaw" # detune 0.3 # attack 2 # release 4 # lpf 2000 # room 0.8 # gain 0.5
+s "noise*16" # gain (range 0 0.3 (slow 2 saw)) # hpf 4000 # pan (slow 2 sine)
+s "bd*4" # lpf 800 # resonance 0.3 # gain 1.2
+s "oh(3,8)" # gain 0.6 # cut 1
+s "cp(3,8,2)" # room 0.3
+slow 4 $ n "60 64 67" # s "supersaw" # attack 2 # release 4 # lpf 2000 # room 0.8 # gain 0.5
+s "bd*4" # gain 1.1 # lpf 600
+s "hh*8" # gain "0.8 0.5 0.9 0.6 0.8 0.5 0.9 0.6" # hpf 8000
+s "~ cp ~ cp" # room 0.4 # gain 0.9
+chop 16 $ s "bev" # speed (range 0.9 1.1 rand) # pan (rand) # room 0.2 # gain 0.7
+chop 8 $ s "bev" # lpf (range 1000 4000 (slow 4 sine)) # room 0.3
+s "amen" # speed 1.2 # hpf 300
+slice 8 "0 7 2 5 [0 1] [4 5] 6 3" $ s "amen" # speed 1.2 # hpf 300
+chop 16 $ s "amen" # speed (range 1.1 1.3 (slow 4 sine)) # crush (range 8 16 (slow 8 sine))
+slow 8 $ n "48 52 55" # s "supersaw" # detune 0.4 # attack 3 # release 5 # lpf 1500 # room 0.9 # gain 0.4
+s "noise" # gain (slow 16 (range 0 0.3 sine)) # hpf 2000 # room 0.8
+s "808bd(3,8)" # lpf 200 # gain 1.3
+s "~ 808sd ~ 808sd" # room 0.8 # size 0.9 # gain 1.0
+s "808oh*" # gain (range 0.5 0.8 rand) # hpf 8000 # pan (rand)
+s "808oh*" # gain (range 0.4 0.8 (slow 2 saw)) # pan (rand)
+slow 8 $ n "60 64 67 72" # s "supersaw" # detune 0.3 # attack 4 # release 8 # lpf 2000 # room 0.95 # size 0.99 # gain 0.6
+slow 16 $ n "48 52 55 60" # s "superpiano" # velocity 0.4 # lpf (slow 32 (range 500 2000 sine)) # room 0.9 # gain 0.5
+slow 8 $ striate 256 $ s "metal" # speed 0.05 # room 0.99 # lpf (slow 16 (range 200 1500 sine)) # gain 0.4
+striate 128 $ s "bev" # speed 0.1 # room 0.95 # hpf 500 # gain 0.3
+slow 16 $ n "48 52 55" # s "supersaw" # attack 4 # release 8 # lpf 1500 # room 0.95 # gain 0.5
+slow 8 $ striate 256 $ s "wind" # speed 0.1 # room 0.9 # gain 0.3
+s "breath" # speed 0.3 # room 0.8 # gain 0.2
+slow 32 $ s "metal" # speed 0.05 # room 0.99 # gain 0.2
+s "amen" # speed 1.3 # hpf 300
+slice 16 "0 [7 8] 2 5 [0 1] 4 [6 7] 3" $ s "amen" # speed 1.3 # crush (range 4 16 (slow 8 sine))
+loopAt 1 $ chop 32 $ s "jungle" # speed (range 1.2 1.4 (slow 4 sine))
+s "bd(5,16)" # gain 1.0
+s "sd(7,16,3)" # room 0.3
+s "hh(11,16)" # gain 0.7 # hpf 8000
+s "bd(5,16) sd(3,8,2) hh(13,16,5)" # gain (range 0.7 1.0 rand)
+s "bd*4" # crush (range 2 16 rand) # speed (range 0.5 2 rand) # pan (rand) # delay 0.5 # delaytime (choose [0.125, 0.25, 0.5])
+chop 64 $ s "amen" # speed (range 0.5 2 rand) # crush (irand 16) # pan (rand)
+s "bd ~ ~ ~ bd ~ ~ ~" # lpf 200 # gain 1.3
+s "~ ~ sd ~" # room 0.7 # size 0.8 # gain 1.0
+s "hh*8" # gain "0.7 0.5 0.8 0.6 0.7 0.5 0.9 0.6" # hpf 8000
+s "bd*" # gain (range 0.9 1.2 rand) # lpf 400
+chop 32 $ s "bev" # speed (range 0.8 1.5 rand) # pan (rand) # crush (irand 8)
+stut 4 0.8 0.0625 $ s "bev" # begin (rand) # speed (range 0.9 1.1 rand)
+s "sd(5,16,3)" # room 0.3 # gain (range 0.7 1.0 rand) # pan (rand)
+
+
+# ============================================
+# IMPORTADO DESDE DOCUMENTACION COMPLETA
+# ============================================
+s "bd" -- Bombo
+s "bd sd hh cp" -- Secuencia de samples
+s "superpiano" -- Sintetizador
+s "bd*4" # gain 1.2 -- Más fuerte
+s "bd*4" # gain 0.8 -- Más suave
+s "bd*4" # gain "1 0.8 0.9 0.7" -- Volumen variable
+s "bd*4" # gain (range 0.5 1.2 sine) -- Volumen oscilante
+s "bd*4" # amp 0.8
+s "bd" # speed 1 -- Velocidad normal
+s "bd" # speed 2 -- Doble velocidad (octava arriba)
+s "bd" # speed 0.5 -- Mitad velocidad (octava abajo)
+s "bd" # speed "-1" -- Reproducción inversa
+s "bd*4" # speed (range 0.5 2 sine) -- Velocidad oscilante
+s "bd" # accelerate 1 -- Sube el pitch
+s "bd" # accelerate "-1" -- Baja el pitch
+s "bd" # accelerate 12 -- Glissando de una octava
+s "superpiano" # freq 440 -- La 440Hz
+s "superpiano" # freq "220 440 880" -- Octavas
+s "bass" # harmonic 2 -- Octava arriba
+s "bass" # harmonic 3 -- Quinta + octava
+s "bass" # harmonic "1 2 3 4" -- Serie armónica
+s "supersaw" # detune 0.2 -- Chorus effect
+s "bd*4" # lpf 1000 -- Cutoff a 1000Hz
+s "bd*4" # lpf (range 200 4000 sine) -- Barrido
+s "supersaw" # lpf 800 -- Sonido más oscuro
+s "bd*4" # hpf 200 -- Elimina graves
+s "hh*16" # hpf 8000 -- Solo brillos
+s "bd*4" # hpf (range 100 2000 sine) -- Barrido inverso
+s "noise" # bpf 1000 -- Solo alrededor de 1000Hz
+s "noise" # bpf (range 200 4000 sine) -- Barrido de banda
+s "noise" # brf 1000 -- Elimina 1000Hz
+s "supersaw" # lpf 800 # resonance 0.3 -- Resonancia moderada
+s "supersaw" # lpf 800 # resonance 0.8 -- Resonancia alta (ácido)
+s "supersaw" # lpf (range 200 4000 sine) # resonance 0.5
+s "bd*4" # djf 0.5 -- Centro (sin filtro)
+s "bd*4" # djf 0.0 -- Low-pass extremo
+s "bd*4" # djf 1.0 -- High-pass extremo
+s "bd*4" # djf (slow 4 sine) -- Barrido automático
+s "bd cp" # delay 0.5 -- 50% de mezcla
+s "bd cp" # delay 0.8 -- 80% de mezcla
+s "bd cp" # delay 0.5 # delaytime 0.25 -- Eco cada 1/4 ciclo
+s "bd cp" # delay 0.5 # delaytime 0.125 -- Eco cada 1/8 ciclo
+s "bd cp" # delay 0.5 # delaytime (1/3) -- Eco en tresillo
+s "bd cp" # delay 0.5 # delayfeedback 0.3 -- Pocas repeticiones
+s "bd cp" # delay 0.5 # delayfeedback 0.8 -- Muchas repeticiones
+s "bd cp" # delay 0.5 # delayfeedback 0.95 -- Casi infinito
+s "bd cp" # delay 0.5 # lock 1 -- Sincronizado
+s "bd cp" # room 0.3 -- Sala pequeña
+s "bd cp" # room 0.7 -- Sala grande
+s "bd cp" # room 0.95 -- Catedral
+s "superpiano" # room (slow 4 sine) -- Espacio variable
+s "bd cp" # room 0.5 # size 0.3 -- Reverb corta
+s "bd cp" # room 0.5 # size 0.9 -- Reverb larga
+s "bd cp" # room 0.8 # dry 0.5 -- 50% señal seca
+s "bd cp" # room 0.8 # dry 0.0 -- Solo reverb
+s "bd*4" # crush 4 -- 4 bits (muy distorsionado)
+s "bd*4" # crush 8 -- 8 bits (moderado)
+s "bd*4" # crush 16 -- 16 bits (casi limpio)
+s "bd*4" # crush (range 2 16 sine) -- Distorsión variable
+s "bd*4" # shape 0.5 -- Saturación moderada
+s "bd*4" # shape 0.9 -- Saturación fuerte
+s "supersaw" # shape 0.7 -- Sonido más agresivo
+s "bd*4" # distort 0.5
+s "supersaw" # distort 0.8
+s "bd*4" # triode 0.5
+s "superpiano" # triode 0.3 -- Calidez vintage
+s "bd*4" # krush 4
+s "hh*16" # krush 2 -- Muy destruido
+s "superpiano" # leslie 0.5
+s "superpiano" # leslie 0.8 -- Rotación más rápida
+s "superpiano" # leslie 0.5 # lrate 2
+s "superpiano" # leslie 0.5 # lsize 0.8
+s "bd*4" # phaser 0.5
+s "supersaw" # phaser 0.8
+s "bd*4" # phaser 0.5 # phaserrate 2
+s "bd*4" # phaser 0.5 # phaserdepth 0.8
+s "bd*4" # pan 0 -- Izquierda total
+s "bd*4" # pan 0.5 -- Centro
+s "bd*4" # pan 1 -- Derecha total
+s "bd*4" # pan (slow 4 sine) -- Paneo automático
+s "bd*4" # pan (rand) -- Paneo aleatorio
+s "bd*4" # pan (sine) # panspan 0.5
+s "bd sd hh cp" # pansplay 0.8
+s "superpiano" # attack 0.01 -- Ataque rápido
+s "superpiano" # attack 0.5 -- Ataque lento (pad)
+s "superpiano" # hold 0.5
+s "superpiano" # release 0.1 -- Release corto (staccato)
+s "superpiano" # release 2 -- Release largo (legato)
+s "bd" # sustain 0.1 -- Muy corto
+s "bd" # sustain 1 -- Duración de 1 ciclo
+s "bd" # sustain 4 -- Duración de 4 ciclos
+s "superpiano" # decay 0.5
+s "bd*4" # vowel "a" -- Vocal "a"
+s "bd*4" # vowel "e i o u" -- Secuencia de vocales
+s "supersaw" # vowel "a e i o u" -- Efecto de "habla"
+s "bd*4" # formant 0.5
+s "bd*4" # spectraldelay 0.5
+s "amen" # spectraldelay 0.8 -- Efecto de "congelación"
+s "bd*4" # binshift 0.5
+s "amen" # binshift (range 0 2 sine) -- Efecto de "alien"
+s "bd*4" # hbrick 1000
+s "bd*4" # lbrick 2000
+s "bd*4" # coarse 4 -- Muy reducido
+s "bd*4" # coarse 16 -- Moderado
+s "bd*4" # coarse (range 2 32 sine) -- Variable
+s "oh*8" # cut 1 -- Solo un hi-hat a la vez
+s "oh*8 ch*8" # cut 1 -- Ambos comparten grupo
+s "supersaw" # cutoff 800
+s "bd*4" # squiz 2
+s "bd*4" # squiz 8 -- Muy destruido
+s "bd*4" # waveloss 20
+s "bd*4" # waveloss 80 -- Muy glitchy
+s "amen" # begin 0 -- Desde el inicio
+s "amen" # begin 0.5 -- Desde la mitad
+s "amen" # begin (slow 4 sine) -- Punto variable
+s "amen" # end 1 -- Hasta el final
+s "amen" # end 0.5 -- Solo primera mitad
+s "amen" # begin 0.25 # end 0.75 -- Sección media
+s "amen" # loop 4
+s "bd*4" # legato 1 -- Duración completa
+s "bd*4" # legato 0.5 -- Mitad de duración (staccato)
+s "bd*4" # legato 2 -- Doble duración (overlap)
+s "bd*4" # orbit 0 -- Bus 0 (estéreo 1-2)
+s "sd*4" # orbit 1 -- Bus 1 (estéreo 3-4)
+s "hh*16" # orbit 2 -- Bus 2 (estéreo 5-6)
+s "bd*4" # nudge 0.01 -- 10ms adelante
+s "bd*4" # nudge "-0.01" -- 10ms atrás
+s "hh*16" # nudge (rand * 0.02) -- Humanización
+s "bd*4" # delta 0.5
+s "bd*4" # unit "c" -- Ciclos
+s "bd*4" # unit "s" -- Segundos
+s "bd*4" # crush (range 2 16 (slow 2 sine)) # delay 0.5 # delaytime 0.125 # delayfeedback 0.6
+s "bev" # begin (rand) # end (rand) # speed (range 0.5 2 rand) # vowel "a e i o u" # room 0.3
+s "supersaw" # lpf (range 200 4000 (slow 4 sine)) # resonance 0.5
+s "bd*4" # pan (slow 2 sine)
+s "cp" # delay 0.5 # delayfeedback (slow 8 (range 0.3 0.9 sine))
+s "bd*4" # shape (slow 4 (range 0 0.9 saw))
+s "bd*4"
+s "bd*4" # gain (range 0.8 1.2 (slow 4 sine))
+s "supersaw" # lpf (range 200 4000 (slow 8 sine))
+fast 2 $ s "hh*8"
+slow 2 $ s "sd*2"
+s "bd*4" # nudge "0 0.02 0 0.02"
+s "hh*8" # nudge (slow 2 (range 0 0.03 sine))
+s "hh*16" # nudge (rand * 0.02)
+s "bd*3" # gain 1.2
+s "sd*4" # gain 1.0
+s "bd*5"
+s "hh*8"
+s "sd*3"
+s "hh*7"
+s "cp*5"
+slow 3 $ s "bd sd hh"
+slow 5 $ s "cp ~ cp ~ cp"
+s "[bd [sd cp]] [hh oh]"
+s "[bd [sd [cp rim]]] [[hh oh] ch]"
+s "bd(3,8,[sd(5,8)])"
+s "[bd(3,8) sd(5,8)] [hh(7,16) cp(3,8)]"
+every 4 (fast 2) $ s "bd*4"
+every 4 (# crush 4)
+whenmod 8 6 (# speed 2) $ s "bd*4"
+base # lpf 800
+base # lpf 800 # shape 0.5
+fast 2 $ base # lpf 800 # shape 0.5
+s "bd*4" # lpf (slow 16 (range 200 4000 sine))
+s "bd*4" # lpf (slow 8 (choose [400, 800, 1600, 3200]))
+s "hh*16"
+s "~ sd ~ sd"
+myFilter $ s "supersaw" # crush (range 2 16 rand) # delay 0.5 # delaytime 0.125
+glitchify $ s "bd*4"
+acidify $ reverbit $ n "0 ~ 0 ~" # s "supersaw"
+s "hh*8" # gain 0.6
+slow 4 $ n "60 64 67" # s "supersaw" # gain 0.4
+s "hh*" # gain (slow 4 (range 0.6 1.0 saw))
+slow 4 $ n "60 64 67" # s "supersaw" # lpf (slow 4 (range 500 4000 saw))
+s "bd*4" # gain 1.2
+s "hh*16" # gain 0.7
+s "~ sd ~ sd" # room 0.3
+s "~ sd ~ sd" # room 0.7
+slow 2 $ n "60 64 67" # s "superpiano" # room 0.5
+striate 256 $ s "bev" # speed (range 0.1 0.5 (slow 16 sine)) # room 0.95 # lpf (range 500 2000 (slow 8 sine)) # gain 0.6
+striate 128 $ s "metal" # speed 0.2 # pan (slow 2 sine) # room 0.9
+chop 32 $ s "amen" # speed (choose [0.5, 1, 1.5, 2]) # pan (rand) # crush (irand 16)
+s "bd*4" # hpf 50 -- 1. EQ (high-pass) # lpf 800 -- 2. EQ (low-pass) # shape 0.5 -- 3. Distorsión # leslie 0.5 -- 4. Modulación # delay 0.3 -- 5. Delay # room 0.4 -- 6. Reverb
+s "bd*4" # orbit 0 -- Kick sin procesar
+s "bd*4" # orbit 1 -- Kick con reverb (configurar en SuperCollider)
+s "supersaw" # cut 1
+s "supersaw" # gain (1 - (0.3 * (read kickPattern)))
+s "noise" # hbrick 1000 -- High-pass brick
+s "noise" # lbrick 2000 -- Low-pass brick
+s "amen" # binshift (slow 4 (range 0 2 sine))
+s "bd*4" # vowel "a e i o u"
+s "supersaw" # vowel (slow 4 "a e i o u")
+slow 4 $ n "60 64 67" # s "supersaw"
+s "bd*4" # lpf freq
+s "hh*16" # lpf freq
+s "bass" # lpf freq
+s "bd*4" # lpf (cF 0 "1") -- CC 1 controla filtro
+s "supersaw" # lpf (cF 0 "1") -- CC 1: filtro # resonance (cF 0 "2") -- CC 2: resonancia # gain (cF 0 "7") -- CC 7: volumen
+striate 1024 $ s "amen"
+striate 128 $ s "amen"
+s "oh*16" # cut 1 -- Solo una voz a la vez
+stack [
+s "bd*4",
+s "sd*2",
+s "bd*4" # crush 1 -- 1 bit
+s "amen" # crush (irand 4) -- Aleatorio 0-3 bits
+s "bd*4" # coarse 2 -- Muy reducido
+s "amen" # coarse (range 2 32 (slow 4 sine))
+s "bd*4" # waveloss 80 -- Pérdida extrema
+s "amen" # waveloss (range 0 100 (slow 8 sine))
+evolve $ s "bd*4"
+s "superpiano" # freq "220 247.5 275 293.3" -- Cuartos de tono
+s "bd:0 bd:1 bd:2 bd:3"
+s "hh*8" # gain "1.0 0.7 0.9 0.6 1.0 0.7 0.9 0.6"
+s "bd(3,8)"
+s "sd(5,8)"
+s "hh(7,16)"
+s "[bd sd] [hh hh hh] [cp ~] [bd [sd sd]]"
+s "bd*4 sd!3 hh/2"
+s "bd sd hh cp"
+fast 2 $ s "bd sd hh cp"
+rev $ s "bd sd hh cp"
+every 4 (fast 2) $ s "bd sd hh cp"
+s "bd*4" # lpf 200 # gain 1.2,
+s "~ sd ~ sd" # room 0.3,
+s "hh*16" # hpf 8000 # gain 0.7,
+s "bd*3"
+s "sd*4"
+s "hh*5"
+s "hh*8" # gain (rand)
+s "sd*2" # speed (choose [0.5, 1, 1.5, 2])
+striate 128 $ s "bev" # speed (range 0.1 0.5 (slow 16 sine)) # pan (slow 2 sine) # room 0.9 # lpf (range 500 2000 (slow 8 sine))
+s "superpiano" # freq (choose microScale)
+evolve pattern
+s "amen" # binshift (slow 4 (range 0 2 sine)) # spectraldelay 0.8 # lpf (range 500 4000 (slow 8 sine)) # room 0.9
+s "supersaw" # lpf (cF 0 "1") -- CC 1 controla filtro # resonance (cF 0 "2") -- CC 2 controla resonancia # gain (cF 0 "7") -- CC 7 controla volumen # speed 0.1 # room 0.9
+every 4 (fast 2) $ every 3 (rev) $ rhythm
+every 8 (# speed 2) $ melody
+every 16 (degradeBy 0.5) $ bass
+texture
+
+
+# ============================================
+# IMPORTADO DESDE DOCUMENTACION COMPLETA
+# ============================================
+fast 2 $ s "bd sd" -- Doble velocidad
+fast 4 $ s "bd sd" -- Cuádruple velocidad
+fast 0.5 $ s "bd sd" -- Mitad de velocidad
+fast "" $ s "bd sd" -- Velocidad variable
+fast "2 4 1 8" $ s "bd sd hh cp"
+fast 2 $ fast 2 $ s "bd sd" -- Equivale a fast 4
+slow 2 $ s "bd sd" -- Mitad de velocidad
+slow 4 $ s "bd sd" -- Cuarto de velocidad
+slow "" $ s "bd sd" -- Velocidad variable
+slow 16 $ n "0 4 7 11" # s "superpiano"
+slow (range 1 8 saw) $ s "bd*4"
+hurry 2 $ s "bd sd" -- Doble velocidad + octava arriba
+hurry 0.5 $ s "bd sd" -- Mitad velocidad + octava abajo
+density 2 $ s "bd sd" -- Equivalente a fast 2
+sparsity 2 $ s "bd sd" -- Equivalente a slow 2
+rev $ s "bd sd hh cp" -- Reproduce al revés
+rev $ n "0 2 4 7" # s "superpiano" -- Melodía invertida
+every 2 rev $ s "bd sd hh cp"
+s "bd sd hh cp" # rev (n "0 2 4 7")
+palindrome $ s "bd sd hh" -- bd sd hh hh sd bd
+palindrome $ n "0 2 4 7" # s "superpiano"
+iter 4 $ s "bd sd hh cp"
+iter' 4 $ s "bd sd hh cp"
+iterBack 4 $ s "bd sd hh cp"
+every 4 (fast 2) $ s "bd sd" -- Acelera cada 4 ciclos
+every 3 rev $ s "bd sd hh cp" -- Invierte cada 3 ciclos
+every 2 (# crush 4) $ s "bd sd" -- Distorsiona cada 2 ciclos
+every 4 (fast 2 . rev . (# crush 3)) $ s "bd sd hh cp"
+every 4 (every 2 (fast 2)) $ s "bd sd"
+whenmod 8 6 (fast 2) $ s "bd sd"
+whenmod 16 12 (# crush 4) $ s "bd sd hh cp"
+whenmod 16 12 (fast 2 . rev) $ s "bd sd hh cp"
+whenmod 32 28 (# lpf 200) $ s "bd*4"
+someCycles (fast 2) $ s "bd sd" -- A veces acelera
+someCycles rev $ s "bd sd hh cp" -- A veces invierte
+someCycles (# crush 4) $ s "bd sd" -- A veces distorsiona
+someCyclesBy 0.25 (fast 2) $ s "bd sd" -- 25% de probabilidad
+someCyclesBy 0.75 rev $ s "bd sd hh cp" -- 75% de probabilidad
+ply 2 $ s "bd sd" -- bd bd sd sd
+ply 4 $ s "bd sd" -- bd bd bd bd sd sd sd sd
+ply "" $ s "bd sd" -- Subdivisión variable
+stut 4 0.5 0.125 $ s "bd sd"
+stut 8 0.7 0.0625 $ s "cp"
+stut' 4 0.125 (# crush 4) $ s "bd sd"
+stutWith 4 0.125 [(# speed 2), (# crush 4)] $ s "bd"
+echo 4 $ s "bd sd"
+stripe 4 $ s "bd sd hh cp"
+0.25 " <~ s "bd sd hh cp" -- Desplazamiento variable
+0.25 ~> s "bd sd hh cp" -- Retrasa 1/4 de ciclo
+0.5 ~> s "bd sd hh cp" -- Retrasa 1/2 ciclo
+0.02 ~> s "hh*8" -- Hi-hats ligeramente retrasados
+0.001 <~ s "bd sd hh cp" -- Desfase gradual
+rotL 1 $ s "bd sd hh cp" -- Rota 1 paso a la izquierda
+rotR 2 $ s "bd sd hh cp" -- Rota 2 pasos a la derecha
+s "sd(3,8)",
+s "bd*4" # gain 1.2,
+s "sd(3,8)" # room 0.3,
+s "hh*16" # pan (sine)
+cat [
+s "sd*4",
+fastcat [
+slowcat [
+append (s "bd*4") (s "sd*4")
+wedge 0.5 (s "bd*4") (s "sd*4") -- 50% cada uno
+wedge 0.75 (s "bd*4") (s "sd*4") -- 75% bd, 25% sd
+wedge (slow 4 sine) (s "bd*4") (s "sd*4") -- Proporción variable
+mask "t f t f" $ s "bd sd hh cp" -- Solo bd y hh
+mask "t(3,8)" $ s "bd*8" -- Patrón euclidiano como máscara
+struct "t(3,8)" $ s "bd" -- Ritmo euclidiano
+struct "t ~ t ~" $ n "0 2 4 7" # s "superpiano"
+euclidFull 3 8 (s "bd") (s "hh")
+jux rev $ s "bd sd hh cp" -- Derecha invertida
+jux (fast 2) $ s "bd sd" -- Derecha doble velocidad
+jux (# crush 4) $ s "bd sd hh cp" -- Derecha distorsionada
+jux (fast 2 . rev . (# speed 2)) $ s "bd sd hh cp"
+jux (jux rev) $ s "bd sd hh cp"
+juxBy 0.5 rev $ s "bd sd hh cp" -- 50% de mezcla
+juxBy 0.25 (fast 2) $ s "bd sd" -- 25% de mezcla
+juxBy (slow 4 sine) rev $ s "bd sd hh cp" -- Mezcla variable
+jux4 rev $ s "bd sd hh cp"
+degrade $ s "bd*4" -- Algunos bombos se pierden
+degrade $ s "hh*16" -- Hi-hats esporádicos
+degradeBy 0.25 $ s "bd*4" -- 25% de pérdida
+degradeBy 0.75 $ s "hh*16" -- 75% de pérdida
+degradeBy (slow 4 sine) $ s "bd*4" -- Degradación variable
+sometimes (fast 2) $ s "bd sd" -- A veces acelera
+sometimes rev $ s "bd sd hh cp" -- A veces invierte
+sometimes (# crush 4) $ s "bd sd" -- A veces distorsiona
+often (fast 2) $ s "bd sd"
+rarely (fast 2) $ s "bd sd"
+almostNever (fast 2) $ s "bd sd"
+almostAlways (fast 2) $ s "bd sd"
+sometimesBy 0.3 (fast 2) $ s "bd sd" -- 30% de probabilidad
+sometimesBy 0.8 rev $ s "bd sd hh cp" -- 80% de probabilidad
+s "bd*4" # gain (range 0.5 1.2 sine) -- Ganancia oscilante
+s "bd*4" # lpf (range 200 4000 saw) -- Filtro oscilante
+s "bd*4" # pan (range 0.2 0.8 sine) -- Paneo oscilante
+s "bd*4" # lpf (rangex 100 10000 sine) -- Barrido exponencial
+s "bd*4" # gain rand -- Ganancia aleatoria
+s "bd*4" # pan rand -- Paneo aleatorio
+s "bd*4" # speed (range 0.5 2 rand) -- Velocidad aleatoria
+s (choose ["bd", "sd", "hh", "cp"])
+s (chooseBy sine ["bd", "sd", "hh", "cp"])
+shuffle 4 $ s "bd sd hh cp" -- Mezcla 4 elementos
+shuffle 8 $ n "0 1 2 3 4 5 6 7" # s "arpy"
+scramble 4 $ s "bd sd hh cp"
+scramble 8 $ n (run 8) # s "arpy"
+chop 16 $ s "amen" -- Corta en 16 partes
+chop 32 $ s "amen" # speed 2 -- Corte fino + velocidad
+striate 16 $ s "amen" -- Textura granular
+striate 128 $ s "bev" # speed 0.5 -- Nube de granos
+slice 8 "0 7 2 5" $ s "amen" -- Selecciona partes específicas
+slice 16 (run 16) $ s "amen" -- Reproduce todas en orden
+slice 8 (irand 8) $ s "amen" -- Selección aleatoria
+splice 8 "0 7 2 5" $ s "amen"
+loopAt 1 $ s "amen" -- Loop de 1 ciclo
+loopAt 4 $ s "amen" -- Loop de 4 ciclos
+loopAt "" $ s "amen" -- Duración variable
+arpeggiate $ n "c'maj" # s "superpiano"
+arpeggiate $ n "a'min7 d'min7 g'dom7 c'maj7" # s "superpiano"
+within (0, 0.5) (fast 2) $ s "bd sd hh cp" -- Solo primera mitad
+within (0.25, 0.75) rev $ s "bd sd hh cp" -- Solo el medio
+off 0.25 (# speed 2) $ s "bd sd" -- Eco con pitch alto
+off 0.125 (# crush 4) $ s "hh*8" -- Eco distorsionado
+superimpose (fast 2) $ s "bd sd" -- Original + doble velocidad
+superimpose (# speed 2) $ s "bd sd" -- Original + octava alta
+layer [id, fast 2, rev, (# speed 2)] $ s "bd sd hh cp"
+seqP [
+s (fit 3 ["bd", "sd", "hh"] "0 1 2 0")
+chunk 4 (fast 2) $ s "bd sd hh cp"
+chunk 8 rev $ s "bd sd hh cp"
+bite 4 "0 2 1 3" $ s "bd sd hh cp"
+bite 8 (run 8) $ n (run 8) # s "arpy"
+smash 4 [1, 2, 3] $ s "bd sd"
+striate' 16 0.5 $ s "amen"
+gap 4 $ s "bd*8"
+swingBy 0.2 4 $ s "hh*8" -- Swing ligero
+swingBy 0.4 4 $ s "hh*16" -- Swing pronunciado
+swing $ s "hh*8"
+s "bd" # orbit 0 -- Órbita 0 (canales 0-1)
+s "sd" # orbit 1 -- Órbita 1 (canales 2-3)
+
+
+# ============================================
+# IMPORTADO DESDE DOCUMENTACION COMPLETA
+# ============================================
+s "bd sd bd sd"
+s "bd*8"
+s "bd/2"
+slow 4 $ s "bd sd" # n (run 100)
+slow 2 $ s "bd sd"
+s "bd sd" # gain "1 0.8"
+s "bd*4" -- Canal 1: Bombo
+s "sd(3,8)" -- Canal 2: Caja
+s "hh*16" -- Canal 3: Hi-hat
+s "bass:3" -- Canal 4: Bajo
+s "bd sd"
+
+# --- EVOLUTIONARY BATCH 2026-01-26 09:28 ---
+sound "hh (11, 16) 808sd (5, 8) "
+sound "hardkick (3, 8) "
+sound "glitch (7, 16) "
+sound "tabla2 (5, 8) "
+sound "bd (5, 8) "
+
+# --- SCAVENGED BATCH ---
+
+# --- SCAVENGED BATCH ---

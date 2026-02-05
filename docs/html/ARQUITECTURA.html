@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARQUITECTURA</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            background: transparent;
+            color: #ecf0f1;
+            padding: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: #555;
+            font-style: italic;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="arquitectura-tecnica-tidalai-companion">Arquitectura Técnica: TidalAI Companion</h1>
+<h2 id="vision-general">Visión General</h2>
+<p>TidalAI Companion es un sistema distribuido que combina generación de música con IA en una Raspberry Pi 3B+ y ejecución de audio en un PC con TidalCycles, comunicándose en tiempo real vía OSC.</p>
+<hr />
+<h2 id="diagrama-de-arquitectura">Diagrama de Arquitectura</h2>
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────────────┐
+│                         PC PRINCIPAL                             │
+│                                                                  │
+│  ┌──────────────────┐                  ┌──────────────────┐    │
+│  │   Navegador      │                  │   TidalCycles    │    │
+│  │   Web            │                  │   (Haskell)      │    │
+│  │                  │                  │                  │    │
+│  │  - Interfaz UI   │                  │  - Live coding   │    │
+│  │  - Controles     │                  │  - Evaluación    │    │
+│  │  - Visualización │                  │    de patrones   │    │
+│  └────────┬─────────┘                  └────────┬─────────┘    │
+│           │                                      │              │
+│           │ HTTP                                 │ OSC          │
+│           │ (192.168.x.x:5000)                  │ (interno)    │
+│           │                                      │              │
+│           │                              ┌───────▼─────────┐    │
+│           │                              │  SuperCollider  │    │
+│           │                              │                 │    │
+│           │                              │  - OSC Server   │    │
+│           │                              │  - Synth Engine │    │
+│           │                              │  - Audio Output │    │
+│           │                              └───────▲─────────┘    │
+│           │                                      │              │
+└───────────┼──────────────────────────────────────┼──────────────┘
+            │                                      │
+            │          Red Local (WiFi/Ethernet)   │
+            │                                      │
+            │                                      │ OSC
+            │                                      │ (UDP 6010)
+            │                                      │
+┌───────────▼──────────────────────────────────────┼──────────────┐
+│           │                                      │              │
+│  ┌────────▼─────────┐                  ┌────────▼─────────┐    │
+│  │   Flask Web      │                  │   OSC Client     │    │
+│  │   Server         │                  │                  │    │
+│  │                  │                  │  - Envío msgs    │    │
+│  │  - API REST      │◄─────────────────┤  - Gestión       │    │
+│  │  - WebSockets    │                  │    conexión      │    │
+│  │  - Static files  │                  └──────────────────┘    │
+│  └────────┬─────────┘                           ▲              │
+│           │                                     │              │
+│           │                                     │              │
+│           │                          ┌──────────┴─────────┐    │
+│           │                          │  Pattern Generator │    │
+│           │                          │                    │    │
+│           └─────────────────────────►│  - Generación      │    │
+│                                      │  - Validación      │    │
+│                                      │  - Formateo        │    │
+│                                      └──────────┬─────────┘    │
+│                                                 │              │
+│                                                 │              │
+│                                      ┌──────────▼─────────┐    │
+│                                      │   AI Model         │    │
+│                                      │                    │    │
+│                                      │  - Markov Chains   │    │
+│                                      │  - RNN/LSTM (opt)  │    │
+│                                      │  - TF Lite (opt)   │    │
+│                                      └────────────────────┘    │
+│                                                                 │
+│                      RASPBERRY PI 3B+                           │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+
+<hr />
+<h2 id="componentes-del-sistema">Componentes del Sistema</h2>
+<h3 id="1-raspberry-pi-backend">1. Raspberry Pi - Backend</h3>
+<h4 id="11-pattern-generator-pattern_generatorpy">1.1 Pattern Generator (<code>pattern_generator.py</code>)</h4>
+<p><strong>Responsabilidades</strong>:
+- Generar patrones TidalCycles sintácticamente válidos
+- Aplicar parámetros de densidad, complejidad, tempo
+- Validar sintaxis antes de enviar
+- Mantener estado de generación</p>
+<p><strong>Interfaz</strong>:</p>
+<pre class="codehilite"><code class="language-python">class PatternGenerator:
+    def __init__(self, model=None):
+        &quot;&quot;&quot;Inicializar con modelo opcional (Markov/RNN)&quot;&quot;&quot;
+
+    def generate(self, 
+                 pattern_type: str,      # 'drums', 'bass', 'melody'
+                 density: float,          # 0.0 - 1.0
+                 complexity: float,       # 0.0 - 1.0
+                 tempo: int) -&gt; str:      # BPM
+        &quot;&quot;&quot;Generar patrón con parámetros&quot;&quot;&quot;
+
+    def validate(self, pattern: str) -&gt; bool:
+        &quot;&quot;&quot;Validar sintaxis Tidal&quot;&quot;&quot;
+</code></pre>
+
+<p><strong>Modos de generación</strong>:
+1. <strong>Hardcoded</strong>: Biblioteca de patrones predefinidos (MVP1)
+2. <strong>Markov</strong>: Generación probabilística (MVP3)
+3. <strong>Neural</strong>: RNN/LSTM (futuro)</p>
+<hr />
+<h4 id="12-osc-client-osc_clientpy">1.2 OSC Client (<code>osc_client.py</code>)</h4>
+<p><strong>Responsabilidades</strong>:
+- Enviar mensajes OSC al PC
+- Gestionar conexión y reconexión
+- Buffering de mensajes si es necesario
+- Logging de comunicación</p>
+<p><strong>Interfaz</strong>:</p>
+<pre class="codehilite"><code class="language-python">class OSCClient:
+    def __init__(self, target_ip: str, target_port: int):
+        &quot;&quot;&quot;Configurar cliente OSC&quot;&quot;&quot;
+
+    def send_pattern(self, 
+                     channel: str,    # 'd1', 'd2', etc.
+                     pattern: str):   # Código Tidal
+        &quot;&quot;&quot;Enviar patrón completo&quot;&quot;&quot;
+
+    def send_param(self,
+                   channel: str,
+                   param: str,       # 'speed', 'cutoff', etc.
+                   value: float):
+        &quot;&quot;&quot;Enviar parámetro individual&quot;&quot;&quot;
+
+    def stop_channel(self, channel: str):
+        &quot;&quot;&quot;Detener canal específico&quot;&quot;&quot;
+</code></pre>
+
+<p><strong>Protocolo OSC</strong>:</p>
+<pre class="codehilite"><code>/tidal/pattern &lt;channel:string&gt; &lt;pattern:string&gt;
+/tidal/param &lt;channel:string&gt; &lt;param:string&gt; &lt;value:float&gt;
+/tidal/stop &lt;channel:string&gt;
+</code></pre>
+
+<hr />
+<h4 id="13-flask-web-server-apppy">1.3 Flask Web Server (<code>app.py</code>)</h4>
+<p><strong>Responsabilidades</strong>:
+- Servir interfaz web
+- Exponer API REST para control
+- Gestionar estado de la aplicación
+- Coordinar generador y cliente OSC</p>
+<p><strong>Endpoints</strong>:</p>
+<pre class="codehilite"><code class="language-python">GET  /                      # Interfaz web
+POST /api/generate          # Generar patrón
+POST /api/send              # Enviar a Tidal
+POST /api/config            # Actualizar config
+GET  /api/status            # Estado actual
+POST /api/mode              # Cambiar modo
+</code></pre>
+
+<p><strong>Request/Response Examples</strong>:</p>
+<pre class="codehilite"><code class="language-json">POST /api/generate
+{
+  &quot;type&quot;: &quot;drums&quot;,
+  &quot;density&quot;: 0.7,
+  &quot;complexity&quot;: 0.5,
+  &quot;tempo&quot;: 140
+}
+
+Response:
+{
+  &quot;pattern&quot;: &quot;d1 $ sound \&quot;bd*4 sn*2 hh*8\&quot;&quot;,
+  &quot;timestamp&quot;: 1706169195
+}
+</code></pre>
+
+<hr />
+<h4 id="14-ai-model-markov_modelpy">1.4 AI Model (<code>markov_model.py</code>)</h4>
+<p><strong>Responsabilidades</strong>:
+- Entrenar con corpus de patrones
+- Generar nuevos patrones probabilísticamente
+- Ajustar creatividad vs coherencia</p>
+<p><strong>Interfaz</strong>:</p>
+<pre class="codehilite"><code class="language-python">class MarkovModel:
+    def train(self, corpus: List[str]):
+        &quot;&quot;&quot;Entrenar con patrones de ejemplo&quot;&quot;&quot;
+
+    def generate(self, 
+                 seed: str = None,
+                 length: int = 20,
+                 temperature: float = 1.0) -&gt; str:
+        &quot;&quot;&quot;Generar patrón nuevo&quot;&quot;&quot;
+
+    def save(self, path: str):
+        &quot;&quot;&quot;Guardar modelo entrenado&quot;&quot;&quot;
+
+    def load(self, path: str):
+        &quot;&quot;&quot;Cargar modelo&quot;&quot;&quot;
+</code></pre>
+
+<p><strong>Algoritmo</strong>:
+1. Tokenizar patrones Tidal (palabras clave, samples, operadores)
+2. Construir cadenas de Markov de orden 2-3
+3. Generar secuencias respetando sintaxis
+4. Validar y corregir si es necesario</p>
+<hr />
+<h3 id="2-pc-audio-engine">2. PC - Audio Engine</h3>
+<h4 id="21-supercollider-osc-receiver-osc_receiverscd">2.1 SuperCollider OSC Receiver (<code>osc_receiver.scd</code>)</h4>
+<p><strong>Responsabilidades</strong>:
+- Escuchar mensajes OSC en puerto 6010
+- Parsear y ejecutar patrones Tidal
+- Logging de actividad
+- Manejo de errores</p>
+<p><strong>Implementación</strong>:</p>
+<pre class="codehilite"><code class="language-supercollider">(
+// Configurar receptor OSC
+OSCdef(\tidalPattern, { |msg, time, addr, recvPort|
+    var channel = msg[1].asString;
+    var pattern = msg[2].asString;
+
+    // Log
+    (&quot;Received pattern for &quot; ++ channel ++ &quot;: &quot; ++ pattern).postln;
+
+    // Ejecutar en Tidal
+    // (requiere integración con TidalCycles)
+
+}, '/tidal/pattern');
+
+OSCdef(\tidalParam, { |msg|
+    var channel = msg[1].asString;
+    var param = msg[2].asString;
+    var value = msg[3].asFloat;
+
+    (&quot;Setting &quot; ++ param ++ &quot; = &quot; ++ value ++ &quot; on &quot; ++ channel).postln;
+
+}, '/tidal/param');
+
+&quot;OSC Receiver ready on port 6010&quot;.postln;
+)
+</code></pre>
+
+<p><strong>Integración con TidalCycles</strong>:
+- SuperCollider puede ejecutar código Haskell vía <code>unixCmd</code> (limitado)
+- Alternativa: usar <code>ghci</code> como REPL y enviar comandos
+- Mejor opción: TidalCycles ya tiene soporte OSC, configurar para escuchar</p>
+<hr />
+<h4 id="22-tidalcycles-configuration">2.2 TidalCycles Configuration</h4>
+<p><strong>Archivo</strong>: <code>BootTidal.hs</code> (modificado)</p>
+<p>Configurar TidalCycles para aceptar patrones vía OSC:</p>
+<pre class="codehilite"><code class="language-haskell">-- Añadir receptor OSC personalizado
+import Sound.OSC.FD
+
+-- Función para evaluar patrones recibidos
+evalRemotePattern :: String -&gt; String -&gt; IO ()
+evalRemotePattern channel pattern = do
+    putStrLn $ &quot;Evaluating: &quot; ++ channel ++ &quot; $ &quot; ++ pattern
+    -- Evaluar en el contexto de Tidal
+    -- (requiere acceso al intérprete GHCi)
+</code></pre>
+
+<p><strong>Nota</strong>: Esta es la parte más compleja de la integración. Alternativas:
+1. Usar <code>tidal-listener</code> (si existe)
+2. Crear bridge en Haskell que escuche OSC
+3. Usar archivos temporales que Tidal carga automáticamente</p>
+<hr />
+<h3 id="3-interfaz-web">3. Interfaz Web</h3>
+<h4 id="31-frontend-indexhtml-appjs">3.1 Frontend (<code>index.html</code> + <code>app.js</code>)</h4>
+<p><strong>Componentes UI</strong>:</p>
+<pre class="codehilite"><code>┌─────────────────────────────────────────────┐
+│         TidalAI Companion                   │
+├─────────────────────────────────────────────┤
+│                                             │
+│  ┌─────────────────────────────────────┐   │
+│  │ Modo de Operación                   │   │
+│  │  ○ Sugerencias  ○ Autónomo  ○ Híbrido│  │
+│  └─────────────────────────────────────┘   │
+│                                             │
+│  ┌─────────────────────────────────────┐   │
+│  │ Parámetros                          │   │
+│  │                                     │   │
+│  │  Densidad:     [▓▓▓▓▓▓░░░░] 60%   │   │
+│  │  Complejidad:  [▓▓▓▓░░░░░░] 40%   │   │
+│  │  Tempo:        140 BPM              │   │
+│  │  Temperatura:  [▓▓▓▓▓░░░░░] 0.5    │   │
+│  └─────────────────────────────────────┘   │
+│                                             │
+│  ┌─────────────────────────────────────┐   │
+│  │ Estilo Musical                      │   │
+│  │  [Techno ▼]                         │   │
+│  └─────────────────────────────────────┘   │
+│                                             │
+│  ┌─────────────────────────────────────┐   │
+│  │ Instrumentos                        │   │
+│  │  ☑ Kick  ☑ Snare  ☑ Hi-hat         │   │
+│  │  ☐ Bass  ☐ Synth  ☐ FX             │   │
+│  └─────────────────────────────────────┘   │
+│                                             │
+│  [Generar Patrón]  [Enviar a Tidal]       │
+│                                             │
+│  ┌─────────────────────────────────────┐   │
+│  │ Patrón Generado                     │   │
+│  │                                     │   │
+│  │  d1 $ sound &quot;bd*4 sn*2 hh*8&quot;       │   │
+│  │    # speed 1.2                      │   │
+│  │                                     │   │
+│  └─────────────────────────────────────┘   │
+│                                             │
+│  ┌─────────────────────────────────────┐   │
+│  │ Log de Actividad                    │   │
+│  │                                     │   │
+│  │  [07:33] Patrón generado            │   │
+│  │  [07:33] Enviado a d1               │   │
+│  │  [07:34] Modo cambiado a Autónomo   │   │
+│  └─────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘
+</code></pre>
+
+<p><strong>Tecnologías</strong>:
+- HTML5 + CSS3 (Flexbox/Grid)
+- Vanilla JavaScript (sin frameworks pesados)
+- Fetch API para comunicación con Flask
+- CSS Variables para theming</p>
+<hr />
+<h2 id="flujo-de-datos">Flujo de Datos</h2>
+<h3 id="escenario-1-modo-sugerencias">Escenario 1: Modo Sugerencias</h3>
+<pre class="codehilite"><code>1. Usuario ajusta parámetros en interfaz web
+   ↓
+2. Click &quot;Generar Patrón&quot;
+   ↓
+3. Frontend → POST /api/generate → Flask
+   ↓
+4. Flask → PatternGenerator.generate()
+   ↓
+5. PatternGenerator → AI Model (si está activo)
+   ↓
+6. Patrón generado → Flask → Frontend
+   ↓
+7. Usuario revisa patrón en interfaz
+   ↓
+8. Usuario click &quot;Enviar a Tidal&quot;
+   ↓
+9. Frontend → POST /api/send → Flask
+   ↓
+10. Flask → OSCClient.send_pattern()
+    ↓
+11. OSC Message → SuperCollider (PC)
+    ↓
+12. SuperCollider → TidalCycles
+    ↓
+13. 🎵 Audio output
+</code></pre>
+
+<hr />
+<h3 id="escenario-2-modo-autonomo">Escenario 2: Modo Autónomo</h3>
+<pre class="codehilite"><code>1. Usuario activa modo Autónomo
+   ↓
+2. Frontend → POST /api/mode {&quot;mode&quot;: &quot;autonomous&quot;}
+   ↓
+3. Flask inicia loop de generación automática
+   ↓
+4. Cada N compases:
+   ├─ PatternGenerator.generate()
+   ├─ OSCClient.send_pattern()
+   └─ Log → Frontend (WebSocket opcional)
+   ↓
+5. Usuario ajusta parámetros en tiempo real
+   ↓
+6. Próxima generación usa nuevos parámetros
+   ↓
+7. 🎵 Audio continuo con evolución
+</code></pre>
+
+<hr />
+<h2 id="consideraciones-de-rendimiento">Consideraciones de Rendimiento</h2>
+<h3 id="latencia">Latencia</h3>
+<p><strong>Objetivo</strong>: &lt; 50ms de latencia total</p>
+<p><strong>Breakdown</strong>:
+- Generación de patrón: &lt; 10ms (Markov) / &lt; 30ms (RNN)
+- Envío OSC: &lt; 5ms (red local)
+- Procesamiento SuperCollider: &lt; 10ms
+- Buffer de audio: ~10ms</p>
+<p><strong>Optimizaciones</strong>:
+- Pre-generar patrones en background
+- Usar UDP para OSC (no TCP)
+- Minimizar validación en tiempo real
+- Cache de patrones frecuentes</p>
+<hr />
+<h3 id="memoria-raspberry-pi">Memoria (Raspberry Pi)</h3>
+<p><strong>Disponible</strong>: ~700MB (de 1GB total, ~300MB para OS)</p>
+<p><strong>Uso estimado</strong>:
+- Python runtime: ~50MB
+- Flask: ~30MB
+- Modelo Markov: ~10-20MB
+- Modelo RNN pequeño: ~50-100MB
+- Buffers y cache: ~50MB</p>
+<p><strong>Total</strong>: ~200-250MB → ✅ Viable</p>
+<hr />
+<h3 id="cpu-raspberry-pi">CPU (Raspberry Pi)</h3>
+<p><strong>Specs</strong>: 4x ARM Cortex-A53 @ 1.4GHz</p>
+<p><strong>Carga estimada</strong>:
+- Flask (idle): ~5% CPU
+- Generación Markov: ~10-20% CPU (burst)
+- Generación RNN: ~30-50% CPU (burst)
+- OSC client: ~1% CPU</p>
+<p><strong>Estrategia</strong>: Generación asíncrona para no bloquear servidor web</p>
+<hr />
+<h2 id="seguridad-y-configuracion">Seguridad y Configuración</h2>
+<h3 id="red-local">Red Local</h3>
+<p><strong>Configuración recomendada</strong>:
+- IP estática para Raspberry Pi
+- Firewall: permitir puertos 5000 (Flask) y 6010 (OSC)
+- Opcional: VPN si se quiere acceso remoto</p>
+<p><strong>Archivo de configuración</strong> (<code>config.json</code>):</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;raspberry_pi&quot;: {
+    &quot;ip&quot;: &quot;192.168.1.100&quot;,
+    &quot;flask_port&quot;: 5000
+  },
+  &quot;pc&quot;: {
+    &quot;ip&quot;: &quot;192.168.1.50&quot;,
+    &quot;osc_port&quot;: 6010
+  },
+  &quot;generator&quot;: {
+    &quot;default_tempo&quot;: 140,
+    &quot;default_density&quot;: 0.6,
+    &quot;default_complexity&quot;: 0.5
+  }
+}
+</code></pre>
+
+<hr />
+<h2 id="extensibilidad">Extensibilidad</h2>
+<h3 id="plugins-de-modelos">Plugins de Modelos</h3>
+<p>Arquitectura permite múltiples modelos:</p>
+<pre class="codehilite"><code class="language-python">class ModelInterface:
+    def generate(self, **params) -&gt; str:
+        raise NotImplementedError
+
+class MarkovModel(ModelInterface):
+    # Implementación Markov
+
+class RNNModel(ModelInterface):
+    # Implementación RNN
+
+class HybridModel(ModelInterface):
+    # Combina múltiples modelos
+</code></pre>
+
+<hr />
+<h3 id="api-para-control-externo">API para Control Externo</h3>
+<p>Otros programas pueden controlar TidalAI:</p>
+<pre class="codehilite"><code class="language-bash"># Generar patrón desde línea de comandos
+curl -X POST http://192.168.1.100:5000/api/generate \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;type&quot;:&quot;drums&quot;,&quot;density&quot;:0.8}'
+
+# Cambiar modo
+curl -X POST http://192.168.1.100:5000/api/mode \
+  -d '{&quot;mode&quot;:&quot;autonomous&quot;}'
+</code></pre>
+
+<p>Esto permite integración con:
+- MIDI controllers (vía script Python)
+- Otros live coding tools
+- Sistemas de automatización de shows</p>
+<hr />
+<h2 id="diagrama-de-secuencia-generacion-y-ejecucion">Diagrama de Secuencia: Generación y Ejecución</h2>
+<pre class="codehilite"><code>Usuario    Frontend    Flask    Generator    OSC    SuperCollider    Tidal
+  │           │          │          │         │           │           │
+  │  Click    │          │          │         │           │           │
+  ├──────────►│          │          │         │           │           │
+  │           │  POST    │          │         │           │           │
+  │           ├─────────►│          │         │           │           │
+  │           │          │ generate()         │           │           │
+  │           │          ├─────────►│         │           │           │
+  │           │          │          │ AI      │           │           │
+  │           │          │          ├────┐    │           │           │
+  │           │          │          │◄───┘    │           │           │
+  │           │          │◄─────────┤         │           │           │
+  │           │◄─────────┤          │         │           │           │
+  │  Display  │          │          │         │           │           │
+  │◄──────────┤          │          │         │           │           │
+  │           │          │          │         │           │           │
+  │  Click    │          │          │         │           │           │
+  │  &quot;Send&quot;   │          │          │         │           │           │
+  ├──────────►│          │          │         │           │           │
+  │           │  POST    │          │         │           │           │
+  │           ├─────────►│          │         │           │           │
+  │           │          │ send_pattern()     │           │           │
+  │           │          ├────────────────────►│           │           │
+  │           │          │          │         │  OSC msg  │           │
+  │           │          │          │         ├──────────►│           │
+  │           │          │          │         │           │  eval()   │
+  │           │          │          │         │           ├──────────►│
+  │           │          │          │         │           │           │
+  │           │          │          │         │           │  🎵 Audio │
+  │           │          │          │         │           │◄──────────┤
+  │           │          │          │         │           │           │
+</code></pre>
+
+<hr />
+<h2 id="conclusion">Conclusión</h2>
+<p>Esta arquitectura proporciona:
+- ✅ Separación clara de responsabilidades
+- ✅ Escalabilidad (añadir más modelos, más RPis)
+- ✅ Baja latencia para uso en vivo
+- ✅ Flexibilidad (múltiples modos de operación)
+- ✅ Extensibilidad (API abierta, plugins)</p>
+<p>El diseño modular permite desarrollo incremental y testing independiente de cada componente.</p>
+    </div>
+</body>
+</html>

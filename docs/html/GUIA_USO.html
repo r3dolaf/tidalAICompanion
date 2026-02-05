@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUIA_USO</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            background: transparent;
+            color: #ecf0f1;
+            padding: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: #555;
+            font-style: italic;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="guia-de-uso-tidalai-companion">Guía de Uso: TidalAI Companion</h1>
+<blockquote>
+<p>Manual completo de instalación, configuración y uso del sistema TidalAI Companion</p>
+</blockquote>
+<hr />
+<h2 id="tabla-de-contenidos">📋 Tabla de Contenidos</h2>
+<ol>
+<li><a href="#requisitos-previos">Requisitos Previos</a></li>
+<li><a href="#instalación">Instalación</a></li>
+<li><a href="#configuración">Configuración</a></li>
+<li><a href="#uso-básico">Uso Básico</a></li>
+<li><a href="#modos-de-operación">Modos de Operación</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ol>
+<hr />
+<h2 id="requisitos-previos">Requisitos Previos</h2>
+<h3 id="hardware">Hardware</h3>
+<ul>
+<li><strong>Raspberry Pi 3B+</strong> con:</li>
+<li>Raspberry Pi OS instalado</li>
+<li>Conexión a red local (WiFi o Ethernet)</li>
+<li>Tarjeta SD con al menos 8GB</li>
+<li>
+<p>Fuente de alimentación adecuada</p>
+</li>
+<li>
+<p><strong>PC</strong> con:</p>
+</li>
+<li>TidalCycles instalado y funcionando</li>
+<li>SuperCollider instalado</li>
+<li>Conexión a la misma red local que la RPi</li>
+</ul>
+<h3 id="software">Software</h3>
+<p><strong>En la Raspberry Pi:</strong>
+- Python 3.7 o superior
+- pip (gestor de paquetes Python)</p>
+<p><strong>En el PC:</strong>
+- TidalCycles (con Haskell Stack)
+- SuperCollider 3.11 o superior
+- Navegador web moderno (Chrome, Firefox, Edge)</p>
+<hr />
+<h2 id="instalacion">Instalación</h2>
+<h3 id="paso-1-configurar-la-raspberry-pi">Paso 1: Configurar la Raspberry Pi</h3>
+<h4 id="11-clonar-o-copiar-el-proyecto">1.1 Clonar o copiar el proyecto</h4>
+<pre class="codehilite"><code class="language-bash"># Si usas git
+git clone &lt;url-del-repositorio&gt;
+cd tidalai-companion
+
+# O copiar los archivos manualmente a la RPi
+</code></pre>
+
+<h4 id="12-instalar-dependencias-python">1.2 Instalar dependencias Python</h4>
+<pre class="codehilite"><code class="language-bash">cd raspberry-pi
+pip3 install -r requirements.txt
+</code></pre>
+
+<p><strong>Nota</strong>: La instalación de WeasyPrint (para PDFs) puede tardar varios minutos en la RPi.</p>
+<h4 id="13-verificar-instalacion">1.3 Verificar instalación</h4>
+<pre class="codehilite"><code class="language-bash"># Probar el generador
+python3 generator/pattern_generator.py
+
+# Deberías ver ejemplos de patrones generados
+</code></pre>
+
+<hr />
+<h3 id="paso-2-configurar-el-pc">Paso 2: Configurar el PC</h3>
+<h4 id="21-copiar-archivo-supercollider">2.1 Copiar archivo SuperCollider</h4>
+<p>Copiar <code>pc-side/osc_receiver.scd</code> a una ubicación accesible en tu PC.</p>
+<h4 id="22-verificar-tidalcycles">2.2 Verificar TidalCycles</h4>
+<pre class="codehilite"><code class="language-bash"># Iniciar TidalCycles
+tidal
+
+# Debería abrir el editor con TidalCycles listo
+</code></pre>
+
+<hr />
+<h2 id="configuracion">Configuración</h2>
+<h3 id="configurar-ips-de-red">Configurar IPs de Red</h3>
+<h4 id="encontrar-la-ip-de-tu-pc">Encontrar la IP de tu PC</h4>
+<p><strong>Windows:</strong></p>
+<pre class="codehilite"><code class="language-powershell">ipconfig
+# Buscar &quot;Dirección IPv4&quot; en tu adaptador de red
+</code></pre>
+
+<p><strong>macOS/Linux:</strong></p>
+<pre class="codehilite"><code class="language-bash">ifconfig
+# o
+ip addr show
+</code></pre>
+
+<h4 id="encontrar-la-ip-de-la-raspberry-pi">Encontrar la IP de la Raspberry Pi</h4>
+<pre class="codehilite"><code class="language-bash">hostname -I
+# Muestra la IP local de la RPi
+</code></pre>
+
+<h4 id="editar-configjson">Editar config.json</h4>
+<p>En la Raspberry Pi, editar <code>raspberry-pi/config.json</code>:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;raspberry_pi&quot;: {
+    &quot;ip&quot;: &quot;192.168.1.100&quot;,     // ← IP de tu Raspberry Pi
+    &quot;flask_port&quot;: 5000
+  },
+  &quot;pc&quot;: {
+    &quot;ip&quot;: &quot;192.168.1.50&quot;,      // ← IP de tu PC
+    &quot;osc_port&quot;: 6010
+  },
+  &quot;generator&quot;: {
+    &quot;default_tempo&quot;: 140,
+    &quot;default_density&quot;: 0.6,
+    &quot;default_complexity&quot;: 0.5,
+    &quot;default_style&quot;: &quot;techno&quot;
+  }
+}
+</code></pre>
+
+<p><strong>Importante</strong>: Reemplaza las IPs con las de tu red local.</p>
+<hr />
+<h2 id="uso-basico">Uso Básico</h2>
+<h3 id="iniciar-el-sistema">Iniciar el Sistema</h3>
+<h4 id="1-iniciar-supercollider-en-el-pc">1. Iniciar SuperCollider (en el PC)</h4>
+<pre class="codehilite"><code class="language-bash"># Abrir SuperCollider
+sclang
+
+# O usar SuperCollider IDE
+</code></pre>
+
+<p>Cargar el receptor OSC:</p>
+<pre class="codehilite"><code class="language-supercollider">// En SuperCollider, evaluar (Ctrl+Enter):
+&quot;ruta/al/osc_receiver.scd&quot;.load;
+
+// Deberías ver:
+// === TidalAI Companion - OSC Receiver ===
+// Listening on port: 6010
+// Ready to receive OSC messages!
+</code></pre>
+
+<h4 id="2-iniciar-tidalcycles-en-el-pc">2. Iniciar TidalCycles (en el PC)</h4>
+<p>En otra terminal o ventana:</p>
+<pre class="codehilite"><code class="language-bash">tidal
+</code></pre>
+
+<h4 id="3-iniciar-el-servidor-flask-en-la-raspberry-pi">3. Iniciar el servidor Flask (en la Raspberry Pi)</h4>
+<pre class="codehilite"><code class="language-bash">cd raspberry-pi/web
+python3 app.py
+
+# Deberías ver:
+# === TidalAI Companion Server ===
+# Iniciando en http://0.0.0.0:5000
+# OSC target: 192.168.1.50:6010
+</code></pre>
+
+<h4 id="4-abrir-la-interfaz-web-en-el-pc">4. Abrir la interfaz web (en el PC)</h4>
+<p>Abrir navegador y navegar a:</p>
+<pre class="codehilite"><code>http://192.168.1.100:5000
+</code></pre>
+
+<p>(Reemplaza con la IP de tu Raspberry Pi)</p>
+<hr />
+<h3 id="generar-y-enviar-tu-primer-patron">Generar y Enviar tu Primer Patrón</h3>
+<h4 id="paso-1-configurar-parametros">Paso 1: Configurar parámetros</h4>
+<p>En la interfaz web:</p>
+<ol>
+<li><strong>Modo</strong>: Seleccionar "Sugerencias" (💡)</li>
+<li><strong>Tipo de patrón</strong>: Seleccionar "Drums" (🥁)</li>
+<li><strong>Densidad</strong>: Ajustar a 70% (más notas)</li>
+<li><strong>Complejidad</strong>: Ajustar a 50% (medio)</li>
+<li><strong>Tempo</strong>: 140 BPM</li>
+<li><strong>Estilo</strong>: Techno</li>
+</ol>
+<h4 id="paso-2-generar-patron">Paso 2: Generar patrón</h4>
+<p>Click en <strong>"🎲 Generar Patrón"</strong></p>
+<p>Deberías ver algo como:</p>
+<pre class="codehilite"><code class="language-haskell">d1 $ sound &quot;bd*6 sn*2 hh*12&quot;
+  # speed 1.15
+  # room 0.21
+</code></pre>
+
+<h4 id="paso-3-enviar-a-tidalcycles">Paso 3: Enviar a TidalCycles</h4>
+<p>Click en <strong>"📤 Enviar a Tidal"</strong></p>
+<p>En el <strong>post window de SuperCollider</strong> deberías ver:</p>
+<pre class="codehilite"><code>Received pattern for d1:
+  sound &quot;bd*6 sn*2 hh*12&quot;
+  # speed 1.15
+  # room 0.21
+</code></pre>
+
+<h4 id="paso-4-ejecutar-en-tidal-mvp1-manual">Paso 4: Ejecutar en Tidal (MVP1 - Manual)</h4>
+<p><strong>Copiar</strong> el patrón del post window de SuperCollider.</p>
+<p><strong>Pegar</strong> en TidalCycles y <strong>evaluar</strong> (Ctrl+Enter):</p>
+<pre class="codehilite"><code class="language-haskell">d1 $ sound &quot;bd*6 sn*2 hh*12&quot;
+  # speed 1.15
+  # room 0.21
+</code></pre>
+
+<p><strong>¡Deberías escuchar el patrón!</strong> 🎵</p>
+<hr />
+<h2 id="modos-de-operacion">Modos de Operación</h2>
+<h3 id="modo-sugerencias">Modo Sugerencias 💡</h3>
+<p><strong>Descripción</strong>: La IA genera patrones que puedes revisar antes de enviar.</p>
+<p><strong>Flujo de trabajo</strong>:
+1. Ajustar parámetros
+2. Click "Generar Patrón"
+3. Revisar el patrón generado
+4. Si te gusta, click "Enviar a Tidal"
+5. Copiar y ejecutar manualmente en Tidal</p>
+<p><strong>Ideal para</strong>:
+- Explorar ideas
+- Aprender sintaxis de Tidal
+- Control total sobre qué se ejecuta</p>
+<hr />
+<h3 id="modo-autonomo">Modo Autónomo 🤖</h3>
+<p><strong>Descripción</strong>: La IA genera y ejecuta patrones automáticamente.</p>
+<p><strong>Nota</strong>: En MVP1, aún requiere copiar manualmente. En versiones futuras será completamente automático.</p>
+<p><strong>Flujo de trabajo</strong>:
+1. Configurar parámetros deseados
+2. Cambiar a modo "Autónomo"
+3. La IA generará patrones continuamente
+4. Puedes ajustar parámetros en tiempo real
+5. Los siguientes patrones reflejarán los cambios</p>
+<p><strong>Ideal para</strong>:
+- Jam sessions
+- Generación continua de ideas
+- Performances en vivo</p>
+<hr />
+<h3 id="modo-hibrido">Modo Híbrido 🤝</h3>
+<p><strong>Descripción</strong>: Colaboración humano-IA donde cada uno controla diferentes canales.</p>
+<p><strong>Configuración</strong> (futuro):
+- IA controla: <code>d1</code>, <code>d2</code> (drums, percussion)
+- Tú controlas: <code>d3</code>, <code>d4</code> (bass, melody)</p>
+<p><strong>Flujo de trabajo</strong>:
+1. Activar modo "Híbrido"
+2. La IA genera patrones para canales asignados
+3. Tú escribes código Tidal para tus canales
+4. Ambos suenan simultáneamente</p>
+<p><strong>Ideal para</strong>:
+- Colaboración creativa
+- Enfocarte en melodías mientras la IA maneja ritmo
+- Experimentación</p>
+<hr />
+<h2 id="parametros-explicados">Parámetros Explicados</h2>
+<h3 id="densidad-0-100">Densidad (0% - 100%)</h3>
+<p>Controla <strong>cuántas notas</strong> hay en el patrón.</p>
+<ul>
+<li><strong>0-30%</strong>: Sparse, minimalista</li>
+<li>
+<p>Ejemplo: <code>sound "bd sn"</code></p>
+</li>
+<li>
+<p><strong>40-60%</strong>: Medio, equilibrado</p>
+</li>
+<li>
+<p>Ejemplo: <code>sound "bd*4 sn*2 hh*8"</code></p>
+</li>
+<li>
+<p><strong>70-100%</strong>: Dense, lleno</p>
+</li>
+<li>Ejemplo: <code>sound "bd*8 sn*4 hh*16 cp*4"</code></li>
+</ul>
+<hr />
+<h3 id="complejidad-0-100">Complejidad (0% - 100%)</h3>
+<p>Controla <strong>qué tan elaborado</strong> es el patrón.</p>
+<ul>
+<li><strong>0-30%</strong>: Simple, directo</li>
+<li>Solo samples básicos</li>
+<li>
+<p>Sin efectos</p>
+</li>
+<li>
+<p><strong>40-60%</strong>: Medio</p>
+</li>
+<li>Euclidean rhythms</li>
+<li>
+<p>Algunos efectos (speed, room)</p>
+</li>
+<li>
+<p><strong>70-100%</strong>: Complejo</p>
+</li>
+<li>Euclidean rhythms avanzados</li>
+<li>Múltiples efectos (cutoff, lpf, gain)</li>
+<li>Modulación con funciones (sine, saw)</li>
+</ul>
+<hr />
+<h3 id="tempo-60-200-bpm">Tempo (60-200 BPM)</h3>
+<p><strong>Nota</strong>: En MVP1, el tempo es solo referencia. No afecta directamente el patrón generado.</p>
+<p>En versiones futuras, ajustará:
+- Velocidad de cambio de patrones en modo autónomo
+- Sincronización con clock externo</p>
+<hr />
+<h3 id="estilo-musical">Estilo Musical</h3>
+<p>Afecta la selección de samples y estructura:</p>
+<ul>
+<li><strong>Techno</strong>: Kicks potentes, hi-hats rápidos, bass en octavas bajas</li>
+<li><strong>Ambient</strong>: Patrones espaciados, reverb, samples suaves</li>
+<li><strong>Breakbeat</strong>: Ritmos sincopados, breaks complejos</li>
+<li><strong>House</strong>: Grooves de 4/4, claps, bass funky</li>
+<li><strong>Experimental</strong>: Combinaciones inusuales, efectos extremos</li>
+</ul>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="problema-osc-desconectado-en-la-interfaz">Problema: "OSC: Desconectado" en la interfaz</h3>
+<p><strong>Causas posibles</strong>:
+1. SuperCollider no está ejecutando <code>osc_receiver.scd</code>
+2. IP del PC incorrecta en <code>config.json</code>
+3. Firewall bloqueando puerto 6010</p>
+<p><strong>Soluciones</strong>:</p>
+<pre class="codehilite"><code class="language-supercollider">// En SuperCollider, verificar que el receptor esté activo:
+OSCdef.all;  // Debería mostrar \tidalPattern, \tidalParam, etc.
+
+// Recargar receptor:
+&quot;ruta/al/osc_receiver.scd&quot;.load;
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash"># Verificar firewall (Windows)
+# Permitir puerto 6010 en Firewall de Windows
+
+# Verificar firewall (Linux)
+sudo ufw allow 6010/udp
+</code></pre>
+
+<hr />
+<h3 id="problema-no-se-genera-ningun-patron">Problema: No se genera ningún patrón</h3>
+<p><strong>Causas posibles</strong>:
+1. Error en el servidor Flask
+2. Navegador no puede conectar con la RPi</p>
+<p><strong>Soluciones</strong>:</p>
+<pre class="codehilite"><code class="language-bash"># En la RPi, verificar logs del servidor:
+# Deberías ver mensajes cuando haces click en &quot;Generar&quot;
+
+# Verificar que el servidor está corriendo:
+ps aux | grep app.py
+
+# Reiniciar servidor:
+python3 app.py
+</code></pre>
+
+<p><strong>En el navegador</strong>:
+- Abrir consola de desarrollador (F12)
+- Buscar errores en la pestaña "Console"
+- Verificar requests en la pestaña "Network"</p>
+<hr />
+<h3 id="problema-patron-generado-pero-no-se-recibe-en-supercollider">Problema: Patrón generado pero no se recibe en SuperCollider</h3>
+<p><strong>Causas posibles</strong>:
+1. IP incorrecta en <code>config.json</code>
+2. Puerto OSC incorrecto
+3. SuperCollider no está escuchando</p>
+<p><strong>Soluciones</strong>:</p>
+<pre class="codehilite"><code class="language-bash"># Verificar IPs:
+# En PC:
+ipconfig  # Windows
+ifconfig  # macOS/Linux
+
+# En RPi:
+hostname -I
+</code></pre>
+
+<pre class="codehilite"><code class="language-supercollider">// En SuperCollider, verificar puerto:
+NetAddr.langPort;  // Debería ser 6010 o el configurado
+
+// Probar envío manual desde RPi:
+python3 generator/osc_client.py
+</code></pre>
+
+<hr />
+<h3 id="problema-patron-recibido-pero-no-suena-en-tidal">Problema: Patrón recibido pero no suena en Tidal</h3>
+<p><strong>Causa</strong>: En MVP1, la ejecución es manual.</p>
+<p><strong>Solución</strong>:
+1. Copiar el patrón del post window de SuperCollider
+2. Pegarlo en TidalCycles
+3. Evaluar con Ctrl+Enter</p>
+<p><strong>Verificar que TidalCycles funciona</strong>:</p>
+<pre class="codehilite"><code class="language-haskell">-- Probar patrón simple:
+d1 $ sound &quot;bd sn&quot;
+
+-- Si no suena, verificar SuperCollider:
+-- ¿Está corriendo el servidor de audio?
+s.boot;  // En SuperCollider
+</code></pre>
+
+<hr />
+<h2 id="faq">FAQ</h2>
+<h3 id="puedo-usar-esto-sin-raspberry-pi">¿Puedo usar esto sin Raspberry Pi?</h3>
+<p><strong>Sí</strong>, puedes ejecutar todo en el mismo PC:</p>
+<ol>
+<li>Ejecutar el servidor Flask en el PC</li>
+<li>Cambiar IPs en <code>config.json</code> a <code>127.0.0.1</code></li>
+<li>Acceder a <code>http://localhost:5000</code></li>
+</ol>
+<p>La ventaja de la RPi es separar la carga de procesamiento.</p>
+<hr />
+<h3 id="como-anado-mis-propios-samples">¿Cómo añado mis propios samples?</h3>
+<p>Editar <code>pattern_generator.py</code>:</p>
+<pre class="codehilite"><code class="language-python"># Añadir a la biblioteca de samples:
+self.drum_samples = {
+    'kick': ['bd', 'bass', 'bass3', 'mi_kick'],  # ← Añadir aquí
+    # ...
+}
+</code></pre>
+
+<p>Asegúrate de que el sample existe en TidalCycles:</p>
+<pre class="codehilite"><code class="language-haskell">-- Probar en Tidal:
+d1 $ sound &quot;mi_kick&quot;
+</code></pre>
+
+<hr />
+<h3 id="puedo-cambiar-el-puerto-flask">¿Puedo cambiar el puerto Flask?</h3>
+<p><strong>Sí</strong>, editar <code>config.json</code>:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;raspberry_pi&quot;: {
+    &quot;flask_port&quot;: 8080  // ← Cambiar aquí
+  }
+}
+</code></pre>
+
+<p>Luego acceder a <code>http://IP_RASPI:8080</code></p>
+<hr />
+<h3 id="como-entreno-el-modelo-de-ia-con-mis-propios-patrones">¿Cómo entreno el modelo de IA con mis propios patrones?</h3>
+<p>En MVP1, el generador usa patrones predefinidos. El modelo de IA (Markov/RNN) se implementará en MVP3.</p>
+<p>Para prepararte:
+1. Guardar tus patrones favoritos en archivos <code>.tidal</code>
+2. Colocarlos en <code>examples/corpus/</code>
+3. Cuando MVP3 esté listo, ejecutar:</p>
+<pre class="codehilite"><code class="language-bash">python3 generator/train_model.py --corpus ../examples/corpus/
+</code></pre>
+
+<hr />
+<h3 id="funciona-con-otros-live-coding-languages">¿Funciona con otros live coding languages?</h3>
+<p>Actualmente está diseñado para TidalCycles, pero la arquitectura es extensible.</p>
+<p>Para adaptar a Sonic Pi, FoxDot, etc.:
+1. Modificar <code>pattern_generator.py</code> para generar sintaxis del lenguaje deseado
+2. Adaptar el receptor OSC para ese lenguaje
+3. Actualizar la interfaz web</p>
+<hr />
+<h3 id="puedo-controlar-esto-desde-un-midi-controller">¿Puedo controlar esto desde un MIDI controller?</h3>
+<p>No directamente en MVP1, pero es una extensión futura planeada.</p>
+<p>Workaround actual:
+- Usar software MIDI-to-OSC (como TouchOSC Bridge)
+- Mapear controles MIDI a endpoints de la API Flask</p>
+<hr />
+<h3 id="como-genero-la-documentacion-en-pdf">¿Cómo genero la documentación en PDF?</h3>
+<pre class="codehilite"><code class="language-bash">cd raspberry-pi
+python3 convert_docs.py
+
+# La documentación se generará en:
+# docs/html/  - Versiones HTML
+# docs/pdf/   - Versiones PDF
+</code></pre>
+
+<hr />
+<h2 id="proximos-pasos">Próximos Pasos</h2>
+<p>Ahora que tienes el sistema funcionando:</p>
+<ol>
+<li><strong>Experimenta</strong> con diferentes parámetros</li>
+<li><strong>Combina</strong> patrones generados con tu código Tidal</li>
+<li><strong>Documenta</strong> tus patrones favoritos</li>
+<li><strong>Prepárate</strong> para MVP2 (interfaz mejorada) y MVP3 (modelo de IA)</li>
+</ol>
+<hr />
+<h2 id="soporte">Soporte</h2>
+<p>Para problemas, preguntas o sugerencias:</p>
+<ul>
+<li>Revisar la <a href="BITACORA.md">Bitácora</a> para detalles técnicos</li>
+<li>Consultar la <a href="ARQUITECTURA.md">Arquitectura</a> para entender el sistema</li>
+<li>Revisar el <a href="../README.md">README</a> para información general</li>
+</ul>
+<hr />
+<p><strong>¡Disfruta creando música con TidalAI Companion!</strong> 🎵🤖</p>
+    </div>
+</body>
+</html>

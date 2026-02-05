@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BITACORA</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            background: transparent;
+            color: #ecf0f1;
+            padding: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: #555;
+            font-style: italic;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="bitacora-del-proyecto-tidalai-companion">📓 Bitácora del Proyecto TidalAI Companion</h1>
+<blockquote>
+<p><strong>Proyecto</strong>: Sistema de generación de patrones TidalCycles con IA en Raspberry Pi 3B+</p>
+<p><strong>Fecha de inicio</strong>: 25 de enero de 2026</p>
+<p><strong>Objetivo</strong>: Crear un asistente de IA que genere patrones musicales para TidalCycles, ejecutándose en una Raspberry Pi y comunicándose con el PC principal vía OSC.</p>
+</blockquote>
+<hr />
+<h2 id="dia-1-25-de-enero-de-2026">📅 Día 1 - 25 de Enero de 2026</h2>
+<h3 id="sesion-1-conceptualizacion-y-planificacion">Sesión 1: Conceptualización y Planificación</h3>
+<h4 id="hora-0733">⏰ Hora: 07:33</h4>
+<h4 id="objetivo-de-la-sesion">🎯 Objetivo de la sesión</h4>
+<p>Definir la arquitectura del proyecto y crear la estructura base de documentación.</p>
+<h4 id="actividades-realizadas">📝 Actividades realizadas</h4>
+<p><strong>1. Definición del concepto</strong>
+- <strong>Problema identificado</strong>: Quiero usar mi Raspberry Pi 3B+ para algo relacionado con IA, programación y música electrónica
+- <strong>Solución propuesta</strong>: Sistema de generación de patrones TidalCycles con IA
+- <strong>Valor añadido</strong>: 
+  - Aprovecha la RPi sin sobrecargar el PC principal
+  - Permite colaboración humano-IA en tiempo real
+  - Control total sobre el comportamiento de la IA durante sesiones live</p>
+<p><strong>2. Arquitectura del sistema</strong></p>
+<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
+│                  PC PRINCIPAL                     │
+│                                                   │
+│  ┌─────────────┐         ┌──────────────┐       │
+│  │ Navegador   │◄────────┤ TidalCycles  │       │
+│  │ (Interfaz)  │  OSC    │ + SuperC     │       │
+│  └─────────────┘         └──────────────┘       │
+│         │                        ▲               │
+│         │ HTTP                   │ OSC           │
+│         ▼                        │               │
+└─────────┼────────────────────────┼───────────────┘
+          │                        │
+          │    Red Local (WiFi)    │
+          │                        │
+┌─────────┼────────────────────────┼───────────────┐
+│         ▼                        │               │
+│  ┌─────────────┐         ┌──────────────┐       │
+│  │  Flask Web  │────────►│  Generador   │       │
+│  │   Server    │         │  IA + OSC    │       │
+│  └─────────────┘         └──────────────┘       │
+│                                                   │
+│              RASPBERRY PI 3B+                     │
+└──────────────────────────────────────────────────┘
+</code></pre>
+
+<p><strong>3. Tecnologías seleccionadas</strong></p>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Tecnología</th>
+<th>Justificación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Raspberry Pi - Backend</strong></td>
+<td>Python 3</td>
+<td>Ecosistema ML maduro, fácil de usar</td>
+</tr>
+<tr>
+<td><strong>Raspberry Pi - Web Server</strong></td>
+<td>Flask</td>
+<td>Ligero, perfecto para RPi</td>
+</tr>
+<tr>
+<td><strong>Raspberry Pi - OSC</strong></td>
+<td>python-osc</td>
+<td>Librería estándar para OSC</td>
+</tr>
+<tr>
+<td><strong>Raspberry Pi - IA</strong></td>
+<td>TensorFlow Lite / Markov Chains</td>
+<td>Optimizado para ARM, baja latencia</td>
+</tr>
+<tr>
+<td><strong>PC - Audio Engine</strong></td>
+<td>TidalCycles + SuperCollider</td>
+<td>Ya instalado y familiar</td>
+</tr>
+<tr>
+<td><strong>PC - OSC Receiver</strong></td>
+<td>SuperCollider OSC</td>
+<td>Nativo en SuperCollider</td>
+</tr>
+<tr>
+<td><strong>Comunicación</strong></td>
+<td>OSC sobre UDP</td>
+<td>Baja latencia, bidireccional</td>
+</tr>
+<tr>
+<td><strong>Interfaz Web</strong></td>
+<td>HTML5 + Vanilla JS</td>
+<td>Sin dependencias pesadas</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4. Estructura del proyecto creada</strong></p>
+<pre class="codehilite"><code>tidalai-companion/
+├── raspberry-pi/          # Código para la Raspberry Pi
+│   ├── generator/         # Motor de generación de patrones
+│   ├── web/              # Servidor Flask e interfaz web
+│   └── requirements.txt   # Dependencias Python
+├── pc-side/              # Código para el PC
+│   ├── osc-receiver.scd  # Receptor OSC en SuperCollider
+│   └── tidal-bridge.hs   # Bridge Haskell (opcional)
+├── docs/                 # Documentación
+│   ├── BITACORA.md       # Este archivo
+│   ├── ARQUITECTURA.md   # Detalles técnicos
+│   └── GUIA_USO.md       # Manual de usuario
+└── examples/             # Ejemplos de patrones
+    └── corpus/           # Corpus de entrenamiento
+</code></pre>
+
+<p><strong>5. Modos de operación definidos</strong></p>
+<ul>
+<li><strong>Modo Sugerencias</strong>: La IA genera patrones pero no los ejecuta (control total del usuario)</li>
+<li><strong>Modo Autónomo</strong>: La IA genera y ejecuta patrones automáticamente (ajustable en tiempo real)</li>
+<li><strong>Modo Híbrido</strong>: La IA maneja algunos canales, el usuario otros (colaboración)</li>
+</ul>
+<h4 id="conceptos-aprendidos">🧠 Conceptos aprendidos</h4>
+<p><strong>OSC (Open Sound Control)</strong>
+- Protocolo de comunicación para aplicaciones musicales en tiempo real
+- Funciona sobre UDP/TCP (red local o internet)
+- Más flexible que MIDI: soporta strings, floats, arrays
+- TidalCycles ya lo usa internamente para comunicarse con SuperCollider
+- Perfecto para comunicación RPi ↔ PC</p>
+<p><strong>Ventajas de la arquitectura distribuida</strong>
+- La RPi se dedica exclusivamente a la generación (sin competir por recursos)
+- El PC mantiene baja latencia de audio
+- Escalable: se pueden añadir más RPis con diferentes modelos</p>
+<h4 id="decisiones-tecnicas">🔧 Decisiones técnicas</h4>
+<ol>
+<li><strong>¿Por qué Python en la RPi?</strong></li>
+<li>Ecosistema ML maduro (TensorFlow Lite, PyTorch Mobile)</li>
+<li>Librerías OSC bien mantenidas</li>
+<li>
+<p>Flask es ligero y suficiente para la interfaz web</p>
+</li>
+<li>
+<p><strong>¿Por qué no correr todo en el PC?</strong></p>
+</li>
+<li>Separación de responsabilidades</li>
+<li>La IA puede correr continuamente sin afectar el audio</li>
+<li>
+<p>Más fácil de debuggear y desarrollar</p>
+</li>
+<li>
+<p><strong>¿Modelo de IA inicial?</strong></p>
+</li>
+<li>Empezaremos con <strong>Markov Chains</strong> (simple, rápido, interpretable)</li>
+<li>Luego evolucionaremos a <strong>RNN/LSTM</strong> si es necesario</li>
+<li>TensorFlow Lite para la versión final optimizada</li>
+</ol>
+<h4 id="estado-actual-del-proyecto">📊 Estado actual del proyecto</h4>
+<ul>
+<li>✅ Concepto definido</li>
+<li>✅ Arquitectura diseñada</li>
+<li>✅ Tecnologías seleccionadas</li>
+<li>✅ Estructura de directorios creada</li>
+<li>✅ Bitácora iniciada</li>
+<li>⏳ Pendiente: Implementación del MVP</li>
+</ul>
+<h4 id="proximos-pasos">🎯 Próximos pasos</h4>
+<ol>
+<li>Crear el plan de implementación detallado</li>
+<li>Documentar la arquitectura completa</li>
+<li>Implementar generador básico de patrones (sin IA primero)</li>
+<li>Configurar comunicación OSC básica</li>
+<li>Probar el flujo completo con patrones hardcodeados</li>
+</ol>
+<h4 id="notas-y-reflexiones">💭 Notas y reflexiones</h4>
+<ul>
+<li>Es importante empezar simple: primero hacer funcionar la comunicación OSC con patrones fijos</li>
+<li>El modelo de IA puede ser la última pieza; lo importante es la infraestructura</li>
+<li>La interfaz web debe ser intuitiva para controlar en vivo sin distraer de la música</li>
+<li>Documentar todo el proceso ayudará a otros a replicar el proyecto</li>
+</ul>
+<h4 id="riesgos-identificados">⚠️ Riesgos identificados</h4>
+<ol>
+<li><strong>Latencia de red</strong>: OSC sobre WiFi puede tener jitter → Solución: usar Ethernet o medir/compensar latencia</li>
+<li><strong>Limitaciones de la RPi 3B+</strong>: Solo 1GB RAM → Solución: modelos pequeños y optimizados</li>
+<li><strong>Sincronización</strong>: Mantener el timing musical preciso → Solución: timestamps OSC y buffering</li>
+</ol>
+<hr />
+<h3 id="sesion-2-implementacion-del-mvp1">Sesión 2: Implementación del MVP1</h3>
+<h4 id="hora-0736-0745">⏰ Hora: 07:36 - 07:45</h4>
+<h4 id="objetivo-de-la-sesion_1">🎯 Objetivo de la sesión</h4>
+<p>Implementar todos los componentes del MVP1: generador de patrones, cliente OSC, servidor Flask, receptor SuperCollider, e interfaz web.</p>
+<h4 id="actividades-realizadas_1">📝 Actividades realizadas</h4>
+<p><strong>1. Generador de Patrones (<code>pattern_generator.py</code>)</strong></p>
+<p>Implementado generador completo con:
+- Soporte para 5 tipos de patrones: drums, bass, melody, percussion, fx
+- Parámetros ajustables: densidad (0.0-1.0), complejidad (0.0-1.0), tempo (BPM)
+- Estilos musicales: techno, ambient, breakbeat, house, experimental
+- Biblioteca de samples organizados por categoría
+- Generación basada en euclidean rhythms para patrones complejos
+- Validación de sintaxis TidalCycles
+- Efectos dinámicos según complejidad (speed, room, gain, cutoff, lpf)</p>
+<p><strong>Ejemplo de patrón generado</strong>:</p>
+<pre class="codehilite"><code class="language-haskell">-- Drums techno (densidad: 0.7, complejidad: 0.6)
+sound &quot;bd*6 sn*2 hh*12&quot;
+  # speed 1.15
+  # room 0.21
+</code></pre>
+
+<p><strong>2. Cliente OSC (<code>osc_client.py</code>)</strong></p>
+<p>Implementado cliente para comunicación con TidalCycles:
+- Envío de patrones completos vía <code>/tidal/pattern</code>
+- Envío de parámetros individuales vía <code>/tidal/param</code>
+- Comandos de stop para canales específicos o todos
+- Gestión de conexión con reconexión automática
+- Logging detallado de actividad
+- Métodos de testing incluidos</p>
+<p><strong>Rutas OSC definidas</strong>:
+- <code>/tidal/pattern &lt;channel&gt; &lt;pattern&gt;</code> - Enviar patrón completo
+- <code>/tidal/param &lt;channel&gt; &lt;param&gt; &lt;value&gt;</code> - Enviar parámetro
+- <code>/tidal/stop &lt;channel&gt;</code> - Detener canal
+- <code>/tidal/ping</code> - Test de conexión</p>
+<p><strong>3. Servidor Flask (<code>app.py</code>)</strong></p>
+<p>Creado servidor web con API REST completa:</p>
+<p><strong>Endpoints implementados</strong>:
+- <code>GET /</code> - Interfaz web
+- <code>POST /api/generate</code> - Generar patrón con parámetros
+- <code>POST /api/send</code> - Enviar patrón a Tidal vía OSC
+- <code>GET/POST /api/config</code> - Obtener/actualizar configuración
+- <code>GET/POST /api/mode</code> - Obtener/cambiar modo de operación
+- <code>GET /api/status</code> - Estado completo del sistema
+- <code>POST /api/stop</code> - Detener canales</p>
+<p><strong>Gestión de estado</strong>:
+- Configuración global (densidad, complejidad, tempo, estilo)
+- Modo de operación (suggestions, autonomous, hybrid)
+- Log de actividad con timestamps
+- Último patrón generado</p>
+<p><strong>4. Receptor OSC SuperCollider (<code>osc_receiver.scd</code>)</strong></p>
+<p>Implementado receptor que escucha en puerto 6010:
+- Handler para <code>/tidal/pattern</code> - Recibe y muestra patrones
+- Handler para <code>/tidal/param</code> - Recibe parámetros
+- Handler para <code>/tidal/stop</code> - Comandos de stop
+- Handler para <code>/tidal/ping</code> - Test de conexión
+- Función helper <code>~writeTidalPattern</code> para escribir a archivo temporal</p>
+<p><strong>Nota importante</strong>: En MVP1, la ejecución automática de patrones en Tidal requiere copiar manualmente del post window. Opciones futuras incluyen bridge Haskell o archivos temporales.</p>
+<p><strong>5. Interfaz Web</strong></p>
+<p><strong>HTML (<code>index.html</code>)</strong>:
+- Selector de modo de operación (3 modos)
+- Controles de parámetros (sliders para densidad, complejidad, tempo)
+- Selector de estilo musical
+- Botones de tipo de patrón (drums, bass, melody, percussion, fx)
+- Área de visualización de patrón generado
+- Botones de acción (generar, enviar, stop, copiar)
+- Log de actividad en tiempo real
+- Indicador de estado de conexión OSC</p>
+<p><strong>CSS (<code>style.css</code>)</strong>:
+- Diseño moderno con glassmorphism
+- Gradientes vibrantes (purple-blue)
+- Dark theme optimizado para producción musical
+- Animaciones suaves en hover y transiciones
+- Sliders personalizados con efectos glow
+- Responsive design (mobile-friendly)
+- Scrollbar personalizado</p>
+<p><strong>JavaScript (<code>app.js</code>)</strong>:
+- Gestión de estado de la aplicación
+- Event listeners para todos los controles
+- Comunicación con API Flask vía fetch
+- Actualización de estado cada 5 segundos
+- Log de actividad con timestamps
+- Funcionalidad de copiar al portapapeles
+- Feedback visual en todas las acciones</p>
+<p><strong>6. Configuración (<code>config.json</code>)</strong></p>
+<p>Archivo de configuración con:
+- IP y puerto de Raspberry Pi (Flask)
+- IP y puerto del PC (OSC)
+- Parámetros por defecto del generador</p>
+<p><strong>Nota</strong>: Los usuarios deben actualizar las IPs según su red local.</p>
+<p><strong>7. Script de Conversión de Documentación (<code>convert_docs.py</code>)</strong></p>
+<p>Herramienta para generar documentación en múltiples formatos:
+- Conversión Markdown → HTML con template estilizado
+- Conversión HTML → PDF usando WeasyPrint
+- Procesamiento batch de todo el directorio <code>docs/</code>
+- Salida organizada en subdirectorios <code>html/</code> y <code>pdf/</code></p>
+<p><strong>Uso</strong>:</p>
+<pre class="codehilite"><code class="language-bash"># Convertir toda la documentación
+python convert_docs.py
+
+# Convertir archivo específico
+python convert_docs.py --file BITACORA.md --format both
+</code></pre>
+
+<h4 id="conceptos-aprendidos_1">🧠 Conceptos aprendidos</h4>
+<p><strong>Arquitectura Cliente-Servidor para Audio</strong>
+- Separación de responsabilidades: generación (RPi) vs ejecución (PC)
+- Comunicación asíncrona vía OSC para baja latencia
+- Estado compartido entre frontend y backend</p>
+<p><strong>Generación Procedural de Música</strong>
+- Euclidean rhythms: <code>sound "bd(5,8)"</code> distribuye 5 kicks en 8 pasos
+- Parámetros continuos (densidad, complejidad) → patrones discretos
+- Validación de sintaxis para evitar errores en Tidal</p>
+<p><strong>Diseño de Interfaz para Live Coding</strong>
+- Controles grandes y claros (usables durante performance)
+- Feedback visual inmediato
+- Dark theme para reducir fatiga visual
+- Log de actividad para debugging en vivo</p>
+<h4 id="decisiones-tecnicas_1">🔧 Decisiones técnicas</h4>
+<ol>
+<li><strong>¿Por qué Euclidean Rhythms?</strong></li>
+<li>Generan patrones musicalmente interesantes</li>
+<li>Fáciles de parametrizar (hits, steps)</li>
+<li>
+<p>Muy usados en música electrónica</p>
+</li>
+<li>
+<p><strong>¿Por qué no ejecutar patrones automáticamente en MVP1?</strong></p>
+</li>
+<li>Integración Haskell-SuperCollider es compleja</li>
+<li>MVP1 se enfoca en probar la infraestructura</li>
+<li>Copiar manualmente es aceptable para testing</li>
+<li>
+<p>Versión futura tendrá bridge automático</p>
+</li>
+<li>
+<p><strong>¿Por qué glassmorphism en la interfaz?</strong></p>
+</li>
+<li>Estética moderna y premium</li>
+<li>Buena legibilidad en dark theme</li>
+<li>Diferenciación visual de secciones</li>
+</ol>
+<h4 id="estado-actual-del-proyecto_1">📊 Estado actual del proyecto</h4>
+<ul>
+<li>✅ Generador de patrones funcional</li>
+<li>✅ Cliente OSC implementado</li>
+<li>✅ Servidor Flask con API completa</li>
+<li>✅ Receptor SuperCollider configurado</li>
+<li>✅ Interfaz web moderna y funcional</li>
+<li>✅ Sistema de configuración</li>
+<li>✅ Herramienta de conversión de docs</li>
+<li>⏳ Pendiente: Testing end-to-end</li>
+<li>⏳ Pendiente: Guía de uso completa</li>
+<li>⏳ Pendiente: Generación de docs en PDF/HTML</li>
+</ul>
+<h4 id="proximos-pasos_1">🎯 Próximos pasos</h4>
+<ol>
+<li>Crear guía de uso detallada (GUIA_USO.md)</li>
+<li>Generar documentación en PDF y HTML</li>
+<li>Testing del flujo completo:</li>
+<li>Generar patrón en interfaz web</li>
+<li>Enviar vía OSC</li>
+<li>Recibir en SuperCollider</li>
+<li>Copiar y ejecutar en Tidal</li>
+<li>Actualizar bitácora con resultados de testing</li>
+<li>Preparar para MVP2 (modelo de IA)</li>
+</ol>
+<h4 id="notas-y-reflexiones_1">💭 Notas y reflexiones</h4>
+<ul>
+<li>El proyecto está tomando forma muy bien</li>
+<li>La separación de componentes facilita el desarrollo y testing</li>
+<li>La interfaz web es intuitiva y visualmente atractiva</li>
+<li>El sistema de logging ayudará mucho en debugging</li>
+<li>La documentación en múltiples formatos es un plus importante</li>
+</ul>
+<h4 id="riesgos-y-limitaciones-identificadas">⚠️ Riesgos y limitaciones identificadas</h4>
+<ol>
+<li><strong>Ejecución manual en MVP1</strong>: Requiere copiar patrones del post window</li>
+<li>Mitigación: Documentar claramente el proceso</li>
+<li>
+<p>Solución futura: Bridge Haskell automático</p>
+</li>
+<li>
+<p><strong>Configuración de red</strong>: IPs hardcodeadas en config.json</p>
+</li>
+<li>Mitigación: Documentación clara de cómo actualizar</li>
+<li>
+<p>Solución futura: Auto-discovery en red local</p>
+</li>
+<li>
+<p><strong>Sin persistencia</strong>: Estado se pierde al reiniciar servidor</p>
+</li>
+<li>Mitigación: No crítico para MVP1</li>
+<li>Solución futura: Base de datos o archivos JSON</li>
+</ol>
+<h4 id="archivos-creados-en-esta-sesion">📁 Archivos creados en esta sesión</h4>
+<pre class="codehilite"><code>raspberry-pi/
+├── generator/
+│   ├── pattern_generator.py    (270 líneas)
+│   └── osc_client.py           (180 líneas)
+├── web/
+│   ├── app.py                  (280 líneas)
+│   ├── templates/
+│   │   └── index.html          (120 líneas)
+│   └── static/
+│       ├── style.css           (380 líneas)
+│       └── app.js              (250 líneas)
+├── requirements.txt
+├── config.json
+└── convert_docs.py             (150 líneas)
+
+pc-side/
+└── osc_receiver.scd            (100 líneas)
+
+Total: ~1,730 líneas de código
+</code></pre>
+
+<hr />
+<h2 id="recursos-y-referencias">📚 Recursos y referencias</h2>
+<h3 id="documentacion-tecnica">Documentación técnica</h3>
+<ul>
+<li><a href="http://opensoundcontrol.org/spec-1_0">OSC Specification</a></li>
+<li><a href="https://tidalcycles.org/docs/">TidalCycles OSC Documentation</a></li>
+<li><a href="https://doc.sccode.org/Guides/OSC_communication.html">SuperCollider OSC Guide</a></li>
+<li><a href="https://python-osc.readthedocs.io/">python-osc Documentation</a></li>
+</ul>
+<h3 id="inspiracion">Inspiración</h3>
+<ul>
+<li><a href="https://magenta.tensorflow.org/">Magenta Project</a> - Google's music generation with ML</li>
+<li><a href="https://100r.co/site/orca.html">ORCA</a> - Esoteric programming language for music</li>
+<li><a href="https://sonic-pi.net/">Sonic Pi</a> - Live coding synth (similar a TidalCycles)</li>
+</ul>
+<h3 id="tutoriales-relevantes">Tutoriales relevantes</h3>
+<ul>
+<li>TensorFlow Lite en Raspberry Pi</li>
+<li>Flask para aplicaciones en tiempo real</li>
+<li>OSC en Python y SuperCollider</li>
+</ul>
+<hr />
+<h2 id="historial-de-cambios">🔄 Historial de cambios</h2>
+<table>
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Versión</th>
+<th>Cambios</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-01-25</td>
+<td>0.1</td>
+<td>Bitácora iniciada, estructura del proyecto creada</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Nota</strong>: Esta bitácora se actualizará después de cada sesión de trabajo significativa. El objetivo es tener un registro completo del proceso de desarrollo para aprendizaje y referencia futura.</p>
+    </div>
+</body>
+</html>
