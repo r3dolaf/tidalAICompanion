@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosario de Música Electrónica - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Glosario de Música Electrónica</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>GLOSARIO COMPLETO DE MÚSICA ELECTRÓNICA</h1>
+
+<h2>📚 Terminología Esencial para Producción Musical</h2>
+
+<p>
+---
+</p>
+
+<h2>🔊 PARÁMETROS DE VOLUMEN Y DINÁMICA</h2>
+
+<h3><strong>Gain (Ganancia)</strong></h3>
+<strong>Qué es:</strong> El nivel de volumen de una señal de audio.
+
+<strong>Explicación simple:</strong> Es como el volumen de tu televisión. Más gain = más fuerte.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd*4" # gain 1.0    -- Volumen normal
+<p>
+d1 $ s "bd*4" # gain 1.5    -- 50% más fuerte
+d1 $ s "bd*4" # gain 0.5    -- 50% más suave</code></pre>
+</p>
+
+<strong>Rango típico:</strong> 0.0 (silencio) a 2.0 (muy fuerte)
+
+<p>
+---
+</p>
+
+<h3><strong>Velocity (Velocidad MIDI)</strong></h3>
+<strong>Qué es:</strong> La fuerza con la que se "golpea" una nota (concepto de MIDI).
+
+<strong>Explicación simple:</strong> Como tocar un piano suave vs. fuerte. Afecta el volumen y el timbre.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n "60 64 67" # s "superpiano" # velocity 0.3  -- Suave
+<p>
+d1 $ n "60 64 67" # s "superpiano" # velocity 0.9  -- Fuerte</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 (muy suave) a 1.0 (muy fuerte)
+
+<p>
+---
+</p>
+
+<h3><strong>Amplitude (Amplitud)</strong></h3>
+<strong>Qué es:</strong> La altura de la onda de sonido (similar a gain).
+
+<strong>Explicación simple:</strong> Qué tan "grande" es la onda sonora. Más amplitud = más volumen.
+
+<p>
+---
+</p>
+
+<h2>🎛️ ENVOLVENTE (ADSR)</h2>
+
+<p>
+La envolvente controla cómo evoluciona el volumen de un sonido en el tiempo.
+</p>
+
+<h3><strong>Attack (Ataque)</strong></h3>
+<strong>Qué es:</strong> Tiempo que tarda el sonido en alcanzar su volumen máximo.
+
+<strong>Explicación simple:</strong>
+<ul><li><strong>Attack corto (0.01s):</strong> Sonido inmediato (percusión, piano)</li>
+<li><strong>Attack largo (2s):</strong> Sonido que crece lentamente (pads, cuerdas)</li>
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n "60" # s "superpiano" # attack 0.01  -- Ataque rápido (piano)
+<p>
+d1 $ n "60" # s "supersaw" # attack 2       -- Ataque lento (pad)</code></pre>
+</p>
+
+<strong>Visualización:</strong>
+<pre><code>Attack corto:  |▲ (inmediato)
+<p>
+Attack largo:  |  /▲ (gradual)</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Decay (Decaimiento)</strong></h3>
+<strong>Qué es:</strong> Tiempo que tarda en bajar del pico al nivel de sustain.
+
+<strong>Explicación simple:</strong> Después del pico inicial, cuánto tarda en estabilizarse.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n "60" # s "superpiano" # decay 0.2</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Sustain (Sostenimiento)</strong></h3>
+<strong>Qué es:</strong> Nivel de volumen que se mantiene mientras la nota está activa.
+
+<strong>Explicación simple:</strong> El volumen constante después del decay, mientras mantienes la tecla presionada.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd" # sustain 1     -- Duración de 1 ciclo
+<p>
+d1 $ s "bd" # sustain 0.1   -- Muy corto</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Release (Liberación)</strong></h3>
+<strong>Qué es:</strong> Tiempo que tarda el sonido en desaparecer después de soltar la nota.
+
+<strong>Explicación simple:</strong>
+<li><strong>Release corto (0.1s):</strong> Sonido que se corta rápido (staccato)</li>
+<li><strong>Release largo (4s):</strong> Sonido que se desvanece lentamente (legato)</li>
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n "60" # s "superpiano" # release 0.1  -- Corto (staccato)
+<p>
+d1 $ n "60" # s "superpiano" # release 4    -- Largo (legato)</code></pre>
+</p>
+
+<strong>Visualización ADSR completa:</strong>
+<pre><code>    A    D     S         R
+<p>
+    |   /\    ___       \
+    |  /  \  /   \___    \___
+    | /    \/             
+    |/                    
+    ▲      ▲         ▲        ▲
+  Inicio  Pico   Sostenido  Fin</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h2>🎚️ FILTROS</h2>
+
+<h3><strong>LPF (Low-Pass Filter / Filtro Paso Bajo)</strong></h3>
+<strong>Qué es:</strong> Deja pasar las frecuencias bajas, atenúa las altas.
+
+<strong>Explicación simple:</strong> Hace el sonido más "oscuro" o "apagado", como tapar los oídos.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "supersaw" # lpf 500    -- Muy oscuro
+<p>
+d1 $ s "supersaw" # lpf 2000   -- Moderado
+d1 $ s "supersaw" # lpf 8000   -- Brillante</code></pre>
+</p>
+
+<strong>Uso común:</strong> Bajos, pads oscuros, efectos de "filtro que se abre"
+
+<p>
+---
+</p>
+
+<h3><strong>HPF (High-Pass Filter / Filtro Paso Alto)</strong></h3>
+<strong>Qué es:</strong> Deja pasar las frecuencias altas, atenúa las bajas.
+
+<strong>Explicación simple:</strong> Elimina los graves, deja solo los agudos. Como escuchar desde otra habitación.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "hh*16" # hpf 8000      -- Solo brillos
+<p>
+d1 $ s "bd*4" # hpf 200        -- Elimina sub-graves</code></pre>
+</p>
+
+<strong>Uso común:</strong> Hi-hats, eliminar rumble, efectos de "teléfono"
+
+<p>
+---
+</p>
+
+<h3><strong>BPF (Band-Pass Filter / Filtro Paso Banda)</strong></h3>
+<strong>Qué es:</strong> Solo deja pasar un rango específico de frecuencias.
+
+<strong>Explicación simple:</strong> Como un "foco" que ilumina solo una parte del espectro.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "noise" # bpf 1000      -- Solo alrededor de 1000Hz</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Resonance (Resonancia / Q)</strong></h3>
+<strong>Qué es:</strong> Énfasis en la frecuencia de corte del filtro.
+
+<strong>Explicación simple:</strong> Hace que el filtro "suene" en la frecuencia de corte. Crea el sonido "ácido" clásico.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "supersaw" # lpf 800 # resonance 0.1   -- Suave
+<p>
+d1 $ s "supersaw" # lpf 800 # resonance 0.8   -- Ácido/resonante</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 (sin resonancia) a 1.0 (muy resonante)
+
+<p>
+---
+</p>
+
+<h3><strong>Cutoff (Frecuencia de Corte)</strong></h3>
+<strong>Qué es:</strong> La frecuencia donde el filtro empieza a actuar (alias de lpf).
+
+<strong>Explicación simple:</strong> El "punto de corte" del filtro.
+
+<p>
+---
+</p>
+
+<h2>🔄 EFECTOS DE TIEMPO</h2>
+
+<h3><strong>Delay (Eco/Retardo)</strong></h3>
+<strong>Qué es:</strong> Repetición del sonido después de un tiempo.
+
+<strong>Explicación simple:</strong> Como gritar en una montaña y escuchar el eco.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "cp" # delay 0.5              -- 50% de mezcla de delay
+<p>
+d1 $ s "cp" # delay 0.5 
+           # delaytime 0.25          -- Eco cada 1/4 ciclo
+           # delayfeedback 0.6       -- Repeticiones moderadas</code></pre>
+</p>
+
+<strong>Parámetros:</strong>
+<li><code>delay</code>: Cantidad de mezcla (0-1)</li>
+<li><code>delaytime</code>: Tiempo entre ecos</li>
+<li><code>delayfeedback</code>: Cuánto se repite (0-1)</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Reverb (Reverberación)</strong></h3>
+<strong>Qué es:</strong> Simulación del sonido rebotando en un espacio.
+
+<strong>Explicación simple:</strong> Como cantar en una catedral vs. en tu habitación.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd cp" # room 0.3    -- Sala pequeña
+<p>
+d1 $ s "bd cp" # room 0.7    -- Sala grande
+d1 $ s "bd cp" # room 0.95   -- Catedral</code></pre>
+</p>
+
+<strong>Parámetros:</strong>
+<li><code>room</code>: Cantidad de reverb (0-1)</li>
+<li><code>size</code>: Tamaño de la sala (0-1)</li>
+
+<p>
+---
+</p>
+
+<h2>🎵 EFECTOS DE MODULACIÓN</h2>
+
+<h3><strong>LFO (Low Frequency Oscillator / Oscilador de Baja Frecuencia)</strong></h3>
+<strong>Qué es:</strong> Una onda que modula otros parámetros automáticamente.
+
+<strong>Explicación simple:</strong> Como un "robot" que mueve un control automáticamente.
+
+<strong>Tipos de ondas:</strong>
+<li><strong>Sine (Seno):</strong> Suave, circular</li>
+<li><strong>Saw (Sierra):</strong> Rampa ascendente</li>
+<li><strong>Square (Cuadrada):</strong> On/off abrupto</li>
+<li><strong>Triangle (Triangular):</strong> Sube y baja lineal</li>
+
+<strong>En TidalCycles:</strong>
+<pre><code>-- LFO modulando el filtro
+<p>
+d1 $ s "supersaw" # lpf (range 200 4000 (slow 4 sine))
+</p>
+
+<p>
+-- LFO modulando el volumen
+d1 $ s "bd*4" # gain (range 0.5 1.2 (slow 2 sine))
+</p>
+
+<p>
+-- LFO modulando el paneo
+d1 $ s "hh*8" # pan (slow 2 sine)</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Chorus</strong></h3>
+<strong>Qué es:</strong> Duplica la señal con ligeras variaciones de pitch y tiempo.
+
+<strong>Explicación simple:</strong> Como si varias personas cantaran la misma nota (ligeramente desafinadas).
+
+<strong>Efecto:</strong> Sonido más "gordo" y espacioso.
+
+<p>
+---
+</p>
+
+<h3><strong>Phaser</strong></h3>
+<strong>Qué es:</strong> Efecto que crea "barridos" en el espectro de frecuencias.
+
+<strong>Explicación simple:</strong> Sonido "espacial" o "de jet".
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd*4" # phaser 0.5</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Flanger</strong></h3>
+<strong>Qué es:</strong> Similar al phaser pero más extremo.
+
+<strong>Explicación simple:</strong> Efecto de "jet plane" o "whoosh".
+
+<p>
+---
+</p>
+
+<h2>🎚️ DISTORSIÓN Y SATURACIÓN</h2>
+
+<h3><strong>Distortion (Distorsión)</strong></h3>
+<strong>Qué es:</strong> Recorte de la onda de audio que añade armónicos.
+
+<strong>Explicación simple:</strong> Como subir el volumen de una guitarra eléctrica hasta que "cruje".
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd*4" # shape 0.5      -- Saturación moderada
+<p>
+d1 $ s "bd*4" # shape 0.9      -- Distorsión fuerte
+d1 $ s "bd*4" # distort 0.6    -- Distorsión alternativa</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Saturation (Saturación)</strong></h3>
+<strong>Qué es:</strong> Distorsión suave que añade calidez.
+
+<strong>Explicación simple:</strong> Como la calidez de equipos analógicos vintage.
+
+<p>
+---
+</p>
+
+<h3><strong>Bit Crushing</strong></h3>
+<strong>Qué es:</strong> Reducción de la resolución digital del audio.
+
+<strong>Explicación simple:</strong> Sonido "lo-fi" o "retro" de 8-bit.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd*4" # crush 4        -- 4 bits (muy lo-fi)
+<p>
+d1 $ s "bd*4" # crush 16       -- 16 bits (casi limpio)</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h2>🎛️ TÉCNICAS AVANZADAS</h2>
+
+<h3><strong>Sidechain / Ducking</strong></h3>
+<strong>Qué es:</strong> Bajar automáticamente el volumen de un sonido cuando otro suena.
+
+<strong>Explicación simple:</strong> El bajo se "agacha" cuando suena el kick (típico de EDM).
+
+<strong>Cómo funciona:</strong>
+<p>
+1. El <strong>kick</strong> es la señal de control (trigger)
+2. El <strong>bajo</strong> se atenúa cuando el kick suena
+3. Crea el efecto de "bombeo" característico
+</p>
+
+<strong>En TidalCycles (usando 'cut'):</strong>
+<pre><code>-- Kick y bajo comparten el mismo grupo 'cut'
+<p>
+d1 $ s "bd*4" # cut 1          -- Kick
+d2 $ n "0 ~ 0 ~" # s "bass" # cut 1  -- Bajo (se corta cuando suena kick)</code></pre>
+</p>
+
+<strong>Visualización:</strong>
+<pre><code>Kick:  |█  |█  |█  |█
+<p>
+Bajo:  |███|  █|███|  █
+       ▲   ▲   ▲   ▲
+       Duck Duck Duck</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Compression (Compresión)</strong></h3>
+<strong>Qué es:</strong> Reduce la diferencia entre los sonidos fuertes y suaves.
+
+<strong>Explicación simple:</strong> Hace que todo suene más "parejo" y "pegado".
+
+<strong>Parámetros:</strong>
+<li><strong>Threshold:</strong> A partir de qué volumen empieza a comprimir</li>
+<li><strong>Ratio:</strong> Cuánto comprime (4:1, 8:1, etc.)</li>
+<li><strong>Attack:</strong> Qué tan rápido actúa</li>
+<li><strong>Release:</strong> Qué tan rápido suelta</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Limiting (Limitación)</strong></h3>
+<strong>Qué es:</strong> Compresión extrema que evita que el audio pase de cierto nivel.
+
+<strong>Explicación simple:</strong> Un "techo" que el audio no puede superar.
+
+<p>
+---
+</p>
+
+<h3><strong>Panning (Paneo)</strong></h3>
+<strong>Qué es:</strong> Posición del sonido en el campo estéreo (izquierda-derecha).
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd*4" # pan 0      -- Izquierda total
+<p>
+d1 $ s "bd*4" # pan 0.5    -- Centro
+d1 $ s "bd*4" # pan 1      -- Derecha total
+d1 $ s "bd*4" # pan (slow 2 sine)  -- Paneo automático</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Stereo Width (Amplitud Estéreo)</strong></h3>
+<strong>Qué es:</strong> Qué tan "ancho" suena algo en estéreo.
+
+<strong>Explicación simple:</strong>
+<li><strong>Mono:</strong> Todo en el centro</li>
+<li><strong>Estéreo estrecho:</strong> Cerca del centro</li>
+<li><strong>Estéreo ancho:</strong> Muy separado L/R</li>
+
+<p>
+---
+</p>
+
+<h2>🎼 TÉRMINOS MUSICALES</h2>
+
+<h3><strong>BPM (Beats Per Minute / Pulsaciones Por Minuto)</strong></h3>
+<strong>Qué es:</strong> Velocidad de la música.
+
+<strong>Ejemplos:</strong>
+<li>60 BPM = 1 beat por segundo (muy lento)</li>
+<li>120 BPM = 2 beats por segundo (house, techno)</li>
+<li>174 BPM = Drum & Bass</li>
+
+<strong>En TidalCycles:</strong>
+<pre><code>setcps 0.5      -- 120 BPM (0.5 * 60 * 2)
+<p>
+setcps (130/60/2)  -- 130 BPM exacto</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>CPS (Cycles Per Second / Ciclos Por Segundo)</strong></h3>
+<strong>Qué es:</strong> Unidad de tempo en TidalCycles.
+
+<strong>Relación con BPM:</strong>
+<pre><code>CPS = BPM / 60 / 2</code></pre>
+
+<strong>Ejemplos:</strong>
+<li>120 BPM = 0.5 CPS</li>
+<li>140 BPM = 0.583 CPS</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Legato vs. Staccato</strong></h3>
+<strong>Legato:</strong> Notas conectadas, sin silencios entre ellas.
+<strong>Staccato:</strong> Notas cortas y separadas.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n "60 64 67" # s "superpiano" # legato 2    -- Legato (notas largas)
+<p>
+d1 $ n "60 64 67" # s "superpiano" # legato 0.5  -- Staccato (notas cortas)</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Octave (Octava)</strong></h3>
+<strong>Qué es:</strong> Duplicar o dividir la frecuencia de una nota.
+
+<strong>Explicación simple:</strong> La misma nota pero más aguda o grave.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n "60" # s "superpiano"           -- Do central
+<p>
+d1 $ n "60" # s "superpiano" # up 12   -- Una octava arriba
+d1 $ n "60" # s "superpiano" # up "-12"  -- Una octava abajo</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Semitone (Semitono)</strong></h3>
+<strong>Qué es:</strong> La distancia más pequeña entre dos notas en música occidental.
+
+<strong>Explicación simple:</strong> Una tecla del piano (blanca o negra).
+
+<p>
+---
+</p>
+
+<h3><strong>Scale (Escala)</strong></h3>
+<strong>Qué es:</strong> Conjunto de notas que suenan bien juntas.
+
+<strong>Escalas comunes:</strong>
+<li><strong>Major (Mayor):</strong> Alegre, brillante</li>
+<li><strong>Minor (Menor):</strong> Triste, oscura</li>
+<li><strong>Pentatonic (Pentatónica):</strong> 5 notas, siempre suena bien</li>
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n (scale "minor" "0 2 4 7") # s "superpiano"
+<p>
+d1 $ n (scale "major" "0 2 4 7") # s "superpiano"</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h2>🎹 SÍNTESIS</h2>
+
+<h3><strong>Oscillator (Oscilador)</strong></h3>
+<strong>Qué es:</strong> Generador de ondas de audio básicas.
+
+<strong>Tipos:</strong>
+<li><strong>Sine (Seno):</strong> Pura, suave (flauta)</li>
+<li><strong>Square (Cuadrada):</strong> Hueca (clarinete)</li>
+<li><strong>Saw (Sierra):</strong> Brillante, rica (cuerdas)</li>
+<li><strong>Triangle (Triangular):</strong> Suave pero con cuerpo</li>
+
+<p>
+---
+</p>
+
+<h3><strong>FM Synthesis (Síntesis FM)</strong></h3>
+<strong>Qué es:</strong> Un oscilador modula la frecuencia de otro.
+
+<strong>Explicación simple:</strong> Sonidos complejos y metálicos (campanas, bajos DX7).
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ n "60" # s "superfm" # voice 2 # lfo 8</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Subtractive Synthesis (Síntesis Sustractiva)</strong></h3>
+<strong>Qué es:</strong> Empiezas con una onda rica y la filtras.
+
+<strong>Explicación simple:</strong> Como esculpir, quitas lo que no quieres.
+
+<p>
+---
+</p>
+
+<h3><strong>Granular Synthesis (Síntesis Granular)</strong></h3>
+<strong>Qué es:</strong> Divide el audio en "granos" microscópicos y los reorganiza.
+
+<strong>Explicación simple:</strong> Como cortar una foto en mil pedacitos y reorganizarlos.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ striate 128 $ s "bev"  -- 128 granos</code></pre>
+
+<p>
+---
+</p>
+
+<h2>🎚️ MEZCLA Y MASTERING</h2>
+
+<h3><strong>EQ (Equalización)</strong></h3>
+<strong>Qué es:</strong> Ajustar el volumen de diferentes rangos de frecuencias.
+
+<strong>Rangos:</strong>
+<li><strong>Sub (20-60 Hz):</strong> Graves profundos</li>
+<li><strong>Bass (60-250 Hz):</strong> Bajos</li>
+<li><strong>Low Mids (250-500 Hz):</strong> Cuerpo</li>
+<li><strong>Mids (500-2000 Hz):</strong> Presencia</li>
+<li><strong>High Mids (2-6 kHz):</strong> Claridad</li>
+<li><strong>Highs (6-20 kHz):</strong> Brillo</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Headroom</strong></h3>
+<strong>Qué es:</strong> Espacio entre el nivel actual y el máximo (0 dB).
+
+<strong>Explicación simple:</strong> Cuánto margen tienes antes de que el audio "clipee" (distorsione).
+
+<p>
+---
+</p>
+
+<h3><strong>Clipping</strong></h3>
+<strong>Qué es:</strong> Cuando el audio supera el máximo nivel y se distorsiona.
+
+<strong>Explicación simple:</strong> Como gritar tan fuerte que el micrófono no puede capturarlo.
+
+<p>
+---
+</p>
+
+<h3><strong>RMS (Root Mean Square)</strong></h3>
+<strong>Qué es:</strong> Medida del volumen promedio.
+
+<strong>Explicación simple:</strong> El volumen "percibido" (no solo los picos).
+
+<p>
+---
+</p>
+
+<h3><strong>Peak</strong></h3>
+<strong>Qué es:</strong> El punto más alto de volumen.
+
+<strong>Explicación simple:</strong> El momento más fuerte.
+
+<p>
+---
+</p>
+
+<h2>🎵 TÉRMINOS ADICIONALES DE PRODUCCIÓN</h2>
+
+<h3><strong>Transient (Transitorio)</strong></h3>
+<strong>Qué es:</strong> El pico inicial de un sonido.
+
+<strong>Explicación simple:</strong> El "golpe" o "ataque" inicial de un sonido (ej: el click de un kick).
+
+<strong>Uso:</strong> Procesadores de transientes pueden hacer sonidos más "punchy" o más suaves.
+
+<p>
+---
+</p>
+
+<h3><strong>Punch</strong></h3>
+<strong>Qué es:</strong> Impacto y presencia de un sonido.
+
+<strong>Explicación simple:</strong> Qué tan "pegado" o "en tu cara" suena algo.
+
+<strong>Cómo lograrlo:</strong>
+<li>Transientes fuertes</li>
+<li>Compresión adecuada</li>
+<li>EQ en medios</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Warmth (Calidez)</strong></h3>
+<strong>Qué es:</strong> Cualidad tonal que suena "cálida" o "vintage".
+
+<strong>Explicación simple:</strong> Como el sonido de equipos analógicos antiguos.
+
+<strong>Cómo lograrlo:</strong>
+<li>Saturación suave</li>
+<li>Énfasis en graves-medios (200-500 Hz)</li>
+<li>Compresión suave</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Presence (Presencia)</strong></h3>
+<strong>Qué es:</strong> Claridad y definición en el rango de 2-6 kHz.
+
+<strong>Explicación simple:</strong> Qué tan "cerca" o "en frente" suena algo.
+
+<p>
+---
+</p>
+
+<h3><strong>Air (Aire)</strong></h3>
+<strong>Qué es:</strong> Brillo y apertura en frecuencias muy altas (10-20 kHz).
+
+<strong>Explicación simple:</strong> Sensación de "espacio" y "respiración" en el sonido.
+
+<p>
+---
+</p>
+
+<h3><strong>Mud (Barro)</strong></h3>
+<strong>Qué es:</strong> Acumulación excesiva de frecuencias bajas-medias (200-500 Hz).
+
+<strong>Explicación simple:</strong> Cuando todo suena "turbio" o "apagado".
+
+<strong>Solución:</strong> Cortar con EQ en esa zona.
+
+<p>
+---
+</p>
+
+<h3><strong>Harshness (Aspereza)</strong></h3>
+<strong>Qué es:</strong> Frecuencias agudas desagradables (2-8 kHz).
+
+<strong>Explicación simple:</strong> Sonidos que "lastiman" los oídos.
+
+<strong>Solución:</strong> Reducir con EQ o de-esser.
+
+<p>
+---
+</p>
+
+<h3><strong>Glue (Pegamento)</strong></h3>
+<strong>Qué es:</strong> Cohesión entre elementos de una mezcla.
+
+<strong>Explicación simple:</strong> Cuando todo suena como "una pieza" en lugar de elementos separados.
+
+<strong>Cómo lograrlo:</strong>
+<li>Compresión de bus</li>
+<li>Reverb sutil</li>
+<li>Saturación suave</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Layering (Capas)</strong></h3>
+<strong>Qué es:</strong> Superponer múltiples sonidos para crear uno más complejo.
+
+<strong>Explicación simple:</strong> Como apilar varios kicks para crear uno más gordo.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ stack [
+<p>
+  s "bd" # lpf 100,           -- Sub
+  s "bd:1" # bpf 500,         -- Cuerpo
+  s "bd:2" # hpf 2000         -- Click
+]</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>White Noise (Ruido Blanco)</strong></h3>
+<strong>Qué es:</strong> Sonido que contiene todas las frecuencias por igual.
+
+<strong>Explicación simple:</strong> Como el sonido de la estática de TV.
+
+<strong>Uso:</strong> Hi-hats, transiciones, texturas.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "noise" # hpf 8000 # gain 0.5</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Pink Noise (Ruido Rosa)</strong></h3>
+<strong>Qué es:</strong> Ruido con más energía en graves que en agudos.
+
+<strong>Explicación simple:</strong> Ruido blanco pero más "natural" al oído.
+
+<strong>Uso:</strong> Pruebas de mezcla, texturas suaves.
+
+<p>
+---
+</p>
+
+<h3><strong>Gate / Noise Gate</strong></h3>
+<strong>Qué es:</strong> Silencia el audio cuando está por debajo de cierto nivel.
+
+<strong>Explicación simple:</strong> Como un "portero" que solo deja pasar sonidos fuertes.
+
+<strong>Uso:</strong> Eliminar ruido de fondo, crear efectos de corte.
+
+<p>
+---
+</p>
+
+<h3><strong>Expander</strong></h3>
+<strong>Qué es:</strong> Lo opuesto al compresor, aumenta el rango dinámico.
+
+<strong>Explicación simple:</strong> Hace los sonidos suaves más suaves y los fuertes más fuertes.
+
+<p>
+---
+</p>
+
+<h3><strong>Envelope Follower</strong></h3>
+<strong>Qué es:</strong> Extrae la envolvente de un sonido para controlar otro parámetro.
+
+<strong>Explicación simple:</strong> Usa el volumen de un sonido para mover un filtro u otro efecto.
+
+<p>
+---
+</p>
+
+<h3><strong>Vocoder</strong></h3>
+<strong>Qué es:</strong> Impone las características espectrales de un sonido sobre otro.
+
+<strong>Explicación simple:</strong> Hace que un sintetizador "hable" usando una voz.
+
+<p>
+---
+</p>
+
+<h3><strong>Auto-Tune / Pitch Correction</strong></h3>
+<strong>Qué es:</strong> Corrección automática de afinación.
+
+<strong>Explicación simple:</strong> Hace que las notas desafinadas suenen afinadas.
+
+<p>
+---
+</p>
+
+<h3><strong>Formant</strong></h3>
+<strong>Qué es:</strong> Picos de resonancia que definen el timbre de una voz o instrumento.
+
+<strong>Explicación simple:</strong> Lo que hace que una "a" suene diferente de una "e".
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd*4" # vowel "a e i o u"</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Portamento / Glide</strong></h3>
+<strong>Qué es:</strong> Transición suave entre dos notas.
+
+<strong>Explicación simple:</strong> En lugar de saltar de una nota a otra, "resbala" entre ellas.
+
+<p>
+---
+</p>
+
+<h3><strong>Arpeggio (Arpegio)</strong></h3>
+<strong>Qué es:</strong> Tocar las notas de un acorde una por una en secuencia.
+
+<strong>Explicación simple:</strong> En lugar de tocar Do-Mi-Sol juntos, tocarlos Do, Mi, Sol, Do, Mi, Sol...
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ arpeggiate $ n "c'maj e'min" # s "superpiano"</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Quantization (Cuantización)</strong></h3>
+<strong>Qué es:</strong> Ajustar el timing de notas a una grilla temporal.
+
+<strong>Explicación simple:</strong> Corregir notas que no están exactamente en el beat.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ quantise 4 $ n "0 2 4 7" # s "superpiano"</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Swing</strong></h3>
+<strong>Qué es:</strong> Retrasar ligeramente las notas en offbeat para crear groove.
+
+<strong>Explicación simple:</strong> Hace que el ritmo "baile" en lugar de ser robótico.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "hh*8" # nudge "0 0.02 0 0.02 0 0.02 0 0.02"</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Groove</strong></h3>
+<strong>Qué es:</strong> La sensación rítmica y el "feel" de una canción.
+
+<strong>Explicación simple:</strong> Lo que te hace mover el cuerpo.
+
+<p>
+---
+</p>
+
+<h3><strong>Humanization (Humanización)</strong></h3>
+<strong>Qué es:</strong> Añadir variaciones sutiles para que suene menos robótico.
+
+<strong>Explicación simple:</strong> Como si un humano lo tocara en lugar de una máquina.
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "hh*16" 
+<p>
+  # gain (range 0.6 0.9 rand)
+  # nudge (rand * 0.02)</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>MIDI (Musical Instrument Digital Interface)</strong></h3>
+<strong>Qué es:</strong> Protocolo para comunicar instrumentos musicales y computadoras.
+
+<strong>Explicación simple:</strong> El "lenguaje" que usan los teclados, sintetizadores y DAWs para hablar entre sí.
+
+<p>
+---
+</p>
+
+<h3><strong>OSC (Open Sound Control)</strong></h3>
+<strong>Qué es:</strong> Protocolo de comunicación para audio (más moderno que MIDI).
+
+<strong>Explicación simple:</strong> Como MIDI pero más flexible y potente.
+
+<strong>Uso en TidalCycles:</strong> TidalCycles usa OSC para comunicarse con SuperDirt.
+
+<p>
+---
+</p>
+
+<h3><strong>Sample Rate (Tasa de Muestreo)</strong></h3>
+<strong>Qué es:</strong> Cuántas veces por segundo se mide el audio digital.
+
+<strong>Explicación simple:</strong> Como los FPS en video, más = mejor calidad.
+
+<strong>Estándares:</strong>
+<li>44.1 kHz: CD quality</li>
+<li>48 kHz: Estándar profesional</li>
+<li>96 kHz: Alta resolución</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Bit Depth (Profundidad de Bits)</strong></h3>
+<strong>Qué es:</strong> Cuántos niveles de volumen se pueden representar.
+
+<strong>Explicación simple:</strong> Como la resolución de color en una imagen.
+
+<strong>Estándares:</strong>
+<li>16-bit: CD quality</li>
+<li>24-bit: Estándar profesional</li>
+<li>32-bit float: Máxima calidad</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Latency (Latencia)</strong></h3>
+<strong>Qué es:</strong> Retraso entre tocar una nota y escucharla.
+
+<strong>Explicación simple:</strong> Como el lag en videojuegos.
+
+<strong>Objetivo:</strong> Menos de 10ms para tocar en vivo.
+
+<p>
+---
+</p>
+
+<h3><strong>Buffer Size</strong></h3>
+<strong>Qué es:</strong> Cantidad de audio procesado a la vez.
+
+<strong>Explicación simple:</strong>
+<li>Buffer pequeño = baja latencia, más CPU</li>
+<li>Buffer grande = alta latencia, menos CPU</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Dry/Wet (Seco/Mojado)</strong></h3>
+<strong>Qué es:</strong> Balance entre señal original (dry) y procesada (wet).
+
+<strong>Explicación simple:</strong>
+<li>100% dry = sin efecto</li>
+<li>50/50 = mitad original, mitad con efecto</li>
+<li>100% wet = solo efecto</li>
+
+<strong>En TidalCycles:</strong>
+<pre><code>d1 $ s "bd cp" # room 0.5 # dry 0.7  -- Más señal seca</code></pre>
+
+<p>
+---
+</p>
+
+<h3><strong>Mono vs. Stereo</strong></h3>
+<strong>Mono:</strong> Un solo canal de audio (todo en el centro).
+<strong>Stereo:</strong> Dos canales (izquierda y derecha).
+
+<strong>Explicación simple:</strong>
+<li>Mono = como escuchar con un oído</li>
+<li>Stereo = como escuchar con ambos oídos</li>
+
+<p>
+---
+</p>
+
+<h3><strong>Phase (Fase)</strong></h3>
+<strong>Qué es:</strong> Posición de una onda en su ciclo.
+
+<strong>Explicación simple:</strong> Si dos ondas idénticas están "fuera de fase", pueden cancelarse.
+
+<strong>Problema:</strong> Phase cancellation (cancelación de fase) hace que el audio suene "hueco".
+
+<p>
+---
+</p>
+
+<h3><strong>Aliasing</strong></h3>
+<strong>Qué es:</strong> Distorsión digital cuando la frecuencia es muy alta para el sample rate.
+
+<strong>Explicación simple:</strong> Artefactos digitales desagradables en frecuencias altas.
+
+<p>
+---
+</p>
+
+<h3><strong>Dither</strong></h3>
+<strong>Qué es:</strong> Ruido muy bajo añadido al reducir bit depth.
+
+<strong>Explicación simple:</strong> Hace que la reducción de calidad sea menos audible.
+
+<p>
+---
+</p>
+
+<h3><strong>Normalization (Normalización)</strong></h3>
+<strong>Qué es:</strong> Ajustar el volumen al máximo sin clipear.
+
+<strong>Explicación simple:</strong> Subir todo el audio hasta que el pico más alto llegue a 0 dB.
+
+<p>
+---
+</p>
+
+<h3><strong>Automation (Automatización)</strong></h3>
+<strong>Qué es:</strong> Cambios programados de parámetros en el tiempo.
+
+<strong>Explicación simple:</strong> Como un robot que mueve los controles por ti.
+
+<strong>En TidalCycles:</strong>
+<pre><code>-- Filtro que se abre gradualmente
+<p>
+d1 $ s "supersaw" # lpf (slow 16 (range 200 4000 saw))</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h3><strong>Bus / Aux Send</strong></h3>
+<strong>Qué es:</strong> Canal auxiliar para enviar señal a efectos.
+
+<strong>Explicación simple:</strong> Como una "tubería" que envía audio a un efecto compartido.
+
+<strong>Uso:</strong> Reverb compartido entre varios instrumentos.
+
+<p>
+---
+</p>
+
+<h3><strong>Insert Effect</strong></h3>
+<strong>Qué es:</strong> Efecto que procesa el 100% de la señal.
+
+<strong>Explicación simple:</strong> El audio pasa completamente por el efecto.
+
+<p>
+---
+</p>
+
+<h3><strong>Send Effect</strong></h3>
+<strong>Qué es:</strong> Efecto al que se envía una copia de la señal.
+
+<strong>Explicación simple:</strong> El audio original sigue, pero también se envía una copia al efecto.
+
+<p>
+---
+</p>
+
+<h3><strong>Parallel Compression</strong></h3>
+<strong>Qué es:</strong> Mezclar señal comprimida con señal sin comprimir.
+
+<strong>Explicación simple:</strong> Lo mejor de ambos mundos: punch + dinámica.
+
+<p>
+---
+</p>
+
+<h3><strong>Multiband Compression</strong></h3>
+<strong>Qué es:</strong> Compresión independiente de diferentes rangos de frecuencia.
+
+<strong>Explicación simple:</strong> Como tener 3-4 compresores, cada uno para graves, medios y agudos.
+
+<p>
+---
+</p>
+
+<h3><strong>De-Esser</strong></h3>
+<strong>Qué es:</strong> Reduce las "eses" sibilantes en voces.
+
+<strong>Explicación simple:</strong> Compresión específica para frecuencias de 5-8 kHz.
+
+<p>
+---
+</p>
+
+<h3><strong>Exciter</strong></h3>
+<strong>Qué es:</strong> Añade armónicos para hacer el sonido más brillante.
+
+<strong>Explicación simple:</strong> Hace que algo suene más "vivo" o "presente".
+
+<p>
+---
+</p>
+
+<h3><strong>Transient Shaper</strong></h3>
+<strong>Qué es:</strong> Controla el ataque y sustain de sonidos percusivos.
+
+<strong>Explicación simple:</strong> Hace kicks más "punchy" o más "suaves".
+
+<p>
+---
+</p>
+
+<h2>🎛️ TABLA DE REFERENCIA RÁPIDA EXPANDIDA</h2>
+
+<p>
+| Término | Qué hace | Rango típico | Uso común |
+|---------|----------|--------------|-----------|
+| <strong>gain</strong> | Volumen | 0.0 - 2.0 | Control de nivel |
+| <strong>attack</strong> | Tiempo de subida | 0.01 - 2.0 s | Pads, percusión |
+| <strong>release</strong> | Tiempo de bajada | 0.1 - 4.0 s | Legato/staccato |
+| <strong>lpf</strong> | Filtro paso bajo | 20 - 20000 Hz | Bajos, pads |
+| <strong>hpf</strong> | Filtro paso alto | 20 - 20000 Hz | Eliminar graves |
+| <strong>resonance</strong> | Énfasis del filtro | 0.0 - 1.0 | Sonido ácido |
+| <strong>delay</strong> | Cantidad de eco | 0.0 - 1.0 | Espacialidad |
+| <strong>room</strong> | Cantidad de reverb | 0.0 - 1.0 | Profundidad |
+| <strong>pan</strong> | Posición L/R | 0.0 - 1.0 | Imagen estéreo |
+| <strong>crush</strong> | Reducción de bits | 1 - 16 bits | Lo-fi, retro |
+| <strong>shape</strong> | Distorsión | 0.0 - 1.0 | Agresividad |
+| <strong>velocity</strong> | Fuerza MIDI | 0.0 - 1.0 | Dinámica |
+| <strong>detune</strong> | Desafinación | -100 - +100 cents | Chorus, grosor |
+| <strong>speed</strong> | Velocidad/pitch | 0.5 - 2.0 | Transposición |
+</p>
+
+<p>
+---
+</p>
+
+<h2>🎯 TÉRMINOS POR CATEGORÍA</h2>
+
+<h3><strong>Para Principiantes (Esenciales):</strong></h3>
+<li>Gain, Attack, Release, LPF, HPF, Delay, Reverb, Pan, BPM</li>
+
+<h3><strong>Para Intermedios:</strong></h3>
+<li>Resonance, ADSR completo, Sidechain, Compression, EQ, Velocity, Legato</li>
+
+<h3><strong>Para Avanzados:</strong></h3>
+<li>Multiband Compression, Parallel Processing, Transient Shaping, Phase, Formants</li>
+
+<h3><strong>Para Expertos:</strong></h3>
+<li>Envelope Follower, Vocoder, Granular Synthesis, Spectral Processing</li>
+
+<p>
+---
+</p>
+
+<h2>💡 CONSEJOS FINALES EXPANDIDOS</h2>
+
+<p>
+1. <strong>Menos es más:</strong> No uses todos los efectos a la vez
+2. <strong>Escucha con referencia:</strong> Compara con canciones profesionales
+3. <strong>Usa tus oídos:</strong> Los números son guías, confía en lo que escuchas
+4. <strong>Experimenta:</strong> La mejor forma de aprender es probando
+5. <strong>Descansa tus oídos:</strong> Toma breaks cada 45-60 minutos
+6. <strong>Mezcla a bajo volumen:</strong> Protege tus oídos y toma mejores decisiones
+7. <strong>Aprende teoría musical:</strong> Te ayudará a crear mejores melodías
+8. <strong>Estudia referencias:</strong> Analiza cómo están mezcladas tus canciones favoritas
+9. <strong>Practica diariamente:</strong> La consistencia es clave
+10. <strong>No te compares:</strong> Cada productor tiene su propio ritmo de aprendizaje
+</p>
+
+<p>
+---
+</p>
+
+<h2>📖 RECURSOS ADICIONALES</h2>
+
+<h3><strong>Frecuencias Importantes:</strong></h3>
+<li><strong>Sub Bass:</strong> 20-60 Hz (se siente más que se escucha)</li>
+<li><strong>Bass:</strong> 60-250 Hz (fundamento del bajo)</li>
+<li><strong>Low Mids:</strong> 250-500 Hz (cuerpo, calidez)</li>
+<li><strong>Mids:</strong> 500-2000 Hz (presencia vocal)</li>
+<li><strong>High Mids:</strong> 2-6 kHz (claridad, definición)</li>
+<li><strong>Highs:</strong> 6-20 kHz (brillo, aire)</li>
+
+<h3><strong>Valores de Compresión Típicos:</strong></h3>
+<li><strong>Ratio:</strong> 2:1 a 4:1 (suave), 8:1 a 20:1 (agresivo)</li>
+<li><strong>Attack:</strong> 1-10 ms (rápido), 20-50 ms (lento)</li>
+<li><strong>Release:</strong> 50-100 ms (rápido), 200-500 ms (lento)</li>
+
+<h3><strong>Tiempos de Delay Musicales:</strong></h3>
+<li><strong>1/4:</strong> 0.25 ciclos</li>
+<li><strong>1/8:</strong> 0.125 ciclos</li>
+<li><strong>1/16:</strong> 0.0625 ciclos</li>
+<li><strong>Dotted 1/8:</strong> 0.1875 ciclos</li>
+<li><strong>Triplet:</strong> 0.333 ciclos</li></ul>
+
+<p>
+---
+</p>
+
+<strong>¡Ahora tienes el conocimiento completo para entender cualquier aspecto de la producción musical electrónica!</strong> 🎵✨
+
+<strong>Total de términos explicados:</strong> 80+
+<strong>Categorías cubiertas:</strong> 12
+<strong>Ejemplos de código:</strong> 50+
+<strong>Visualizaciones:</strong> 5
+
+        </div>
+    </div>
+</body>
+</html>

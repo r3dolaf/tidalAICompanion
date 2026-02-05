@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TidalAI Launcher</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050510;
+            --bg-card: rgba(30, 41, 59, 0.4);
+            --bg-card-hover: rgba(51, 65, 85, 0.6);
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.5);
+            --accent-cyan: #22d3ee;
+            --accent-pink: #f472b6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-deep);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            gap: 40px;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 30%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            group: card;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: var(--bg-card-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color, var(--primary)), transparent);
+            opacity: 0.7;
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: var(--accent-color, var(--primary));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+        }
+
+        .btn:hover {
+            background: var(--accent-color, var(--primary));
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 0 20px var(--glow-color, rgba(139, 92, 246, 0.4));
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border-color: transparent;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            box-shadow: none;
+        }
+
+        /* STATUS FOOTER */
+        .footer {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            display: inline-flex;
+            gap: 15px;
+            align-items: center;
+            justify-self: center;
+            margin-top: 20px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #22d3ee;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #22d3ee;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card-hover);
+            border: 1px solid var(--primary);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <div class="header">
+            <h1>TidalAI Launcher</h1>
+            <p>Panel de Control Local & Gestión de Proyectos</p>
+        </div>
+
+        <div class="grid">
+            <!-- DEPLOY CARD -->
+            <div class="card" style="--accent-color: #f472b6; --glow-color: rgba(244, 114, 182, 0.5)">
+                <div class="icon">🚀</div>
+                <h2>Deploy to RPi</h2>
+                <p>Transfiere el código actualizado a la Raspberry Pi y reinicia el servicio automáticamente.</p>
+                <button class="btn" onclick="run('deploy')">⚡ Ejecutar Deploy</button>
+            </div>
+
+            <!-- CLEANUP CARD -->
+            <div class="card" style="--accent-color: #ef4444; --glow-color: rgba(239, 68, 68, 0.5)">
+                <div class="icon">🧹</div>
+                <h2>Cleanup Project</h2>
+                <p>Elimina archivos temporales (.pyc), cache y backups antiguos para mantener el proyecto limpio.</p>
+                <button class="btn" onclick="run('cleanup')">🗑️ Limpiar</button>
+            </div>
+
+            <!-- EXTRACT CARD -->
+            <div class="card" style="--accent-color: #22d3ee; --glow-color: rgba(34, 211, 238, 0.5)">
+                <div class="icon">💎</div>
+                <h2>Extract Patterns</h2>
+                <p>Escanea tus archivos .tidal, extrae patrones y los añade al corpus de entrenamiento.</p>
+                <button class="btn" onclick="run('extract')">🔍 Extraer Patrones</button>
+                <button class="btn btn-ghost" onclick="openFolder('corpus')">📂 Ver Corpus</button>
+            </div>
+
+            <!-- SSH CARD -->
+            <div class="card" style="--accent-color: #f59e0b; --glow-color: rgba(245, 158, 11, 0.5)">
+                <div class="icon">🔐</div>
+                <h2>Configure SSH</h2>
+                <p>Configura llaves SSH para despliegues sin contraseña. Ejecutar solo una vez.</p>
+                <button class="btn" onclick="run('ssh')">🔑 Configurar</button>
+            </div>
+
+            <!-- FOLDER CARD -->
+            <div class="card" style="--accent-color: #8b5cf6; --glow-color: rgba(139, 92, 246, 0.5)">
+                <div class="icon">📂</div>
+                <h2>Project Files</h2>
+                <p>Acceso rápido a las carpetas del proyecto y archivos de configuración.</p>
+                <button class="btn" onclick="openFolder('root')">📁 Abrir Proyecto</button>
+                <button class="btn btn-ghost" onclick="openFolder('bridge')">🌉 Abrir Bridge</button>
+            </div>
+
+            <!-- ADMIN REMOTE CARD -->
+            <div class="card" style="--accent-color: #10b981; --glow-color: rgba(16, 185, 129, 0.5)">
+                <div class="icon">🎛️</div>
+                <h2>Admin Remoto</h2>
+                <p>Abrir el panel de control del sistema (temperatura, logs) de la Raspberry Pi.</p>
+                <button class="btn" onclick="run('admin_remote')">🌐 Abrir Panel</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="status-dot"></div>
+            <span>Local Engine Active • Port 8080</span>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Comando Ejecutado 🚀</div>
+
+    <script>
+        function run(action) {
+            showToast('Ejecutando ' + action + '...');
+            fetch('/api/run/' + action, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) alert(data.error);
+                })
+                .catch(err => alert('Error de conexión con el motor local'));
+        }
+
+        function openFolder(target) {
+            fetch('/api/open/folder/' + target, { method: 'POST' });
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+
+</html>

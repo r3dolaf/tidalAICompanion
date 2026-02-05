@@ -1,0 +1,362 @@
+[
+    {
+        "name": "Techno Track",
+        "description": "Classic techno structure with build-up and drop",
+        "sections": [
+            {
+                "name": "Intro",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.3
+                    },
+                    "d2": {
+                        "type": "fx",
+                        "density": 0.2
+                    }
+                }
+            },
+            {
+                "name": "Build Up",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.6
+                    },
+                    "d2": {
+                        "type": "percussion",
+                        "density": 0.4
+                    },
+                    "d3": {
+                        "type": "bass",
+                        "density": 0.3
+                    }
+                }
+            },
+            {
+                "name": "Drop",
+                "duration": 32,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.8
+                    },
+                    "d2": {
+                        "type": "bass",
+                        "density": 0.7
+                    },
+                    "d3": {
+                        "type": "melody",
+                        "density": 0.5
+                    },
+                    "d4": {
+                        "type": "percussion",
+                        "density": 0.6
+                    }
+                }
+            },
+            {
+                "name": "Breakdown",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.4
+                    },
+                    "d3": {
+                        "type": "melody",
+                        "density": 0.6
+                    }
+                }
+            },
+            {
+                "name": "Outro",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.2
+                    },
+                    "d2": {
+                        "type": "fx",
+                        "density": 0.3
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "House Track",
+        "description": "Deep house with groovy bassline",
+        "sections": [
+            {
+                "name": "Intro",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.4
+                    },
+                    "d2": {
+                        "type": "percussion",
+                        "density": 0.3
+                    }
+                }
+            },
+            {
+                "name": "Verse",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.6
+                    },
+                    "d2": {
+                        "type": "bass",
+                        "density": 0.5
+                    },
+                    "d3": {
+                        "type": "percussion",
+                        "density": 0.4
+                    }
+                }
+            },
+            {
+                "name": "Pre-Chorus",
+                "duration": 8,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.7
+                    },
+                    "d2": {
+                        "type": "bass",
+                        "density": 0.6
+                    },
+                    "d3": {
+                        "type": "melody",
+                        "density": 0.3
+                    }
+                }
+            },
+            {
+                "name": "Chorus",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.8
+                    },
+                    "d2": {
+                        "type": "bass",
+                        "density": 0.7
+                    },
+                    "d3": {
+                        "type": "melody",
+                        "density": 0.6
+                    },
+                    "d4": {
+                        "type": "fx",
+                        "density": 0.4
+                    }
+                }
+            },
+            {
+                "name": "Bridge",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.5
+                    },
+                    "d3": {
+                        "type": "melody",
+                        "density": 0.7
+                    }
+                }
+            },
+            {
+                "name": "Outro",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.3
+                    },
+                    "d2": {
+                        "type": "fx",
+                        "density": 0.4
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Ambient Piece",
+        "description": "Atmospheric ambient soundscape",
+        "sections": [
+            {
+                "name": "Opening",
+                "duration": 24,
+                "channels": {
+                    "d1": {
+                        "type": "fx",
+                        "density": 0.3
+                    },
+                    "d2": {
+                        "type": "melody",
+                        "density": 0.2
+                    }
+                }
+            },
+            {
+                "name": "Development",
+                "duration": 32,
+                "channels": {
+                    "d1": {
+                        "type": "fx",
+                        "density": 0.4
+                    },
+                    "d2": {
+                        "type": "melody",
+                        "density": 0.5
+                    },
+                    "d3": {
+                        "type": "bass",
+                        "density": 0.2
+                    }
+                }
+            },
+            {
+                "name": "Climax",
+                "duration": 24,
+                "channels": {
+                    "d1": {
+                        "type": "fx",
+                        "density": 0.5
+                    },
+                    "d2": {
+                        "type": "melody",
+                        "density": 0.6
+                    },
+                    "d3": {
+                        "type": "bass",
+                        "density": 0.3
+                    },
+                    "d4": {
+                        "type": "percussion",
+                        "density": 0.2
+                    }
+                }
+            },
+            {
+                "name": "Resolution",
+                "duration": 24,
+                "channels": {
+                    "d1": {
+                        "type": "fx",
+                        "density": 0.3
+                    },
+                    "d2": {
+                        "type": "melody",
+                        "density": 0.3
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Breakbeat Track",
+        "description": "Energetic breakbeat with complex rhythms",
+        "sections": [
+            {
+                "name": "Intro",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.5
+                    },
+                    "d2": {
+                        "type": "percussion",
+                        "density": 0.4
+                    }
+                }
+            },
+            {
+                "name": "Main Section",
+                "duration": 32,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.8
+                    },
+                    "d2": {
+                        "type": "percussion",
+                        "density": 0.7
+                    },
+                    "d3": {
+                        "type": "bass",
+                        "density": 0.6
+                    },
+                    "d4": {
+                        "type": "melody",
+                        "density": 0.4
+                    }
+                }
+            },
+            {
+                "name": "Break",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.4
+                    },
+                    "d3": {
+                        "type": "bass",
+                        "density": 0.5
+                    }
+                }
+            },
+            {
+                "name": "Drop",
+                "duration": 32,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.9
+                    },
+                    "d2": {
+                        "type": "percussion",
+                        "density": 0.8
+                    },
+                    "d3": {
+                        "type": "bass",
+                        "density": 0.7
+                    },
+                    "d4": {
+                        "type": "fx",
+                        "density": 0.5
+                    }
+                }
+            },
+            {
+                "name": "Outro",
+                "duration": 16,
+                "channels": {
+                    "d1": {
+                        "type": "drums",
+                        "density": 0.3
+                    },
+                    "d2": {
+                        "type": "fx",
+                        "density": 0.4
+                    }
+                }
+            }
+        ]
+    }
+]

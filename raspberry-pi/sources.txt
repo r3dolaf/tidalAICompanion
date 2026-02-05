@@ -1,0 +1,12 @@
+# Lista de fuentes para el Scavenger
+# Añade aquí URLs que contengan código TidalCycles
+# El sistema extraerá automáticamente los patrones válidos.
+
+# --- Documentación Oficial (Mini Notation) ---
+https://tidalcycles.org/docs/reference/mini_notation/
+
+# --- Audio Effects ---
+https://tidalcycles.org/docs/reference/audio_effects/
+
+# --- Estructura y Composición ---
+https://tidalcycles.org/docs/reference/cycle_and_cps/

@@ -1,0 +1,16 @@
+{
+    "raspberry_pi": {
+        "ip": "192.168.1.100",
+        "flask_port": 5000
+    },
+    "pc": {
+        "ip": "192.168.1.50",
+        "osc_port": 6010
+    },
+    "generator": {
+        "default_tempo": 140,
+        "default_density": 0.6,
+        "default_complexity": 0.5,
+        "default_style": "techno"
+    }
+}

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samples y Síntesis - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Samples y Síntesis</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>SAMPLES Y SÍNTESIS: GUÍA COMPLETA</h1>
+
+<h2>1. Sistema de Samples en TidalCycles</h2>
+
+<h3>1.1 Arquitectura de Samples</h3>
+
+<p>
+TidalCycles utiliza SuperDirt como motor de audio, que carga samples desde directorios específicos. Los samples se organizan en "bancos" donde cada banco puede contener múltiples variaciones.
+</p>
+
+<strong>Estructura de Directorios:</strong>
+<pre><code>Dirt-Samples/
+<p>
+├── 808bd/          # Bombo 808
+│   ├── 808bd_0.wav
+│   ├── 808bd_1.wav
+│   └── ...
+├── 808sd/          # Caja 808
+├── amen/           # Amen break
+├── bass/           # Bajos
+└── ...</code></pre>
+</p>
+
+<strong>Acceso a Samples:</strong>
+<pre><code>d1 $ s "808bd"              -- Primera variación (0)
+<p>
+d1 $ s "808bd:1"            -- Segunda variación
+d1 $ s "808bd" # n 2        -- Tercera variación
+d1 $ s "808bd" # n (run 8)  -- Secuencia de variaciones</code></pre>
+</p>
+
+<h3>1.2 Bancos de Samples Incluidos</h3>
+
+<strong>Percusión Electrónica:</strong>
+<ul><li><code>808bd</code>, <code>808sd</code>, <code>808oh</code>, <code>808ch</code>, <code>808cy</code>: Roland TR-808</li>
+<li><code>909bd</code>, <code>909sd</code>, <code>909oh</code>, <code>909ch</code>, <code>909cy</code>: Roland TR-909</li>
+<li><code>bd</code>, <code>sd</code>, <code>hh</code>, <code>oh</code>, <code>ch</code>: Percusión genérica</li>
+<li><code>cp</code>, <code>clap</code>: Palmas</li>
+<li><code>rim</code>, <code>rs</code>: Rim shots</li>
+
+<strong>Breaks y Loops:</strong>
+<li><code>amen</code>: Amen break (el más famoso)</li>
+<li><code>break</code>: Varios breaks</li>
+<li><code>jungle</code>: Breaks de jungle</li>
+<li><code>drumtraks</code>: Drum loops</li>
+
+<strong>Tonales:</strong>
+<li><code>bass</code>: Bajos sintetizados</li>
+<li><code>arpy</code>: Arpegios</li>
+<li><code>feel</code>: Sonidos melódicos</li>
+<li><code>future</code>: Sonidos futuristas</li>
+<li><code>gab</code>: Gabber kicks</li>
+
+<strong>Efectos y Texturas:</strong>
+<li><code>glitch</code>: Sonidos glitch</li>
+<li><code>metal</code>: Sonidos metálicos</li>
+<li><code>noise</code>: Ruido blanco/rosa</li>
+<li><code>wind</code>: Viento</li>
+<li><code>breath</code>: Respiración</li>
+
+<strong>Vocales:</strong>
+<li><code>bev</code>: Vocales procesadas</li>
+<li><code>mouth</code>: Sonidos bucales</li>
+<li><code>alphabet</code>: Letras del alfabeto</li>
+
+<strong>Instrumentos Acústicos:</strong>
+<li><code>sax</code>: Saxofón</li>
+<li><code>trump</code>: Trompeta</li>
+<li><code>flick</code>: Sonidos percusivos</li>
+<li><code>tabla</code>: Tabla india</li>
+
+<h3>1.3 Añadir Samples Personalizados</h3>
+
+<strong>Método 1: Directorio SuperDirt</strong>
+<pre><code>-- En SuperCollider
+<p>
+~dirt.loadSoundFiles("C:/MisSamples/*");</code></pre>
+</p>
+
+<strong>Método 2: setS en Tidal</strong>
+<pre><code>-- En Tidal
+<p>
+setS "mysamples" "c:/path/to/samples"
+</p>
+
+<p>
+-- Usar
+d1 $ s "mysamples:0"</code></pre>
+</p>
+
+<strong>Organización Recomendada:</strong>
+<pre><code>MisSamples/
+<p>
+├── kicks/
+│   ├── kick_0.wav
+│   ├── kick_1.wav
+│   └── ...
+├── snares/
+├── hats/
+└── fx/</code></pre>
+</p>
+
+<h3>1.4 Manipulación Avanzada de Samples</h3>
+
+<strong>Corte y Selección:</strong>
+<pre><code>-- Reproducir solo una parte
+<p>
+d1 $ s "amen" # begin 0.25 # end 0.75
+</p>
+
+<p>
+-- Cortar en partes
+d1 $ chop 16 $ s "amen"
+</p>
+
+<p>
+-- Seleccionar partes específicas
+d1 $ slice 8 "0 7 2 5" $ s "amen"
+</p>
+
+<p>
+-- Granulación
+d1 $ striate 128 $ s "amen"</code></pre>
+</p>
+
+<strong>Velocidad y Pitch:</strong>
+<pre><code>-- Cambiar velocidad (afecta pitch)
+<p>
+d1 $ s "amen" # speed 2         -- Doble velocidad, octava arriba
+d1 $ s "amen" # speed 0.5       -- Mitad velocidad, octava abajo
+d1 $ s "amen" # speed "-1"      -- Reversa
+</p>
+
+<p>
+-- Glissando
+d1 $ s "bd" # accelerate 12     -- Sube una octava
+</p>
+
+<p>
+-- Pitch sin afectar velocidad
+d1 $ s "amen" # up 12           -- Octava arriba</code></pre>
+</p>
+
+<strong>Loops Sincronizados:</strong>
+<pre><code>-- Hacer que el sample dure exactamente N ciclos
+<p>
+d1 $ loopAt 1 $ s "amen"        -- 1 ciclo
+d1 $ loopAt 4 $ s "amen"        -- 4 ciclos
+d1 $ loopAt "<1 2 4>" $ s "amen"  -- Duración variable</code></pre>
+</p>
+
+<h2>2. Sintetizadores en TidalCycles</h2>
+
+<h3>2.1 SuperDirt Synths</h3>
+
+<p>
+TidalCycles incluye varios sintetizadores integrados basados en SuperCollider.
+</p>
+
+<strong>Lista de Sintetizadores:</strong>
+<li><code>superpiano</code>: Piano físico modelado</li>
+<li><code>superfm</code>: Síntesis FM (6 operadores)</li>
+<li><code>supersaw</code>: Super saw (múltiples sierras desfasadas)</li>
+<li><code>superpwm</code>: PWM (modulación de ancho de pulso)</li>
+<li><code>superchip</code>: Sonidos de 8-bit/chiptune</li>
+<li><code>superzow</code>: Filtro resonante barrido</li>
+<li><code>supergong</code>: Gong metálico</li>
+<li><code>superhammond</code>: Órgano Hammond</li>
+<li><code>supervibe</code>: Vibráfono</li>
+<li><code>supermandolin</code>: Mandolina</li>
+<li><code>superhoover</code>: Hoover clásico</li>
+<li><code>superkick</code>: Kick sintetizado</li>
+<li><code>superclap</code>: Clap sintetizado</li>
+<li><code>superhat</code>: Hi-hat sintetizado</li>
+<li><code>supersnare</code>: Snare sintetizado</li>
+
+<h3>2.2 Uso de Sintetizadores</h3>
+
+<strong>Sintaxis Básica:</strong>
+<pre><code>-- Notas MIDI
+<p>
+d1 $ n "60 64 67" # s "superpiano"
+</p>
+
+<p>
+-- Notación musical
+d1 $ note "c e g" # s "superpiano"
+</p>
+
+<p>
+-- Acordes
+d1 $ n "c'maj" # s "superpiano"
+d1 $ n "a'min7" # s "superpiano"</code></pre>
+</p>
+
+<h3>2.3 Parámetros Específicos de Synths</h3>
+
+<strong>superpiano:</strong>
+<pre><code>d1 $ n "60 64 67" # s "superpiano"
+<p>
+  # velocity 0.8        -- Velocidad MIDI
+  # sustain 2           -- Duración
+  # detune 0.1          -- Desafinación (chorus)</code></pre>
+</p>
+
+<strong>superfm:</strong>
+<pre><code>d1 $ n "60 64 67" # s "superfm"
+<p>
+  # voice 0             -- Algoritmo FM (0-5)
+  # lfo 2               -- Velocidad LFO
+  # rate 1              -- Ratio de modulación</code></pre>
+</p>
+
+<strong>supersaw:</strong>
+<pre><code>d1 $ n "60 64 67" # s "supersaw"
+<p>
+  # detune 0.2          -- Desfase entre sierras
+  # accelerate 0.5      -- Pitch bend
+  # lpf 2000            -- Filtro
+  # resonance 0.3</code></pre>
+</p>
+
+<strong>superpwm:</strong>
+<pre><code>d1 $ n "60 64 67" # s "superpwm"
+<p>
+  # voice 0.5           -- Ancho de pulso
+  # lfo 4               -- Modulación</code></pre>
+</p>
+
+<strong>superchip:</strong>
+<pre><code>d1 $ n "60 64 67" # s "superchip"
+<p>
+  # slide 2             -- Portamento
+  # pitch1 1            -- Pitch de oscilador 1
+  # pitch2 2            -- Pitch de oscilador 2</code></pre>
+</p>
+
+<h3>2.4 Ejemplos de Síntesis</h3>
+
+<strong>Piano Realista:</strong>
+<pre><code>d1 $ n "60 64 67 72" # s "superpiano"
+<p>
+  # velocity (range 0.5 0.9 rand)
+  # sustain 3
+  # room 0.3
+  # lpf 8000</code></pre>
+</p>
+
+<strong>Bajo FM Agresivo:</strong>
+<pre><code>d1 $ n "36 ~ 36 ~" # s "superfm"
+<p>
+  # voice 2
+  # lfo 8
+  # lpf (range 200 2000 (slow 4 saw))
+  # resonance 0.8
+  # shape 0.6</code></pre>
+</p>
+
+<strong>Pad Ambient:</strong>
+<pre><code>d1 $ n "60 64 67 72" # s "supersaw"
+<p>
+  # detune 0.3
+  # attack 2
+  # release 4
+  # lpf 2000
+  # room 0.8
+  # size 0.9</code></pre>
+</p>
+
+<strong>Lead Chip:</strong>
+<pre><code>d1 $ n "60 62 64 65 67" # s "superchip"
+<p>
+  # slide 1
+  # legato 0.8
+  # crush 4
+  # lpf 4000</code></pre>
+</p>
+
+<h2>3. Síntesis Granular</h2>
+
+<h3>3.1 Conceptos de Granulación</h3>
+
+<p>
+La síntesis granular divide el audio en "granos" microscópicos (1-100ms) y los reorganiza para crear nuevas texturas.
+</p>
+
+<strong>Funciones de Granulación:</strong>
+
+<strong>chop - División Equitativa:</strong>
+<pre><code>-- Divide en N partes iguales
+<p>
+d1 $ chop 16 $ s "amen"
+d1 $ chop 32 $ s "amen" # speed 2
+d1 $ chop 64 $ s "amen" # pan (rand)</code></pre>
+</p>
+
+<strong>striate - Granulación con Solapamiento:</strong>
+<pre><code>-- Crea nubes de granos
+<p>
+d1 $ striate 16 $ s "amen"
+d1 $ striate 128 $ s "bev" # speed 0.5
+d1 $ striate 256 $ s "metal" # room 0.8</code></pre>
+</p>
+
+<strong>gap - Espacios entre Granos:</strong>
+<pre><code>-- Crea silencios entre granos
+<p>
+d1 $ gap 4 $ s "amen"
+d1 $ gap 8 $ s "amen" # speed 2</code></pre>
+</p>
+
+<h3>3.2 Técnicas Granulares Avanzadas</h3>
+
+<strong>Nube de Granos Densa:</strong>
+<pre><code>d1 $ striate 256 $ s "bev"
+<p>
+  # speed 0.25
+  # room 0.9
+  # size 0.99
+  # lpf 2000
+  # gain 0.7</code></pre>
+</p>
+
+<strong>Granulación Rítmica:</strong>
+<pre><code>d1 $ chop 16 $ s "amen"
+<p>
+  # speed (range 0.5 2 (slow 4 sine))
+  # pan (rand)
+  # room 0.3</code></pre>
+</p>
+
+<strong>Textura Ambiental:</strong>
+<pre><code>d1 $ slow 4 $ striate 128 $ s "metal"
+<p>
+  # speed 0.1
+  # room 0.95
+  # lpf (range 500 3000 (slow 8 sine))
+  # gain 0.6</code></pre>
+</p>
+
+<h2>4. Procesamiento de Samples</h2>
+
+<h3>4.1 Time-Stretching</h3>
+
+<strong>Mantener Pitch:</strong>
+<pre><code>-- Usar 'up' para transponer sin cambiar velocidad
+<p>
+d1 $ s "amen" # up 12           -- Octava arriba, misma velocidad
+d1 $ s "amen" # up "-12"        -- Octava abajo, misma velocidad</code></pre>
+</p>
+
+<strong>Cambiar Duración:</strong>
+<pre><code>-- Usar 'loopAt' para ajustar duración
+<p>
+d1 $ loopAt 2 $ s "amen"        -- Dura 2 ciclos
+d1 $ loopAt 0.5 $ s "amen"      -- Dura medio ciclo</code></pre>
+</p>
+
+<h3>4.2 Reversión y Manipulación Temporal</h3>
+
+<strong>Reproducción Inversa:</strong>
+<pre><code>d1 $ s "amen" # speed "-1"      -- Reversa completa
+<p>
+d1 $ s "amen" # speed "-2"      -- Reversa doble velocidad</code></pre>
+</p>
+
+<strong>Secciones Específicas:</strong>
+<pre><code>-- Reproducir solo el final
+<p>
+d1 $ s "amen" # begin 0.75 # end 1
+</p>
+
+<p>
+-- Reproducir el medio
+d1 $ s "amen" # begin 0.25 # end 0.75
+</p>
+
+<p>
+-- Reproducir en reversa una sección
+d1 $ s "amen" # begin 0.75 # end 0.25</code></pre>
+</p>
+
+<h3>4.3 Layering de Samples</h3>
+
+<strong>Superposición Simple:</strong>
+<pre><code>d1 $ stack [
+<p>
+  s "bd*4",
+  s "sd(3,8)",
+  s "hh*16"
+]</code></pre>
+</p>
+
+<strong>Con Procesamiento Independiente:</strong>
+<pre><code>d1 $ stack [
+<p>
+  s "bd*4" # lpf 200 # gain 1.2,
+  s "sd(3,8)" # room 0.3 # pan 0.5,
+  s "hh*16" # hpf 8000 # pan (sine)
+]</code></pre>
+</p>
+
+<strong>Layering con Variaciones:</strong>
+<pre><code>d1 $ stack [
+<p>
+  s "bd*4" # n 0,
+  s "bd*4" # n 1 # speed 0.95 # gain 0.7,
+  s "bd*4" # n 2 # speed 1.05 # gain 0.6
+]</code></pre>
+</p>
+
+<h2>5. Técnicas de Sampling Creativas</h2>
+
+<h3>5.1 Re-secuenciación de Breaks</h3>
+
+<strong>Drum & Bass:</strong>
+<pre><code>-- Amen break clásico re-secuenciado
+<p>
+d1 $ slice 8 "0 7 2 5 [0 1] [4 5] 6 3" $ s "amen"
+  # speed 1.2
+  # hpf 300
+</p>
+
+<p>
+-- Con variaciones
+d1 $ slice 16 (run 16) $ s "amen"
+  # speed (range 1 1.5 (slow 4 sine))</code></pre>
+</p>
+
+<strong>Jungle:</strong>
+<pre><code>d1 $ slice 8 "<0 7 2 5>" $ s "amen"
+<p>
+  # speed 1.3
+  # crush (range 4 16 (slow 8 sine))</code></pre>
+</p>
+
+<h3>5.2 Vocal Chopping</h3>
+
+<strong>Chops Rítmicos:</strong>
+<pre><code>d1 $ chop 16 $ s "bev"
+<p>
+  # speed (range 0.8 1.2 rand)
+  # pan (rand)
+  # room 0.2</code></pre>
+</p>
+
+<strong>Stutter:</strong>
+<pre><code>d1 $ stut 4 0.7 0.125 $ s "bev"
+<p>
+  # begin (rand)
+  # end (rand + 0.1)
+  # speed (range 0.9 1.1 rand)</code></pre>
+</p>
+
+<h3>5.3 Texturas Atmosféricas</h3>
+
+<strong>Drone de Sample:</strong>
+<pre><code>d1 $ slow 8 $ striate 256 $ s "metal"
+<p>
+  # speed 0.05
+  # room 0.99
+  # size 0.99
+  # lpf (range 200 2000 (slow 16 sine))
+  # gain 0.5</code></pre>
+</p>
+
+<strong>Paisaje Sonoro:</strong>
+<pre><code>d1 $ stack [
+<p>
+  slow 16 $ s "wind" # gain 0.4 # lpf 500,
+  striate 128 $ s "metal" # speed 0.1 # room 0.9 # gain 0.3,
+  s "breath" # speed 0.5 # room 0.7 # gain 0.2
+]</code></pre>
+</p>
+
+<h2>6. Optimización y Gestión de Recursos</h2>
+
+<h3>6.1 Gestión de Memoria</h3>
+
+<strong>Liberar Samples:</strong>
+<pre><code>-- En SuperCollider
+<p>
+~dirt.freeSoundFiles;
+~dirt.loadSoundFiles;</code></pre>
+</p>
+
+<strong>Cargar Solo lo Necesario:</strong>
+<pre><code>-- Cargar bancos específicos
+<p>
+~dirt.loadSoundFiles("C:/Dirt-Samples/808*");</code></pre>
+</p>
+
+<h3>6.2 Optimización de CPU</h3>
+
+<strong>Reducir Polifonía:</strong>
+<pre><code>-- Usar 'cut' para limitar voces simultáneas
+<p>
+d1 $ s "oh*8" # cut 1</code></pre>
+</p>
+
+<strong>Simplificar Efectos:</strong>
+<pre><code>-- Evitar múltiples reverbs pesados
+<p>
+-- Usar órbitas para aplicar efectos globales</code></pre>
+</p>
+
+<h3>6.3 Calidad de Audio</h3>
+
+<strong>Configuración de SuperCollider:</strong>
+<pre><code>// En SuperCollider startup
+<p>
+s.options.sampleRate = 48000;
+s.options.numBuffers = 1024 * 256;
+s.options.memSize = 8192 * 64;</code></pre>
+</p>
+
+<h2>7. Biblioteca de Samples Recomendada</h2>
+
+<h3>7.1 Samples Esenciales</h3>
+
+<strong>Kicks:</strong>
+<li><code>808bd</code>: Clásico 808</li>
+<li><code>909bd</code>: Clásico 909</li>
+<li><code>gab</code>: Gabber/Hardcore</li>
+<li><code>superkick</code>: Sintetizado</li>
+
+<strong>Snares:</strong>
+<li><code>808sd</code>: 808 snare</li>
+<li><code>909sd</code>: 909 snare</li>
+<li><code>sd</code>: Genérico</li>
+<li><code>clap</code>: Palmas</li>
+
+<strong>Hi-Hats:</strong>
+<li><code>808oh</code>, <code>808ch</code>: 808 hats</li>
+<li><code>909oh</code>, <code>909ch</code>: 909 hats</li>
+<li><code>hh</code>: Genérico</li>
+
+<strong>Breaks:</strong>
+<li><code>amen</code>: Amen break</li>
+<li><code>break</code>: Varios breaks</li>
+<li><code>jungle</code>: Jungle breaks</li>
+
+<strong>Tonales:</strong>
+<li><code>bass</code>: Bajos</li>
+<li><code>arpy</code>: Arpegios</li>
+<li><code>superpiano</code>: Piano</li>
+
+<h3>7.2 Expansión de Biblioteca</h3>
+
+<strong>Fuentes Gratuitas:</strong>
+<li>Freesound.org</li>
+<li>99Sounds</li>
+<li>Bedroom Producers Blog</li>
+<li>Samples From Mars (algunos gratuitos)</li></ul>
+
+<strong>Organización:</strong>
+<pre><code>Samples/
+<p>
+├── Drums/
+│   ├── Kicks/
+│   ├── Snares/
+│   └── Hats/
+├── Melodic/
+│   ├── Bass/
+│   ├── Synths/
+│   └── Keys/
+├── FX/
+│   ├── Impacts/
+│   ├── Risers/
+│   └── Atmospheres/
+└── Vocals/
+    ├── Chops/
+    └── Phrases/</code></pre>
+</p>
+
+<h2>8. Casos de Uso Prácticos</h2>
+
+<h3>8.1 Techno Kick</h3>
+
+<pre><code>d1 $ s "bd*4"
+<p>
+  # lpf 800
+  # resonance 0.3
+  # shape 0.5
+  # gain 1.2
+  # orbit 0</code></pre>
+</p>
+
+<h3>8.2 Acid Bassline</h3>
+
+<pre><code>d1 $ n "0 ~ 0 ~" # s "superfm"
+<p>
+  # voice 2
+  # lfo 8
+  # lpf (range 200 4000 (slow 4 saw))
+  # resonance 0.8
+  # shape 0.6
+  # orbit 1</code></pre>
+</p>
+
+<h3>8.3 Ambient Pad</h3>
+
+<pre><code>d1 $ n "60 64 67 72" # s "supersaw"
+<p>
+  # detune 0.3
+  # attack 3
+  # release 5
+  # lpf 2000
+  # room 0.9
+  # size 0.95
+  # gain 0.7
+  # orbit 2</code></pre>
+</p>
+
+<h3>8.4 Glitch Percussion</h3>
+
+<pre><code>d1 $ chop 32 $ s "amen"
+<p>
+  # speed (range 0.5 2 rand)
+  # crush (range 2 16 rand)
+  # pan (rand)
+  # delay 0.3
+  # delaytime 0.125
+  # orbit 3</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<p>
+Esta guía cubre los aspectos fundamentales y avanzados del trabajo con samples y síntesis en TidalCycles. La clave está en experimentar constantemente y desarrollar tu propia paleta sonora única.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

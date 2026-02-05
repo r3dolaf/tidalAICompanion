@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintaxis Avanzada - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Sintaxis Avanzada</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>MINI-NOTACIÓN: REFERENCIA COMPLETA Y EXHAUSTIVA</h1>
+
+<h2>1. Introducción a la Mini-Notación</h2>
+
+<p>
+La mini-notación es un lenguaje de dominio específico (DSL) dentro de TidalCycles que permite describir patrones rítmicos de forma concisa y expresiva. Es el corazón de la composición en Tidal.
+</p>
+
+<h2>2. Sintaxis Básica</h2>
+
+<h3>2.1 Secuencias Simples</h3>
+
+<pre><code>-- Secuencia de 4 elementos
+<p>
+d1 $ s "bd sd bd sd"
+</p>
+
+<p>
+-- Equivalente con samples numerados
+d1 $ s "bd:0 sd:1 bd:2 sd:3"</code></pre>
+</p>
+
+<strong>Regla</strong>: Los elementos separados por espacios se distribuyen equitativamente en un ciclo.
+
+<h3>2.2 Grupos <code>[]</code></h3>
+
+<p>
+Los corchetes crean subdivisiones dentro del espacio asignado:
+</p>
+
+<pre><code>-- 3 elementos en el espacio de 1
+<p>
+d1 $ s "bd [sd sd sd] bd"
+</p>
+
+<p>
+-- Equivalente a tresillo en el segundo beat
+d1 $ s "bd [sd sd sd]/3 bd"</code></pre>
+</p>
+
+<strong>Anidamiento</strong>:
+
+<pre><code>-- Subdivisiones dentro de subdivisiones
+<p>
+d1 $ s "bd [sd [hh hh hh] sd] bd"</code></pre>
+</p>
+
+<h3>2.3 Punto <code>.</code> (Separador de Secuencia)</h3>
+
+<p>
+El punto actúa como separador sin crear subdivisiones:
+</p>
+
+<pre><code>-- Equivalente a espacios, pero más legible en patrones largos
+<p>
+d1 $ s "bd . sd . hh . cp"</code></pre>
+</p>
+
+<h3>2.4 Coma <code>,</code> (Superposición)</h3>
+
+<p>
+La coma superpone eventos en el mismo espacio temporal:
+</p>
+
+<pre><code>-- Bombo y caja al mismo tiempo
+<p>
+d1 $ s "bd,sd"
+</p>
+
+<p>
+-- Acorde de tres notas
+d1 $ n "0,4,7" # s "superpiano"</code></pre>
+</p>
+
+<h2>3. Operadores de Repetición</h2>
+
+<h3>3.1 Multiplicación <code>*</code></h3>
+
+<p>
+Repite un elemento N veces en su espacio:
+</p>
+
+<pre><code>-- 4 bombos en un ciclo
+<p>
+d1 $ s "bd*4"
+</p>
+
+<p>
+-- 8 hi-hats en el segundo beat
+d1 $ s "bd [hh*8] sd"</code></pre>
+</p>
+
+<h3>3.2 División <code>/</code></h3>
+
+<p>
+Alarga la duración del elemento:
+</p>
+
+<pre><code>-- Un bombo cada 2 ciclos
+<p>
+d1 $ s "bd/2"
+</p>
+
+<p>
+-- Un bombo cada 4 ciclos
+d1 $ s "bd/4"</code></pre>
+</p>
+
+<h3>3.3 Ponderación <code>@</code></h3>
+
+<p>
+Asigna peso relativo a los elementos:
+</p>
+
+<pre><code>-- Bombo dura 3 veces más que la caja
+<p>
+d1 $ s "bd@3 sd"
+</p>
+
+<p>
+-- Equivalente a
+d1 $ s "bd bd bd sd"</code></pre>
+</p>
+
+<h2>4. Silencios y Espacios</h2>
+
+<h3>4.1 Tilde <code>~</code> (Silencio)</h3>
+
+<p>
+Representa un espacio vacío:
+</p>
+
+<pre><code>-- Patrón con silencios
+<p>
+d1 $ s "bd ~ sd ~"
+</p>
+
+<p>
+-- Síncopa
+d1 $ s "bd ~ ~ sd"</code></pre>
+</p>
+
+<h3>4.2 Guión bajo <code>_</code> (Prolongación)</h3>
+
+<p>
+Extiende la duración del evento anterior:
+</p>
+
+<pre><code>-- Bombo largo
+<p>
+d1 $ s "bd _ sd _"</code></pre>
+</p>
+
+<h2>5. Aleatorización</h2>
+
+<h3>5.1 Signo de Interrogación <code>?</code></h3>
+
+<p>
+Evento aleatorio con 50% de probabilidad:
+</p>
+
+<pre><code>-- Hi-hat aleatorio
+<p>
+d1 $ s "hh*16?"
+</p>
+
+<p>
+-- Cada evento tiene 50% de aparecer
+d1 $ s "bd? sd? hh? cp?"</code></pre>
+</p>
+
+<h3>5.2 Probabilidad Explícita <code>?n</code></h3>
+
+<p>
+Especifica la probabilidad (0-1):
+</p>
+
+<pre><code>-- 80% de probabilidad
+<p>
+d1 $ s "bd*4?0.8"
+</p>
+
+<p>
+-- 30% de probabilidad
+d1 $ s "hh*16?0.3"</code></pre>
+</p>
+
+<h2>6. Selección y Alternancia</h2>
+
+<h3>6.1 Ángulos <code>< ></code> (Alternancia)</h3>
+
+<p>
+Alterna entre opciones en cada ciclo:
+</p>
+
+<pre><code>-- Alterna entre bd y sd cada ciclo
+<p>
+d1 $ s "<bd sd>"
+</p>
+
+<p>
+-- Alterna entre 3 opciones
+d1 $ s "<bd sd cp>"</code></pre>
+</p>
+
+<h3>6.2 Pipes <code>|</code> (Selección Aleatoria)</h3>
+
+<p>
+Elige aleatoriamente entre opciones:
+</p>
+
+<pre><code>-- Elige aleatoriamente entre bd y sd
+<p>
+d1 $ s "bd|sd"
+</p>
+
+<p>
+-- Múltiples opciones
+d1 $ s "bd|sd|cp|hh"</code></pre>
+</p>
+
+<h2>7. Ritmos Euclidianos</h2>
+
+<h3>7.1 Sintaxis <code>(k,n)</code></h3>
+
+<p>
+Distribuye k pulsos en n pasos usando el algoritmo de Bjorklund:
+</p>
+
+<pre><code>-- 3 pulsos en 8 pasos (tresillo)
+<p>
+d1 $ s "bd(3,8)"
+</p>
+
+<p>
+-- 5 pulsos en 8 pasos (cinquillo)
+d1 $ s "bd(5,8)"</code></pre>
+</p>
+
+<h3>7.2 Rotación <code>(k,n,r)</code></h3>
+
+<p>
+Rota el patrón euclidiano r pasos:
+</p>
+
+<pre><code>-- Tresillo rotado 2 pasos
+<p>
+d1 $ s "bd(3,8,2)"</code></pre>
+</p>
+
+<h3>7.3 Patrones Euclidianos Comunes</h3>
+
+<pre><code>-- Reggaeton/Dembow
+<p>
+d1 $ s "bd(3,8)"
+</p>
+
+<p>
+-- Bossa Nova
+d1 $ s "bd(1,4) sd(1,4,2)"
+</p>
+
+<p>
+-- Rumba
+d1 $ s "bd(3,4)"
+</p>
+
+<p>
+-- Samba
+d1 $ s "bd(7,16)"
+</p>
+
+<p>
+-- Soukous
+d1 $ s "bd(5,12)"</code></pre>
+</p>
+
+<h2>8. Polimetría y Polirritmos</h2>
+
+<h3>8.1 Llaves <code>{ }</code> (Polimetría)</h3>
+
+<p>
+Crea patrones con diferente número de pasos que se sincronizan por ciclo:
+</p>
+
+<pre><code>-- 3 contra 4
+<p>
+d1 $ s "{bd bd bd, sd sd sd sd}"
+</p>
+
+<p>
+-- Estilo Steve Reich
+d1 $ s "{bd sd hh, cp cp cp cp cp}"</code></pre>
+</p>
+
+<h3>8.2 Polirritmos Complejos</h3>
+
+<pre><code>-- 3:4:5
+<p>
+d1 $ s "{bd bd bd, sd sd sd sd, hh hh hh hh hh}"</code></pre>
+</p>
+
+<h2>9. Modificadores de Velocidad</h2>
+
+<h3>9.1 Multiplicación de Velocidad <code>*n</code></h3>
+
+<pre><code>-- Doble velocidad
+<p>
+d1 $ s "bd sd"*2
+</p>
+
+<p>
+-- Mitad de velocidad
+d1 $ s "bd sd"/2</code></pre>
+</p>
+
+<h3>9.2 Modificadores en Grupos</h3>
+
+<pre><code>-- Solo afecta al grupo
+<p>
+d1 $ s "[bd sd]*2 hh"</code></pre>
+</p>
+
+<h2>10. Rangos y Secuencias</h2>
+
+<h3>10.1 Rangos con <code>..</code></h3>
+
+<pre><code>-- Secuencia de 0 a 7
+<p>
+d1 $ n "0..7" # s "arpy"
+</p>
+
+<p>
+-- Descendente
+d1 $ n "7..0" # s "arpy"</code></pre>
+</p>
+
+<h3>10.2 Rangos con Paso</h3>
+
+<pre><code>-- De 0 a 12 de 2 en 2
+<p>
+d1 $ n "0,2..12" # s "arpy"</code></pre>
+</p>
+
+<h2>11. Ejemplos Avanzados</h2>
+
+<h3>11.1 Combinación de Técnicas</h3>
+
+<pre><code>-- Patrón complejo
+<p>
+d1 $ s "[bd*2 [sd cp], hh*8?0.7] <~ bd> {bd sd, hh hh hh}"</code></pre>
+</p>
+
+<h3>11.2 Patrones Anidados</h3>
+
+<pre><code>-- Múltiples niveles de anidamiento
+<p>
+d1 $ s "bd [sd [hh hh [cp cp cp]] sd] bd [~ sd]"</code></pre>
+</p>
+
+<h3>11.3 Euclidiano con Aleatorización</h3>
+
+<pre><code>-- Patrón euclidiano con probabilidad
+<p>
+d1 $ s "bd(3,8)?0.8"</code></pre>
+</p>
+
+<h2>12. Tabla de Referencia Rápida</h2>
+
+<p>
+| Símbolo | Función | Ejemplo |
+|---------|---------|---------|
+| <code>espacio</code> | Secuencia | <code>bd sd hh</code> |
+| <code>[]</code> | Subdivisión | <code>[bd sd]</code> |
+| <code>.</code> | Separador | <code>bd . sd</code> |
+| <code>,</code> | Superposición | <code>bd,sd</code> |
+| <code>*n</code> | Repetición | <code>bd*4</code> |
+| <code>/n</code> | Alargamiento | <code>bd/2</code> |
+| <code>@n</code> | Peso | <code>bd@3 sd</code> |
+| <code>~</code> | Silencio | <code>bd ~ sd</code> |
+| <code>_</code> | Prolongación | <code>bd _ _</code> |
+| <code>?</code> | Aleatorio 50% | <code>bd?</code> |
+| <code>?n</code> | Probabilidad | <code>bd?0.8</code> |
+| <code><></code> | Alternancia | <code><bd sd></code> |
+| <code>\|</code> | Selección | <code>bd\|sd</code> |
+| <code>(k,n)</code> | Euclidiano | <code>bd(3,8)</code> |
+| <code>(k,n,r)</code> | Euclidiano rotado | <code>bd(3,8,2)</code> |
+| <code>{}</code> | Polimetría | <code>{bd bd, sd sd sd}</code> |
+| <code>..</code> | Rango | <code>0..7</code> |
+</p>
+
+<h2>13. Patrones de Uso Común</h2>
+
+<h3>13.1 Drum Patterns</h3>
+
+<pre><code>-- Four on the floor
+<p>
+d1 $ s "bd*4"
+</p>
+
+<p>
+-- Breakbeat básico
+d1 $ s "bd ~ sd ~"
+</p>
+
+<p>
+-- Jungle break
+d1 $ s "bd [~ bd] sd [bd ~]"
+</p>
+
+<p>
+-- Trap hi-hats
+d1 $ s "hh*8 [hh*3] [hh*4] hh*8"</code></pre>
+</p>
+
+<h3>13.2 Melodías</h3>
+
+<pre><code>-- Arpegio ascendente
+<p>
+d1 $ n "0 2 4 7" # s "superpiano"
+</p>
+
+<p>
+-- Arpegio con repeticiones
+d1 $ n "0*2 2 4*2 7" # s "superpiano"
+</p>
+
+<p>
+-- Melodía con silencios
+d1 $ n "0 ~ 4 ~ 7 ~ 4 ~" # s "superpiano"</code></pre>
+</p>
+
+<h3>13.3 Basslines</h3>
+
+<pre><code>-- Bajo simple
+<p>
+d1 $ n "0 ~ 0 ~" # s "bass"
+</p>
+
+<p>
+-- Bajo sincopado
+d1 $ n "0 ~ [0 0] ~ 0 ~ ~ 0" # s "bass"
+</p>
+
+<p>
+-- Bajo con octavas
+d1 $ n "0 12 0 12" # s "bass"</code></pre>
+</p>
+
+<h2>14. Debugging de Mini-Notación</h2>
+
+<h3>14.1 Visualizar Patrones</h3>
+
+<pre><code>-- Ver estructura
+<p>
+drawLine $ s "bd [sd sd sd] bd"
+</p>
+
+<p>
+-- Ver con números
+drawLine $ n "0 [1 2 3] 4"</code></pre>
+</p>
+
+<h3>14.2 Errores Comunes</h3>
+
+<p>
+1. <strong>Corchetes no balanceados</strong>: <code>[bd sd</code> ❌
+2. <strong>Comas fuera de contexto</strong>: <code>bd, sd</code> ❌ (debe ser <code>bd,sd</code>)
+3. <strong>Operadores mal colocados</strong>: <code>*4bd</code> ❌ (debe ser <code>bd*4</code>)
+</p>
+
+<h2>15. Ejercicios Prácticos</h2>
+
+<h3>Nivel Básico</h3>
+<p>
+1. Crear un patrón de 4 beats con bombo y caja alternados
+2. Añadir hi-hats en corcheas
+3. Introducir un silencio en el tercer beat
+</p>
+
+<h3>Nivel Intermedio</h3>
+<p>
+4. Crear un tresillo de caja en el segundo beat
+5. Usar aleatorización en los hi-hats
+6. Combinar dos patrones con polimetría
+</p>
+
+<h3>Nivel Avanzado</h3>
+<p>
+7. Crear un patrón euclidiano de 5 en 8
+8. Anidar 3 niveles de subdivisiones
+9. Combinar euclidiano, aleatorización y polimetría en un solo patrón
+</p>
+
+<p>
+---
+</p>
+
+<p>
+Esta es la base fundamental de la mini-notación. Dominar estos conceptos te permite crear patrones de cualquier complejidad. La clave está en la experimentación y la práctica constante.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

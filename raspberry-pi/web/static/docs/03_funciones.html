@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones Completas - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Funciones Completas</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>FUNCIONES DE TRANSFORMACIÓN: REFERENCIA COMPLETA</h1>
+
+<h2>1. Funciones de Velocidad y Tiempo</h2>
+
+<h3>1.1 <code>fast</code> - Acelerar Patrón</h3>
+
+<p>
+Multiplica la velocidad del patrón por un factor.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+fast :: Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ fast 2 $ s "bd sd"        -- Doble velocidad
+d1 $ fast 4 $ s "bd sd"        -- Cuádruple velocidad
+d1 $ fast 0.5 $ s "bd sd"      -- Mitad de velocidad
+d1 $ fast "<2 4 8>" $ s "bd sd" -- Velocidad variable</code></pre>
+</p>
+
+<strong>Uso Avanzado:</strong>
+<pre><code>-- Fast con patrón
+<p>
+d1 $ fast "2 4 1 8" $ s "bd sd hh cp"
+</p>
+
+<p>
+-- Fast anidado
+d1 $ fast 2 $ fast 2 $ s "bd sd"  -- Equivale a fast 4</code></pre>
+</p>
+
+<h3>1.2 <code>slow</code> - Ralentizar Patrón</h3>
+
+<p>
+Divide la velocidad del patrón por un factor.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+slow :: Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ slow 2 $ s "bd sd"        -- Mitad de velocidad
+d1 $ slow 4 $ s "bd sd"        -- Cuarto de velocidad
+d1 $ slow "<2 4 8>" $ s "bd sd" -- Velocidad variable</code></pre>
+</p>
+
+<strong>Aplicaciones Musicales:</strong>
+<pre><code>-- Ambient/Drone
+<p>
+d1 $ slow 16 $ n "0 4 7 11" # s "superpiano"
+</p>
+
+<p>
+-- Build-up progresivo
+d1 $ slow (range 1 8 saw) $ s "bd*4"</code></pre>
+</p>
+
+<h3>1.3 <code>hurry</code> - Acelerar con Pitch</h3>
+
+<p>
+Acelera el patrón Y aumenta el pitch proporcionalmente.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+hurry :: Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ hurry 2 $ s "bd sd"       -- Doble velocidad + octava arriba
+d1 $ hurry 0.5 $ s "bd sd"     -- Mitad velocidad + octava abajo</code></pre>
+</p>
+
+<strong>Diferencia con <code>fast</code>:</strong>
+<ul><li><code>fast</code>: Solo afecta la velocidad temporal</li>
+<li><code>hurry</code>: Afecta velocidad + pitch (como acelerar una cinta)</li>
+
+<h3>1.4 <code>density</code> - Alias de <code>fast</code></h3>
+
+<pre><code>d1 $ density 2 $ s "bd sd"  -- Equivalente a fast 2</code></pre>
+
+<h3>1.5 <code>sparsity</code> - Alias de <code>slow</code></h3>
+
+<pre><code>d1 $ sparsity 2 $ s "bd sd"  -- Equivalente a slow 2</code></pre>
+
+<h2>2. Funciones de Estructura Temporal</h2>
+
+<h3>2.1 <code>rev</code> - Invertir Patrón</h3>
+
+<p>
+Invierte el orden temporal de los eventos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+rev :: Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ rev $ s "bd sd hh cp"     -- Reproduce al revés
+d1 $ rev $ n "0 2 4 7" # s "superpiano"  -- Melodía invertida</code></pre>
+</p>
+
+<strong>Uso Creativo:</strong>
+<pre><code>-- Mitad normal, mitad invertida
+<p>
+d1 $ every 2 rev $ s "bd sd hh cp"
+</p>
+
+<p>
+-- Patrón palindrómico
+d1 $ s "bd sd hh cp" # rev (n "0 2 4 7")</code></pre>
+</p>
+
+<h3>2.2 <code>palindrome</code> - Patrón Palindrómico</h3>
+
+<p>
+Reproduce el patrón normal y luego invertido.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+palindrome :: Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ palindrome $ s "bd sd hh"  -- bd sd hh hh sd bd
+d1 $ palindrome $ n "0 2 4 7" # s "superpiano"</code></pre>
+</p>
+
+<h3>2.3 <code>iter</code> - Rotación Progresiva</h3>
+
+<p>
+Rota el patrón un paso en cada ciclo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+iter :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ iter 4 $ s "bd sd hh cp"
+-- Ciclo 1: bd sd hh cp
+-- Ciclo 2: sd hh cp bd
+-- Ciclo 3: hh cp bd sd
+-- Ciclo 4: cp bd sd hh
+-- Ciclo 5: bd sd hh cp (vuelve al inicio)</code></pre>
+</p>
+
+<strong>Variantes:</strong>
+<pre><code>-- iter' - Rotación inversa
+<p>
+d1 $ iter' 4 $ s "bd sd hh cp"
+</p>
+
+<p>
+-- iterBack - Rotación hacia atrás
+d1 $ iterBack 4 $ s "bd sd hh cp"</code></pre>
+</p>
+
+<h3>2.4 <code>every</code> - Aplicar Cada N Ciclos</h3>
+
+<p>
+Aplica una transformación cada N ciclos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+every :: Pattern Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ every 4 (fast 2) $ s "bd sd"           -- Acelera cada 4 ciclos
+d1 $ every 3 rev $ s "bd sd hh cp"          -- Invierte cada 3 ciclos
+d1 $ every 2 (# crush 4) $ s "bd sd"        -- Distorsiona cada 2 ciclos</code></pre>
+</p>
+
+<strong>Uso Avanzado:</strong>
+<pre><code>-- Múltiples transformaciones
+<p>
+d1 $ every 4 (fast 2 . rev . (# crush 3)) $ s "bd sd hh cp"
+</p>
+
+<p>
+-- every anidado
+d1 $ every 4 (every 2 (fast 2)) $ s "bd sd"</code></pre>
+</p>
+
+<h3>2.5 <code>whenmod</code> - Condicional Modular</h3>
+
+<p>
+Aplica transformación cuando el ciclo cumple una condición modular.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+whenmod :: Pattern Int -> Pattern Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ whenmod 8 6 (fast 2) $ s "bd sd"
+-- Aplica fast 2 en los ciclos 6, 14, 22, 30...
+-- (cuando ciclo mod 8 == 6)
+</p>
+
+<p>
+d1 $ whenmod 16 12 (# crush 4) $ s "bd sd hh cp"</code></pre>
+</p>
+
+<strong>Aplicaciones:</strong>
+<pre><code>-- Estructura de 16 compases con variación en el 13
+<p>
+d1 $ whenmod 16 12 (fast 2 . rev) $ s "bd sd hh cp"
+</p>
+
+<p>
+-- Drop cada 32 ciclos
+d1 $ whenmod 32 28 (# lpf 200) $ s "bd*4"</code></pre>
+</p>
+
+<h3>2.6 <code>someCycles</code> - Aplicar Aleatoriamente</h3>
+
+<p>
+Aplica transformación aleatoriamente a algunos ciclos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+someCycles :: (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ someCycles (fast 2) $ s "bd sd"        -- A veces acelera
+d1 $ someCycles rev $ s "bd sd hh cp"       -- A veces invierte
+d1 $ someCycles (# crush 4) $ s "bd sd"     -- A veces distorsiona</code></pre>
+</p>
+
+<strong>Variantes con Probabilidad:</strong>
+<pre><code>-- someCyclesBy - Especifica probabilidad
+<p>
+d1 $ someCyclesBy 0.25 (fast 2) $ s "bd sd"  -- 25% de probabilidad
+d1 $ someCyclesBy 0.75 rev $ s "bd sd hh cp" -- 75% de probabilidad</code></pre>
+</p>
+
+<h2>3. Funciones de Repetición y Densidad</h2>
+
+<h3>3.1 <code>ply</code> - Subdividir Eventos</h3>
+
+<p>
+Subdivide cada evento en N repeticiones.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+ply :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ ply 2 $ s "bd sd"          -- bd bd sd sd
+d1 $ ply 4 $ s "bd sd"          -- bd bd bd bd sd sd sd sd
+d1 $ ply "<2 4 8>" $ s "bd sd"  -- Subdivisión variable</code></pre>
+</p>
+
+<strong>Diferencia con <code>fast</code>:</strong>
+<li><code>fast</code>: Repite todo el patrón</li>
+<li><code>ply</code>: Repite cada evento individual</li>
+
+<h3>3.2 <code>stut</code> - Eco/Delay</h3>
+
+<p>
+Crea ecos del patrón con decay.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+stut :: Pattern Int -> Pattern Double -> Pattern Double -> Pattern a -> Pattern a
+-- stut repeticiones decay tiempo
+</p>
+
+<p>
+-- Ejemplos
+d1 $ stut 4 0.5 0.125 $ s "bd sd"
+-- 4 repeticiones, 50% de volumen cada vez, separadas 1/8 de ciclo
+</p>
+
+<p>
+d1 $ stut 8 0.7 0.0625 $ s "cp"
+-- Eco largo con decay lento</code></pre>
+</p>
+
+<strong>Variantes:</strong>
+<pre><code>-- stut' - Con transformación en cada eco
+<p>
+d1 $ stut' 4 0.125 (# crush 4) $ s "bd sd"
+</p>
+
+<p>
+-- stutWith - Control total
+d1 $ stutWith 4 0.125 [(# speed 2), (# crush 4)] $ s "bd"</code></pre>
+</p>
+
+<h3>3.3 <code>echo</code> - Eco Simple</h3>
+
+<p>
+Eco con parámetros simplificados.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+echo :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ echo 4 $ s "bd sd"</code></pre>
+</p>
+
+<h3>3.4 <code>stripe</code> - Dividir en Franjas</h3>
+
+<p>
+Divide el patrón en franjas temporales.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+stripe :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ stripe 4 $ s "bd sd hh cp"</code></pre>
+</p>
+
+<h2>4. Funciones de Desplazamiento Temporal</h2>
+
+<h3>4.1 <code>(<~)</code> - Desplazar a la Izquierda</h3>
+
+<p>
+Desplaza el patrón hacia la izquierda (adelanta).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+(<~) :: Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ 0.25 <~ s "bd sd hh cp"    -- Adelanta 1/4 de ciclo
+d1 $ 0.5 <~ s "bd sd hh cp"     -- Adelanta 1/2 ciclo
+d1 $ "<0 0.25 0.5>" <~ s "bd sd hh cp"  -- Desplazamiento variable</code></pre>
+</p>
+
+<h3>4.2 <code>(~>)</code> - Desplazar a la Derecha</h3>
+
+<p>
+Desplaza el patrón hacia la derecha (retrasa).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+(~>) :: Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ 0.25 ~> s "bd sd hh cp"    -- Retrasa 1/4 de ciclo
+d1 $ 0.5 ~> s "bd sd hh cp"     -- Retrasa 1/2 ciclo</code></pre>
+</p>
+
+<strong>Aplicaciones Musicales:</strong>
+<pre><code>-- Groove/Swing
+<p>
+d1 $ s "bd sd hh cp"
+d2 $ 0.02 ~> s "hh*8"  -- Hi-hats ligeramente retrasados
+</p>
+
+<p>
+-- Phasing (estilo Steve Reich)
+d1 $ s "bd sd hh cp"
+d2 $ 0.001 <~ s "bd sd hh cp"  -- Desfase gradual</code></pre>
+</p>
+
+<h3>4.3 <code>rotL</code> y <code>rotR</code> - Rotación</h3>
+
+<p>
+Rota el patrón por un número de pasos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+rotL :: Pattern Time -> Pattern a -> Pattern a
+rotR :: Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ rotL 1 $ s "bd sd hh cp"   -- Rota 1 paso a la izquierda
+d1 $ rotR 2 $ s "bd sd hh cp"   -- Rota 2 pasos a la derecha</code></pre>
+</p>
+
+<h2>5. Funciones de Combinación</h2>
+
+<h3>5.1 <code>stack</code> - Apilar Patrones</h3>
+
+<p>
+Superpone múltiples patrones.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+stack :: [Pattern a] -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ stack [
+  s "bd*4",
+  s "sd(3,8)",
+  s "hh*16"
+]
+</p>
+
+<p>
+-- Con efectos independientes
+d1 $ stack [
+  s "bd*4" # gain 1.2,
+  s "sd(3,8)" # room 0.3,
+  s "hh*16" # pan (sine)
+]</code></pre>
+</p>
+
+<h3>5.2 <code>cat</code> - Concatenar Patrones</h3>
+
+<p>
+Concatena patrones secuencialmente.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+cat :: [Pattern a] -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ cat [
+  s "bd*4",
+  s "sd*4",
+  s "hh*8"
+]
+-- Ciclo 1: bd*4
+-- Ciclo 2: sd*4
+-- Ciclo 3: hh*8
+-- Ciclo 4: bd*4 (repite)</code></pre>
+</p>
+
+<h3>5.3 <code>fastcat</code> - Concatenar Rápido</h3>
+
+<p>
+Concatena patrones dentro de un ciclo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+fastcat :: [Pattern a] -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ fastcat [
+  s "bd*4",
+  s "sd*4",
+  s "hh*8"
+]
+-- Todo en un ciclo, dividido en 3 partes</code></pre>
+</p>
+
+<h3>5.4 <code>slowcat</code> - Concatenar Lento</h3>
+
+<p>
+Concatena patrones, cada uno dura N ciclos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+slowcat :: [Pattern a] -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ slowcat [
+  s "bd*4",
+  s "sd*4",
+  s "hh*8"
+]</code></pre>
+</p>
+
+<h3>5.5 <code>append</code> - Añadir Patrón</h3>
+
+<p>
+Añade un patrón al final de otro.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+append :: Pattern a -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ append (s "bd*4") (s "sd*4")</code></pre>
+</p>
+
+<h3>5.6 <code>wedge</code> - Mezcla Proporcional</h3>
+
+<p>
+Mezcla dos patrones con una proporción específica.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+wedge :: Pattern Time -> Pattern a -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ wedge 0.5 (s "bd*4") (s "sd*4")  -- 50% cada uno
+d1 $ wedge 0.75 (s "bd*4") (s "sd*4") -- 75% bd, 25% sd
+d1 $ wedge (slow 4 sine) (s "bd*4") (s "sd*4")  -- Proporción variable</code></pre>
+</p>
+
+<h2>6. Funciones de Filtrado y Selección</h2>
+
+<h3>6.1 <code>mask</code> - Enmascarar Patrón</h3>
+
+<p>
+Filtra eventos según un patrón booleano.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+mask :: Pattern Bool -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ mask "t f t f" $ s "bd sd hh cp"  -- Solo bd y hh
+d1 $ mask "t(3,8)" $ s "bd*8"          -- Patrón euclidiano como máscara</code></pre>
+</p>
+
+<h3>6.2 <code>struct</code> - Estructura Rítmica</h3>
+
+<p>
+Aplica una estructura rítmica a un patrón.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+struct :: Pattern Bool -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ struct "t(3,8)" $ s "bd"          -- Ritmo euclidiano
+d1 $ struct "t ~ t ~" $ n "0 2 4 7" # s "superpiano"</code></pre>
+</p>
+
+<strong>Diferencia con <code>mask</code>:</strong>
+<li><code>mask</code>: Filtra eventos existentes</li>
+<li><code>struct</code>: Impone una nueva estructura temporal</li>
+
+<h3>6.3 <code>euclidFull</code> - Euclidiano con Relleno</h3>
+
+<p>
+Ritmo euclidiano con eventos en los espacios vacíos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+euclidFull :: Pattern Int -> Pattern Int -> Pattern a -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ euclidFull 3 8 (s "bd") (s "hh")
+-- 3 bombos en 8 pasos, hi-hats en los espacios vacíos</code></pre>
+</p>
+
+<h2>7. Funciones de Transformación Estéreo</h2>
+
+<h3>7.1 <code>jux</code> - Yuxtaponer</h3>
+
+<p>
+Aplica una transformación solo al canal derecho.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+jux :: (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ jux rev $ s "bd sd hh cp"          -- Derecha invertida
+d1 $ jux (fast 2) $ s "bd sd"           -- Derecha doble velocidad
+d1 $ jux (# crush 4) $ s "bd sd hh cp"  -- Derecha distorsionada</code></pre>
+</p>
+
+<strong>Uso Avanzado:</strong>
+<pre><code>-- jux con múltiples transformaciones
+<p>
+d1 $ jux (fast 2 . rev . (# speed 2)) $ s "bd sd hh cp"
+</p>
+
+<p>
+-- jux anidado
+d1 $ jux (jux rev) $ s "bd sd hh cp"</code></pre>
+</p>
+
+<h3>7.2 <code>juxBy</code> - Yuxtaponer con Mezcla</h3>
+
+<p>
+Controla la cantidad de mezcla entre canales.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+juxBy :: Pattern Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ juxBy 0.5 rev $ s "bd sd hh cp"    -- 50% de mezcla
+d1 $ juxBy 0.25 (fast 2) $ s "bd sd"    -- 25% de mezcla
+d1 $ juxBy (slow 4 sine) rev $ s "bd sd hh cp"  -- Mezcla variable</code></pre>
+</p>
+
+<h3>7.3 <code>jux4</code> - Yuxtaponer en 4 Canales</h3>
+
+<p>
+Aplica transformaciones a 4 canales (cuadrafónico).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+jux4 :: (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ jux4 rev $ s "bd sd hh cp"</code></pre>
+</p>
+
+<h2>8. Funciones de Degradación y Glitch</h2>
+
+<h3>8.1 <code>degrade</code> - Degradar Aleatoriamente</h3>
+
+<p>
+Elimina eventos aleatoriamente (50% de probabilidad).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+degrade :: Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ degrade $ s "bd*4"                 -- Algunos bombos se pierden
+d1 $ degrade $ s "hh*16"                -- Hi-hats esporádicos</code></pre>
+</p>
+
+<h3>8.2 <code>degradeBy</code> - Degradar con Probabilidad</h3>
+
+<p>
+Especifica la probabilidad de eliminación.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+degradeBy :: Pattern Double -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ degradeBy 0.25 $ s "bd*4"          -- 25% de pérdida
+d1 $ degradeBy 0.75 $ s "hh*16"         -- 75% de pérdida
+d1 $ degradeBy (slow 4 sine) $ s "bd*4" -- Degradación variable</code></pre>
+</p>
+
+<h3>8.3 <code>sometimes</code> - A Veces</h3>
+
+<p>
+Aplica transformación aleatoriamente (50% de probabilidad).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+sometimes :: (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ sometimes (fast 2) $ s "bd sd"     -- A veces acelera
+d1 $ sometimes rev $ s "bd sd hh cp"    -- A veces invierte
+d1 $ sometimes (# crush 4) $ s "bd sd"  -- A veces distorsiona</code></pre>
+</p>
+
+<strong>Variantes:</strong>
+<pre><code>-- often - 75% de probabilidad
+<p>
+d1 $ often (fast 2) $ s "bd sd"
+</p>
+
+<p>
+-- rarely - 25% de probabilidad
+d1 $ rarely (fast 2) $ s "bd sd"
+</p>
+
+<p>
+-- almostNever - 10% de probabilidad
+d1 $ almostNever (fast 2) $ s "bd sd"
+</p>
+
+<p>
+-- almostAlways - 90% de probabilidad
+d1 $ almostAlways (fast 2) $ s "bd sd"</code></pre>
+</p>
+
+<h3>8.4 <code>sometimesBy</code> - A Veces con Probabilidad</h3>
+
+<pre><code>-- Sintaxis
+<p>
+sometimesBy :: Pattern Double -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ sometimesBy 0.3 (fast 2) $ s "bd sd"   -- 30% de probabilidad
+d1 $ sometimesBy 0.8 rev $ s "bd sd hh cp"  -- 80% de probabilidad</code></pre>
+</p>
+
+<h2>9. Funciones de Rango y Escalado</h2>
+
+<h3>9.1 <code>range</code> - Escalar Rango</h3>
+
+<p>
+Escala un patrón continuo a un rango específico.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+range :: Pattern Double -> Pattern Double -> Pattern Double -> Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # gain (range 0.5 1.2 sine)   -- Ganancia oscilante
+d1 $ s "bd*4" # lpf (range 200 4000 saw)    -- Filtro oscilante
+d1 $ s "bd*4" # pan (range 0.2 0.8 sine)    -- Paneo oscilante</code></pre>
+</p>
+
+<h3>9.2 <code>rangex</code> - Escalar Rango Exponencial</h3>
+
+<p>
+Escala exponencialmente (útil para frecuencias).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+rangex :: Pattern Double -> Pattern Double -> Pattern Double -> Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # lpf (rangex 100 10000 sine)  -- Barrido exponencial</code></pre>
+</p>
+
+<h2>10. Funciones de Cuantización</h2>
+
+<h3>10.1 <code>quantise</code> - Cuantizar Valores</h3>
+
+<p>
+Redondea valores a un grid específico.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+quantise :: Pattern Int -> Pattern Double -> Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ n (quantise 1 $ range 0 12 sine) # s "superpiano"  -- Notas enteras
+d1 $ n (quantise 2 $ range 0 12 sine) # s "superpiano"  -- Semitonos</code></pre>
+</p>
+
+<h2>11. Funciones de Aleatorización</h2>
+
+<h3>11.1 <code>rand</code> - Valor Aleatorio</h3>
+
+<p>
+Genera un valor aleatorio entre 0 y 1.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+rand :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # gain rand               -- Ganancia aleatoria
+d1 $ s "bd*4" # pan rand                -- Paneo aleatorio
+d1 $ s "bd*4" # speed (range 0.5 2 rand)  -- Velocidad aleatoria</code></pre>
+</p>
+
+<h3>11.2 <code>irand</code> - Entero Aleatorio</h3>
+
+<p>
+Genera un entero aleatorio entre 0 y N-1.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+irand :: Pattern Int -> Pattern Int
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "arpy" # n (irand 16)            -- Sample aleatorio (0-15)
+d1 $ n (irand 12) # s "superpiano"      -- Nota aleatoria (0-11)</code></pre>
+</p>
+
+<h3>11.3 <code>choose</code> - Elegir Aleatoriamente</h3>
+
+<p>
+Elige aleatoriamente de una lista.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+choose :: [a] -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s (choose ["bd", "sd", "hh", "cp"])
+d1 $ n (choose [0, 2, 4, 7, 9]) # s "superpiano"</code></pre>
+</p>
+
+<h3>11.4 <code>chooseBy</code> - Elegir con Patrón</h3>
+
+<p>
+Usa un patrón para indexar en una lista.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+chooseBy :: Pattern Double -> [a] -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s (chooseBy sine ["bd", "sd", "hh", "cp"])
+d1 $ n (chooseBy (slow 4 saw) [0, 2, 4, 7, 9]) # s "superpiano"</code></pre>
+</p>
+
+<h3>11.5 <code>shuffle</code> - Mezclar Aleatoriamente</h3>
+
+<p>
+Mezcla los elementos de un patrón.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+shuffle :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ shuffle 4 $ s "bd sd hh cp"        -- Mezcla 4 elementos
+d1 $ shuffle 8 $ n "0 1 2 3 4 5 6 7" # s "arpy"</code></pre>
+</p>
+
+<h3>11.6 <code>scramble</code> - Reorganizar Aleatoriamente</h3>
+
+<p>
+Similar a shuffle pero con control de subdivisiones.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+scramble :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ scramble 4 $ s "bd sd hh cp"
+d1 $ scramble 8 $ n (run 8) # s "arpy"</code></pre>
+</p>
+
+<h2>12. Funciones de Samples</h2>
+
+<h3>12.1 <code>chop</code> - Cortar Sample</h3>
+
+<p>
+Divide el sample en N partes y las reproduce en orden.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+chop :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ chop 16 $ s "amen"                 -- Corta en 16 partes
+d1 $ chop 32 $ s "amen" # speed 2       -- Corte fino + velocidad</code></pre>
+</p>
+
+<h3>12.2 <code>striate</code> - Estratificar Sample</h3>
+
+<p>
+Similar a chop pero con solapamiento.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+striate :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ striate 16 $ s "amen"              -- Textura granular
+d1 $ striate 128 $ s "bev" # speed 0.5  -- Nube de granos</code></pre>
+</p>
+
+<h3>12.3 <code>slice</code> - Cortar y Seleccionar</h3>
+
+<p>
+Corta el sample y selecciona qué partes reproducir.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+slice :: Pattern Int -> Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ slice 8 "0 7 2 5" $ s "amen"       -- Selecciona partes específicas
+d1 $ slice 16 (run 16) $ s "amen"       -- Reproduce todas en orden
+d1 $ slice 8 (irand 8) $ s "amen"       -- Selección aleatoria</code></pre>
+</p>
+
+<h3>12.4 <code>splice</code> - Cortar con Velocidad</h3>
+
+<p>
+Corta y ajusta la velocidad para mantener el pitch.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+splice :: Pattern Int -> Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ splice 8 "0 7 2 5" $ s "amen"</code></pre>
+</p>
+
+<h3>12.5 <code>loopAt</code> - Loop con Duración</h3>
+
+<p>
+Hace loop del sample para que dure exactamente N ciclos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+loopAt :: Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ loopAt 1 $ s "amen"                -- Loop de 1 ciclo
+d1 $ loopAt 4 $ s "amen"                -- Loop de 4 ciclos
+d1 $ loopAt "<1 2 4>" $ s "amen"        -- Duración variable</code></pre>
+</p>
+
+<h2>13. Funciones de Escalas Musicales</h2>
+
+<h3>13.1 <code>scale</code> - Aplicar Escala</h3>
+
+<p>
+Mapea números a una escala musical.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+scale :: Pattern String -> Pattern Int -> Pattern Int
+</p>
+
+<p>
+-- Ejemplos
+d1 $ n (scale "major" "0 2 4 7") # s "superpiano"
+d1 $ n (scale "minor" (run 8)) # s "superpiano"
+d1 $ n (scale "phrygian" "0 1 2 3") # s "superpiano"</code></pre>
+</p>
+
+<strong>Escalas Disponibles:</strong>
+<li><code>major</code>, <code>minor</code>, <code>dorian</code>, <code>phrygian</code>, <code>lydian</code>, <code>mixolydian</code>, <code>aeolian</code>, <code>locrian</code></li>
+<li><code>majorPentatonic</code>, <code>minorPentatonic</code>, <code>chromatic</code>, <code>whole</code></li>
+<li><code>augmented</code>, <code>diminished</code>, <code>egyptian</code>, <code>spanish</code></li>
+
+<h3>13.2 <code>scaleList</code> - Ver Escalas Disponibles</h3>
+
+<pre><code>-- En la consola de Haskell
+<p>
+scaleList</code></pre>
+</p>
+
+<h2>14. Funciones de Acordes</h2>
+
+<h3>14.1 Notación de Acordes</h3>
+
+<pre><code>-- Sintaxis
+<p>
+n "nota'acorde" # s "sintetizador"
+</p>
+
+<p>
+-- Ejemplos
+d1 $ n "c'maj" # s "superpiano"         -- Do mayor
+d1 $ n "a'min" # s "superpiano"         -- La menor
+d1 $ n "g'dom7" # s "superpiano"        -- Sol dominante 7
+d1 $ n "d'min9" # s "superpiano"        -- Re menor 9</code></pre>
+</p>
+
+<strong>Tipos de Acordes:</strong>
+<li>Tríadas: <code>maj</code>, <code>min</code>, <code>aug</code>, <code>dim</code></li>
+<li>Séptimas: <code>maj7</code>, <code>min7</code>, <code>dom7</code>, <code>dim7</code></li>
+<li>Extensiones: <code>maj9</code>, <code>min9</code>, <code>dom9</code>, <code>maj11</code>, <code>min11</code></li>
+<li>Alteraciones: <code>7sharp9</code>, <code>7flat9</code>, <code>7sharp5</code></li>
+
+<h3>14.2 <code>arpeggiate</code> - Arpegio</h3>
+
+<p>
+Convierte acordes en arpegios.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+arpeggiate :: Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ arpeggiate $ n "c'maj" # s "superpiano"
+d1 $ arpeggiate $ n "a'min7 d'min7 g'dom7 c'maj7" # s "superpiano"</code></pre>
+</p>
+
+<h2>15. Funciones de Control de Flujo</h2>
+
+<h3>15.1 <code>within</code> - Aplicar en Rango</h3>
+
+<p>
+Aplica transformación solo en un rango temporal del ciclo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+within :: (Time, Time) -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ within (0, 0.5) (fast 2) $ s "bd sd hh cp"  -- Solo primera mitad
+d1 $ within (0.25, 0.75) rev $ s "bd sd hh cp"   -- Solo el medio</code></pre>
+</p>
+
+<h3>15.2 <code>off</code> - Desplazar y Combinar</h3>
+
+<p>
+Crea una copia desplazada y transformada del patrón.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+off :: Pattern Time -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ off 0.25 (# speed 2) $ s "bd sd"   -- Eco con pitch alto
+d1 $ off 0.125 (# crush 4) $ s "hh*8"   -- Eco distorsionado</code></pre>
+</p>
+
+<h3>15.3 <code>superimpose</code> - Superponer Transformación</h3>
+
+<p>
+Superpone el patrón original con una versión transformada.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+superimpose :: (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ superimpose (fast 2) $ s "bd sd"   -- Original + doble velocidad
+d1 $ superimpose (# speed 2) $ s "bd sd"  -- Original + octava alta</code></pre>
+</p>
+
+<h3>15.4 <code>layer</code> - Capas de Transformaciones</h3>
+
+<p>
+Aplica múltiples transformaciones y las superpone.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+layer :: [Pattern a -> Pattern a] -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ layer [id, fast 2, rev, (# speed 2)] $ s "bd sd hh cp"</code></pre>
+</p>
+
+<h2>16. Funciones de Análisis y Debugging</h2>
+
+<h3>16.1 <code>drawLine</code> - Visualizar Patrón</h3>
+
+<p>
+Muestra el patrón en formato texto.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+drawLine :: Pattern String -> String
+</p>
+
+<p>
+-- Ejemplos (en consola)
+drawLine $ s "bd sd hh cp"
+drawLine $ n "0 2 4 7"</code></pre>
+</p>
+
+<h3>16.2 <code>queryArc</code> - Consultar Arco</h3>
+
+<p>
+Consulta eventos en un rango temporal.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+queryArc :: Pattern a -> Arc -> [Event a]
+</p>
+
+<p>
+-- Ejemplos (en consola)
+queryArc (s "bd*4") (Arc 0 1)</code></pre>
+</p>
+
+<h2>17. Funciones Avanzadas de Composición</h2>
+
+<h3>17.1 <code>ur</code> - Ultra-Recursión</h3>
+
+<p>
+Sistema de secuenciación de alto nivel.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+ur :: Pattern Time -> Pattern String -> [(String, Pattern a)] -> [(String, Pattern a -> Pattern a)] -> Pattern a
+</p>
+
+<p>
+-- Ejemplo
+let intro = s "bd*4"
+    verse = s "bd sd hh cp"
+    chorus = s "bd*2 sd*2"
+in d1 $ ur 16 "i v v c" [
+  ("i", intro),
+  ("v", verse),
+  ("c", chorus)
+] []</code></pre>
+</p>
+
+<h3>17.2 <code>seqP</code> - Secuenciador Temporal</h3>
+
+<p>
+Secuencia patrones con tiempos específicos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+seqP :: [(Time, Time, Pattern a)] -> Pattern a
+</p>
+
+<p>
+-- Ejemplo
+d1 $ seqP [
+  (0, 4, s "bd*4"),
+  (4, 8, s "sd*4"),
+  (8, 12, s "hh*8")
+]</code></pre>
+</p>
+
+<h3>17.3 <code>fit</code> - Ajustar a Lista</h3>
+
+<p>
+Mapea valores a una lista específica.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+fit :: Pattern Int -> [a] -> Pattern Int -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s (fit 3 ["bd", "sd", "hh"] "0 1 2 0")
+d1 $ n (fit 5 [0, 2, 4, 7, 9] (run 8)) # s "superpiano"</code></pre>
+</p>
+
+<h3>17.4 <code>chunk</code> - Dividir y Transformar</h3>
+
+<p>
+Divide el ciclo y aplica transformación a partes específicas.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+chunk :: Pattern Int -> (Pattern a -> Pattern a) -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ chunk 4 (fast 2) $ s "bd sd hh cp"
+d1 $ chunk 8 rev $ s "bd sd hh cp"</code></pre>
+</p>
+
+<h3>17.5 <code>bite</code> - Morder Patrón</h3>
+
+<p>
+Similar a slice pero opera sobre el patrón, no sobre el sample.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+bite :: Pattern Int -> Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ bite 4 "0 2 1 3" $ s "bd sd hh cp"
+d1 $ bite 8 (run 8) $ n (run 8) # s "arpy"</code></pre>
+</p>
+
+<h2>18. Funciones de Efectos Dinámicos</h2>
+
+<h3>18.1 <code>smash</code> - Comprimir Temporalmente</h3>
+
+<p>
+Comprime el patrón y lo repite.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+smash :: Pattern Int -> [Pattern Time] -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ smash 4 [1, 2, 3] $ s "bd sd"</code></pre>
+</p>
+
+<h3>18.2 <code>striate'</code> - Estratificar con Parámetros</h3>
+
+<p>
+Estratifica con control de solapamiento.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+striate' :: Pattern Int -> Pattern Double -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ striate' 16 0.5 $ s "amen"</code></pre>
+</p>
+
+<h3>18.3 <code>gap</code> - Crear Espacios</h3>
+
+<p>
+Crea espacios entre eventos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+gap :: Pattern Int -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ gap 4 $ s "bd*8"</code></pre>
+</p>
+
+<h2>19. Funciones de Swing y Groove</h2>
+
+<h3>19.1 <code>swingBy</code> - Aplicar Swing</h3>
+
+<p>
+Añade swing al patrón.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+swingBy :: Pattern Time -> Pattern Time -> Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ swingBy 0.2 4 $ s "hh*8"           -- Swing ligero
+d1 $ swingBy 0.4 4 $ s "hh*16"          -- Swing pronunciado</code></pre>
+</p>
+
+<h3>19.2 <code>swing</code> - Swing Predefinido</h3>
+
+<pre><code>-- Sintaxis
+<p>
+swing :: Pattern a -> Pattern a
+</p>
+
+<p>
+-- Ejemplos
+d1 $ swing $ s "hh*8"</code></pre>
+</p>
+
+<h2>20. Funciones de Transición</h2>
+
+<h3>20.1 <code>xfade</code> - Crossfade</h3>
+
+<p>
+Transición con fundido cruzado.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+xfade :: Pattern Int -> Pattern a -> IO ()
+</p>
+
+<p>
+-- Ejemplos
+xfade 1 $ s "bd*4"                      -- Fundido a nuevo patrón</code></pre>
+</p>
+
+<h3>20.2 <code>xfadeIn</code> - Crossfade con Duración</h3>
+
+<pre><code>-- Sintaxis
+<p>
+xfadeIn :: Pattern Int -> Pattern Time -> Pattern a -> IO ()
+</p>
+
+<p>
+-- Ejemplos
+xfadeIn 1 4 $ s "bd*4"                  -- Fundido de 4 ciclos
+xfadeIn 1 16 $ s "bd*4"                 -- Fundido de 16 ciclos</code></pre>
+</p>
+
+<h3>20.3 <code>anticipate</code> - Anticipar con Filtro</h3>
+
+<p>
+Transición con filtro high-pass.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+anticipate :: Pattern Int -> Pattern a -> IO ()
+</p>
+
+<p>
+-- Ejemplos
+anticipate 1 $ s "bd*4"</code></pre>
+</p>
+
+<h3>20.4 <code>jump</code> - Salto Inmediato</h3>
+
+<p>
+Cambia al siguiente ciclo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+jump :: Pattern Int -> Pattern a -> IO ()
+</p>
+
+<p>
+-- Ejemplos
+jump 1 $ s "bd*4"</code></pre>
+</p>
+
+<h3>20.5 <code>clutch</code> - Transición Suave</h3>
+
+<p>
+Fundido cruzado muy suave.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+clutch :: Pattern Int -> Pattern a -> IO ()
+</p>
+
+<p>
+-- Ejemplos
+clutch 1 $ s "bd*4"</code></pre>
+</p>
+
+<h3>20.6 <code>clutchIn</code> - Clutch con Duración</h3>
+
+<pre><code>-- Sintaxis
+<p>
+clutchIn :: Pattern Int -> Pattern Time -> Pattern a -> IO ()
+</p>
+
+<p>
+-- Ejemplos
+clutchIn 1 8 $ s "bd*4"</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<p>
+Esta es una referencia exhaustiva de las funciones de transformación en TidalCycles. Cada función tiene múltiples aplicaciones y se pueden combinar de formas infinitas. La maestría viene de la experimentación y el entendimiento profundo de cómo cada función afecta la estructura temporal del patrón.
+</p>
+
+<strong>Próximos pasos:</strong>
+<li>Practicar cada función individualmente</li>
+<li>Combinar funciones para crear transformaciones complejas</li>
+<li>Experimentar con parámetros variables</li>
+<li>Crear tus propias funciones personalizadas</li></ul>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,253 @@
+{
+    "general": [
+        {
+            "id": "no_empty_pattern",
+            "type": "method",
+            "active": true,
+            "desc": "No Empty Patterns"
+        },
+        {
+            "id": "balanced_parens",
+            "type": "method",
+            "active": true,
+            "desc": "Balanced Parentheses"
+        },
+        {
+            "id": "no_excessive_silence",
+            "type": "method",
+            "active": true,
+            "desc": "Max 50% Silence"
+        },
+        {
+            "id": "valid_euclidean",
+            "type": "method",
+            "active": true,
+            "desc": "Valid Euclidean (k<=n)"
+        },
+        {
+            "id": "no_consecutive_silences",
+            "type": "regex",
+            "pattern": "~ ~",
+            "active": true,
+            "desc": "No Consecutive Silences"
+        },
+        {
+            "id": "no_multiple_decimal_points",
+            "type": "method",
+            "active": true,
+            "desc": "No Multiple Decimals (e.g. 0.1.2)"
+        },
+        {
+            "id": "valid_speed_range",
+            "type": "method",
+            "active": true,
+            "desc": "Valid Speed (0.25-4.0)"
+        },
+        {
+            "id": "valid_filter_range",
+            "type": "method",
+            "active": true,
+            "desc": "Valid Filters (20-20kHz)"
+        },
+        {
+            "id": "no_extreme_density_jumps",
+            "type": "method",
+            "active": true,
+            "desc": "No Extreme Density Jumps"
+        },
+        {
+            "id": "valid_sample_syntax",
+            "type": "method",
+            "active": true,
+            "desc": "Valid Sample Syntax"
+        },
+        {
+            "id": "no_orphan_effects",
+            "type": "method",
+            "active": true,
+            "desc": "No Effects Without Sound"
+        }
+    ],
+    "techno": [
+        {
+            "id": "techno_kick_pattern",
+            "type": "method",
+            "active": true,
+            "desc": "Kick Pattern (4/4)"
+        },
+        {
+            "id": "techno_no_swing",
+            "type": "method",
+            "active": true,
+            "desc": "No Heavy Swing"
+        }
+    ],
+    "house": [
+        {
+            "id": "house_four_on_floor",
+            "type": "method",
+            "active": true,
+            "desc": "Four-on-Floor Kick"
+        },
+        {
+            "id": "house_offbeat_hats",
+            "type": "method",
+            "active": true,
+            "desc": "Offbeat Hi-Hats"
+        }
+    ],
+    "drum_and_bass": [
+        {
+            "id": "dnb_fast_tempo",
+            "type": "method",
+            "active": true,
+            "desc": "High Density (*8+)"
+        },
+        {
+            "id": "dnb_breakbeat_structure",
+            "type": "method",
+            "active": true,
+            "desc": "Breakbeat Structure"
+        }
+    ],
+    "ambient": [
+        {
+            "id": "ambient_low_density",
+            "type": "method",
+            "active": true,
+            "desc": "Low Density"
+        },
+        {
+            "id": "ambient_texture_focus",
+            "type": "method",
+            "active": true,
+            "desc": "Texture Focus"
+        }
+    ],
+    "breakbeat": [
+        {
+            "id": "breakbeat_syncopation",
+            "type": "method",
+            "active": true,
+            "desc": "Syncopation Required"
+        },
+        {
+            "id": "breakbeat_varied_rhythm",
+            "type": "method",
+            "active": true,
+            "desc": "Varied Rhythm"
+        }
+    ],
+    "dub": [
+        {
+            "id": "dub_space_and_delay",
+            "type": "method",
+            "active": true,
+            "desc": "Space & Delay"
+        },
+        {
+            "id": "dub_bass_focus",
+            "type": "method",
+            "active": true,
+            "desc": "Bass Focus"
+        }
+    ],
+    "experimental": [
+        {
+            "id": "experimental_unconventional",
+            "type": "method",
+            "active": true,
+            "desc": "Unconventional Patterns"
+        },
+        {
+            "id": "experimental_complexity",
+            "type": "method",
+            "active": true,
+            "desc": "Complex Structures"
+        }
+    ],
+    "trap": [
+        {
+            "id": "trap_hihat_rolls",
+            "type": "method",
+            "active": true,
+            "desc": "Hi-Hat Rolls (*12+)"
+        },
+        {
+            "id": "trap_808_bass",
+            "type": "method",
+            "active": true,
+            "desc": "808 Bass Elements"
+        }
+    ],
+    "cyberpunk": [
+        {
+            "id": "cyberpunk_digital_sounds",
+            "type": "method",
+            "active": true,
+            "desc": "Digital/Synth Sounds"
+        },
+        {
+            "id": "cyberpunk_aggressive",
+            "type": "method",
+            "active": true,
+            "desc": "Aggressive Rhythm"
+        }
+    ],
+    "industrial": [
+        {
+            "id": "industrial_harsh_sounds",
+            "type": "method",
+            "active": true,
+            "desc": "Harsh/Metallic Sounds"
+        },
+        {
+            "id": "industrial_distortion",
+            "type": "method",
+            "active": true,
+            "desc": "Distortion/Noise"
+        }
+    ],
+    "deepsea": [
+        {
+            "id": "deepsea_atmospheric",
+            "type": "method",
+            "active": true,
+            "desc": "Atmospheric/Fluid"
+        },
+        {
+            "id": "deepsea_low_tempo",
+            "type": "method",
+            "active": true,
+            "desc": "Low Tempo/Sparse"
+        }
+    ],
+    "glitch": [
+        {
+            "id": "glitch_fragmented",
+            "type": "method",
+            "active": true,
+            "desc": "Fragmented Patterns"
+        },
+        {
+            "id": "glitch_digital_artifacts",
+            "type": "method",
+            "active": true,
+            "desc": "Digital Artifacts"
+        }
+    ],
+    "organic": [
+        {
+            "id": "organic_natural_sounds",
+            "type": "method",
+            "active": true,
+            "desc": "Natural/Field Sounds"
+        },
+        {
+            "id": "organic_irregular_rhythm",
+            "type": "method",
+            "active": true,
+            "desc": "Irregular Rhythm"
+        }
+    ]
+}

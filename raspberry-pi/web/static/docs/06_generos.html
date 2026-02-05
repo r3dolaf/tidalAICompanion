@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Géneros Musicales - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Géneros Musicales</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>GÉNEROS MUSICALES: GUÍA COMPLETA DE PRODUCCIÓN</h1>
+
+<h2>1. TECHNO</h2>
+
+<h3>1.1 Características del Género</h3>
+
+<strong>Tempo:</strong> 120-135 BPM (típicamente 128-132)
+<strong>Estructura:</strong> Minimalista, repetitiva, hipnótica
+<strong>Elementos Clave:</strong>
+<ul><li>Kick 4/4 constante y potente</li>
+<li>Hi-hats en offbeat (16ths)</li>
+<li>Snare/clap en 2 y 4</li>
+<li>Bassline hipnótica</li>
+<li>Texturas atmosféricas</li>
+
+<h3>1.2 Kick de Techno</h3>
+
+<pre><code>-- Kick básico 4/4
+<p>
+d1 $ s "bd*4"
+  # lpf 800
+  # resonance 0.3
+  # shape 0.5
+  # gain 1.2
+</p>
+
+<p>
+-- Kick con variaciones sutiles
+d1 $ s "bd*4"
+  # n (irand 3)
+  # lpf (range 600 1000 (slow 8 sine))
+  # gain (range 1.1 1.3 (slow 4 sine))
+</p>
+
+<p>
+-- Kick con sidechain (usando 'cut')
+d1 $ s "bd*4" # cut 1</code></pre>
+</p>
+
+<h3>1.3 Hi-Hats</h3>
+
+<pre><code>-- Hi-hats clásicos
+<p>
+d2 $ s "hh*16"
+  # gain 0.7
+  # hpf 8000
+  # pan (slow 4 sine)
+</p>
+
+<p>
+-- Con variaciones de velocidad
+d2 $ s "hh*16"
+  # n (irand 4)
+  # gain (range 0.6 0.8 rand)
+  # hpf 8000
+</p>
+
+<p>
+-- Open hat en offbeat
+d3 $ s "oh(3,8)"
+  # gain 0.6
+  # cut 1</code></pre>
+</p>
+
+<h3>1.4 Bassline Techno</h3>
+
+<pre><code>-- Bajo hipnótico simple
+<p>
+d4 $ n "0 ~ 0 ~" # s "bass"
+  # lpf 400
+  # resonance 0.2
+  # gain 1.0
+</p>
+
+<p>
+-- Bajo con modulación de filtro
+d4 $ n "0 ~ 0 ~" # s "superfm"
+  # voice 2
+  # lpf (range 200 800 (slow 4 saw))
+  # resonance 0.5
+  # shape 0.4
+</p>
+
+<p>
+-- Patrón más complejo
+d4 $ n "0 ~ [0 7] ~" # s "bass"
+  # lpf (range 300 1200 (slow 8 sine))
+  # resonance 0.3
+  # gain 0.9</code></pre>
+</p>
+
+<h3>1.5 Percusión Adicional</h3>
+
+<pre><code>-- Claps/snares
+<p>
+d5 $ s "cp(3,8,2)"
+  # room 0.3
+  # gain 0.8
+</p>
+
+<p>
+-- Rims y shakers
+d6 $ s "rim*8"
+  # gain (range 0.4 0.7 rand)
+  # pan (rand)
+</p>
+
+<p>
+-- Percusión industrial
+d7 $ s "metal(5,16)"
+  # speed (range 1 2 rand)
+  # hpf 2000
+  # gain 0.5</code></pre>
+</p>
+
+<h3>1.6 Atmósferas y Texturas</h3>
+
+<pre><code>-- Pad atmosférico
+<p>
+d8 $ slow 4 $ n "60 64 67" # s "supersaw"
+  # detune 0.3
+  # attack 2
+  # release 4
+  # lpf 2000
+  # room 0.8
+  # gain 0.5
+</p>
+
+<p>
+-- Ruido blanco rítmico
+d9 $ s "noise*16"
+  # gain (range 0 0.3 (slow 2 saw))
+  # hpf 4000
+  # pan (slow 2 sine)</code></pre>
+</p>
+
+<h3>1.7 Track Completo de Techno</h3>
+
+<pre><code>-- Kick
+<p>
+d1 $ s "bd*4"
+  # lpf 800
+  # resonance 0.3
+  # gain 1.2
+</p>
+
+<p>
+-- Hi-hats
+d2 $ s "hh*16"
+  # n (irand 4)
+  # gain (range 0.6 0.8 rand)
+  # hpf 8000
+</p>
+
+<p>
+-- Open hats
+d3 $ s "oh(3,8)"
+  # gain 0.6
+  # cut 1
+</p>
+
+<p>
+-- Bassline
+d4 $ n "0 ~ [0 7] ~" # s "bass"
+  # lpf (range 300 1200 (slow 8 sine))
+  # resonance 0.3
+</p>
+
+<p>
+-- Claps
+d5 $ s "cp(3,8,2)"
+  # room 0.3
+</p>
+
+<p>
+-- Atmósfera
+d8 $ slow 4 $ n "60 64 67" # s "supersaw"
+  # attack 2
+  # release 4
+  # lpf 2000
+  # room 0.8
+  # gain 0.5</code></pre>
+</p>
+
+<h2>2. HOUSE</h2>
+
+<h3>2.1 Características del Género</h3>
+
+<strong>Tempo:</strong> 120-130 BPM (típicamente 124-128)
+<strong>Estructura:</strong> Groovy, bailable, soulful
+<strong>Elementos Clave:</strong>
+<li>Kick 4/4 con swing</li>
+<li>Hi-hats shuffled</li>
+<li>Bassline funky</li>
+<li>Vocales (a menudo)</li>
+<li>Piano/Rhodes</li>
+
+<h3>2.2 Groove de House</h3>
+
+<pre><code>-- Kick con swing
+<p>
+d1 $ s "bd*4"
+  # gain 1.1
+  # lpf 600
+</p>
+
+<p>
+-- Hi-hats con shuffle
+d2 $ s "hh*8"
+  # gain "0.8 0.5 0.9 0.6 0.8 0.5 0.9 0.6"
+  # hpf 8000
+</p>
+
+<p>
+-- Claps en 2 y 4
+d3 $ s "~ cp ~ cp"
+  # room 0.4
+  # gain 0.9</code></pre>
+</p>
+
+<h3>2.3 Bassline House</h3>
+
+<pre><code>-- Bajo funky
+<p>
+d4 $ n "0 ~ 7 ~ 0 ~ 5 ~" # s "bass"
+  # lpf 800
+  # resonance 0.2
+  # legato 0.8
+</p>
+
+<p>
+-- Bajo con slides
+d4 $ n "0 ~ [7 8] ~ 0 ~ [5 7] ~" # s "bass"
+  # lpf 600
+  # slide 1</code></pre>
+</p>
+
+<h3>2.4 Piano House</h3>
+
+<pre><code>-- Acordes de piano
+<p>
+d5 $ n "c'maj ~ e'min ~ g'maj ~ a'min ~" # s "superpiano"
+  # velocity 0.7
+  # room 0.3
+  # lpf 4000
+</p>
+
+<p>
+-- Con variaciones rítmicas
+d5 $ n "c'maj [~ e'min] g'maj [a'min ~]" # s "superpiano"
+  # velocity (range 0.6 0.8 rand)
+  # room 0.3</code></pre>
+</p>
+
+<h3>2.5 Vocal Chops</h3>
+
+<pre><code>-- Chops vocales
+<p>
+d6 $ chop 16 $ s "bev"
+  # speed (range 0.9 1.1 rand)
+  # pan (rand)
+  # room 0.2
+  # gain 0.7
+</p>
+
+<p>
+-- Con filtro
+d6 $ chop 8 $ s "bev"
+  # lpf (range 1000 4000 (slow 4 sine))
+  # room 0.3</code></pre>
+</p>
+
+<h2>3. DRUM & BASS</h2>
+
+<h3>3.1 Características del Género</h3>
+
+<strong>Tempo:</strong> 160-180 BPM (típicamente 170-174)
+<strong>Estructura:</strong> Breaks complejos, bajo pesado
+<strong>Elementos Clave:</strong>
+<li>Amen break (o similar)</li>
+<li>Bassline sub</li>
+<li>Reese bass</li>
+<li>Atmósferas oscuras</li>
+
+<h3>3.2 Breaks de D&B</h3>
+
+<pre><code>-- Amen break básico
+<p>
+d1 $ s "amen"
+  # speed 1.2
+  # hpf 300
+</p>
+
+<p>
+-- Re-secuenciado
+d1 $ slice 8 "0 7 2 5 [0 1] [4 5] 6 3" $ s "amen"
+  # speed 1.2
+  # hpf 300
+</p>
+
+<p>
+-- Con chops
+d1 $ chop 16 $ s "amen"
+  # speed (range 1.1 1.3 (slow 4 sine))
+  # crush (range 8 16 (slow 8 sine))</code></pre>
+</p>
+
+<h3>3.3 Bassline D&B</h3>
+
+<pre><code>-- Sub bass
+<p>
+d2 $ n "0 ~ 0 ~" # s "bass"
+  # lpf 100
+  # gain 1.3
+</p>
+
+<p>
+-- Reese bass
+d3 $ n "0 ~ [0 7] ~" # s "supersaw"
+  # detune 0.5
+  # lpf (range 200 600 (slow 4 saw))
+  # resonance 0.7
+  # shape 0.6
+  # gain 0.9
+</p>
+
+<p>
+-- Wobble bass
+d3 $ n "0 ~ 0 ~" # s "superfm"
+  # voice 3
+  # lpf (range 100 1000 (fast 8 saw))
+  # resonance 0.8
+  # gain 1.0</code></pre>
+</p>
+
+<h3>3.4 Atmósferas D&B</h3>
+
+<pre><code>-- Pad oscuro
+<p>
+d4 $ slow 8 $ n "48 52 55" # s "supersaw"
+  # detune 0.4
+  # attack 3
+  # release 5
+  # lpf 1500
+  # room 0.9
+  # gain 0.4
+</p>
+
+<p>
+-- Ruido atmosférico
+d5 $ s "noise"
+  # gain (slow 16 (range 0 0.3 sine))
+  # hpf 2000
+  # room 0.8</code></pre>
+</p>
+
+<h2>4. TRAP</h2>
+
+<h3>4.1 Características del Género</h3>
+
+<strong>Tempo:</strong> 130-170 BPM (típicamente 140-150)
+<strong>Estructura:</strong> Hi-hats rápidos, 808s, snares con reverb
+<strong>Elementos Clave:</strong>
+<li>808 kick y snare</li>
+<li>Hi-hats en rolls (32nds, 64ths)</li>
+<li>Bassline 808</li>
+<li>Snare con reverb largo</li>
+
+<h3>4.2 Drums de Trap</h3>
+
+<pre><code>-- 808 kick
+<p>
+d1 $ s "808bd(3,8)"
+  # lpf 200
+  # gain 1.3
+</p>
+
+<p>
+-- 808 snare con reverb
+d2 $ s "~ 808sd ~ 808sd"
+  # room 0.8
+  # size 0.9
+  # gain 1.0
+</p>
+
+<p>
+-- Hi-hat rolls
+d3 $ s "808oh*<8 16 32 16>"
+  # gain (range 0.5 0.8 rand)
+  # hpf 8000
+  # pan (rand)</code></pre>
+</p>
+
+<h3>4.3 808 Bassline</h3>
+
+<pre><code>-- 808 bass
+<p>
+d4 $ n "0 ~ 0 [~ 7]" # s "808bd"
+  # speed 0.5
+  # lpf 300
+  # gain 1.2
+  # sustain 0.5
+</p>
+
+<p>
+-- Con slides
+d4 $ n "0 ~ [0 7] ~" # s "808bd"
+  # speed 0.5
+  # accelerate 12
+  # lpf 300</code></pre>
+</p>
+
+<h3>4.4 Hi-Hat Patterns</h3>
+
+<pre><code>-- Pattern complejo
+<p>
+d3 $ s "808oh*8"
+  # n (irand 3)
+  # gain "0.7 0.5 0.8 0.6 0.7 0.5 0.9 0.6"
+</p>
+
+<p>
+-- Rolls
+d3 $ s "808oh*<8 16 32 64>"
+  # gain (range 0.4 0.8 (slow 2 saw))
+  # pan (rand)</code></pre>
+</p>
+
+<h2>5. AMBIENT</h2>
+
+<h3>5.1 Características del Género</h3>
+
+<strong>Tempo:</strong> Variable (60-90 BPM o sin tempo)
+<strong>Estructura:</strong> Atmosférica, textural, evolutiva
+<strong>Elementos Clave:</strong>
+<li>Pads largos</li>
+<li>Texturas granulares</li>
+<li>Reverb profundo</li>
+<li>Evolución lenta</li>
+
+<h3>5.2 Pads Ambient</h3>
+
+<pre><code>-- Pad básico
+<p>
+d1 $ slow 8 $ n "60 64 67 72" # s "supersaw"
+  # detune 0.3
+  # attack 4
+  # release 8
+  # lpf 2000
+  # room 0.95
+  # size 0.99
+  # gain 0.6
+</p>
+
+<p>
+-- Pad con modulación
+d1 $ slow 16 $ n "48 52 55 60" # s "superpiano"
+  # velocity 0.4
+  # lpf (slow 32 (range 500 2000 sine))
+  # room 0.9
+  # gain 0.5</code></pre>
+</p>
+
+<h3>5.3 Texturas Granulares</h3>
+
+<pre><code>-- Granulación densa
+<p>
+d2 $ slow 8 $ striate 256 $ s "metal"
+  # speed 0.05
+  # room 0.99
+  # lpf (slow 16 (range 200 1500 sine))
+  # gain 0.4
+</p>
+
+<p>
+-- Nube de granos
+d3 $ striate 128 $ s "bev"
+  # speed 0.1
+  # room 0.95
+  # hpf 500
+  # gain 0.3</code></pre>
+</p>
+
+<h3>5.4 Paisajes Sonoros</h3>
+
+<pre><code>-- Capas atmosféricas
+<p>
+do
+  d1 $ slow 16 $ n "48 52 55" # s "supersaw"
+    # attack 4 # release 8
+    # lpf 1500 # room 0.95 # gain 0.5
+  d2 $ slow 8 $ striate 256 $ s "wind"
+    # speed 0.1 # room 0.9 # gain 0.3
+  d3 $ s "breath"
+    # speed 0.3 # room 0.8 # gain 0.2
+  d4 $ slow 32 $ s "metal"
+    # speed 0.05 # room 0.99 # gain 0.2</code></pre>
+</p>
+
+<h2>6. BREAKBEAT / JUNGLE</h2>
+
+<h3>6.1 Características del Género</h3>
+
+<strong>Tempo:</strong> 150-180 BPM
+<strong>Estructura:</strong> Breaks sincopados, basslines complejas
+<strong>Elementos Clave:</strong>
+<li>Amen break (y variantes)</li>
+<li>Basslines ragga</li>
+<li>Atmósferas jamaicanas</li>
+<li>Vocales reggae</li>
+
+<h3>6.2 Breaks Jungle</h3>
+
+<pre><code>-- Amen clásico
+<p>
+d1 $ s "amen"
+  # speed 1.3
+  # hpf 300
+</p>
+
+<p>
+-- Re-secuenciado jungle
+d1 $ slice 16 "0 [7 8] 2 5 [0 1] 4 [6 7] 3" $ s "amen"
+  # speed 1.3
+  # crush (range 4 16 (slow 8 sine))
+</p>
+
+<p>
+-- Con timestretching
+d1 $ loopAt 1 $ chop 32 $ s "jungle"
+  # speed (range 1.2 1.4 (slow 4 sine))</code></pre>
+</p>
+
+<h3>6.3 Bassline Ragga</h3>
+
+<pre><code>-- Bajo sincopado
+<p>
+d2 $ n "0 ~ [7 0] ~ [5 ~] 0 ~ [7 5]" # s "bass"
+  # lpf 600
+  # resonance 0.3
+  # legato 0.7
+</p>
+
+<p>
+-- Reese bass
+d3 $ n "0 ~ 0 ~" # s "supersaw"
+  # detune 0.6
+  # lpf (range 150 500 (slow 4 saw))
+  # resonance 0.8
+  # gain 0.9</code></pre>
+</p>
+
+<h2>7. IDM (Intelligent Dance Music)</h2>
+
+<h3>7.1 Características del Género</h3>
+
+<strong>Tempo:</strong> Variable (90-160 BPM)
+<strong>Estructura:</strong> Compleja, experimental, glitchy
+<strong>Elementos Clave:</strong>
+<li>Ritmos irregulares</li>
+<li>Glitches y errores digitales</li>
+<li>Melodías complejas</li>
+<li>Texturas inusuales</li>
+
+<h3>7.2 Ritmos IDM</h3>
+
+<pre><code>-- Patrón irregular
+<p>
+d1 $ s "bd(5,16)" # gain 1.0
+d2 $ s "sd(7,16,3)" # room 0.3
+d3 $ s "hh(11,16)" # gain 0.7 # hpf 8000
+</p>
+
+<p>
+-- Con euclidean complejo
+d1 $ s "bd(5,16) sd(3,8,2) hh(13,16,5)"
+  # gain (range 0.7 1.0 rand)</code></pre>
+</p>
+
+<h3>7.3 Glitches</h3>
+
+<pre><code>-- Glitch processing
+<p>
+d4 $ s "bd*4"
+  # crush (range 2 16 rand)
+  # speed (range 0.5 2 rand)
+  # pan (rand)
+  # delay 0.5
+  # delaytime (choose [0.125, 0.25, 0.5])
+</p>
+
+<p>
+-- Granulación glitchy
+d5 $ chop 64 $ s "amen"
+  # speed (range 0.5 2 rand)
+  # crush (irand 16)
+  # pan (rand)</code></pre>
+</p>
+
+<h3>7.4 Melodías Complejas</h3>
+
+<pre><code>-- Secuencia compleja
+<p>
+d6 $ n (scale "minor" "0 2 [4 5] 7 [9 11] 12") # s "superpiano"
+  # velocity (range 0.5 0.9 rand)
+  # legato (range 0.5 2 rand)
+  # lpf (range 1000 8000 (slow 8 sine))</code></pre>
+</p>
+
+<h2>8. DUBSTEP</h2>
+
+<h3>8.1 Características del Género</h3>
+
+<strong>Tempo:</strong> 135-145 BPM (típicamente 140)
+<strong>Estructura:</strong> Half-time, wobble bass, espacioso
+<strong>Elementos Clave:</strong>
+<li>Kick y snare en half-time</li>
+<li>Wobble bass</li>
+<li>Sub bass profundo</li>
+<li>Espacios y silencios</li>
+
+<h3>8.2 Drums Dubstep</h3>
+
+<pre><code>-- Half-time kick
+<p>
+d1 $ s "bd ~ ~ ~ bd ~ ~ ~"
+  # lpf 200
+  # gain 1.3
+</p>
+
+<p>
+-- Snare con reverb
+d2 $ s "~ ~ sd ~"
+  # room 0.7
+  # size 0.8
+  # gain 1.0
+</p>
+
+<p>
+-- Hi-hats sincopados
+d3 $ s "hh*8"
+  # gain "0.7 0.5 0.8 0.6 0.7 0.5 0.9 0.6"
+  # hpf 8000</code></pre>
+</p>
+
+<h3>8.3 Wobble Bass</h3>
+
+<pre><code>-- Wobble clásico
+<p>
+d4 $ n "0 ~ 0 ~" # s "superfm"
+  # voice 3
+  # lpf (fast 4 (range 100 2000 saw))
+  # resonance 0.9
+  # shape 0.7
+  # gain 1.0
+</p>
+
+<p>
+-- Wobble con ritmo
+d4 $ n "0 ~ [0 7] ~" # s "supersaw"
+  # detune 0.5
+  # lpf (fast 8 (range 100 1500 (choose [saw, square])))
+  # resonance 0.8
+  # gain 0.9</code></pre>
+</p>
+
+<h3>8.4 Sub Bass</h3>
+
+<pre><code>-- Sub profundo
+<p>
+d5 $ n "0 ~ 0 ~" # s "bass"
+  # lpf 80
+  # gain 1.4
+  # sustain 0.5</code></pre>
+</p>
+
+<h2>9. FOOTWORK / JUKE</h2>
+
+<h3>9.1 Características del Género</h3>
+
+<strong>Tempo:</strong> 150-165 BPM
+<strong>Estructura:</strong> Sincopada, vocal chops, kicks rápidos
+<strong>Elementos Clave:</strong>
+<li>Kicks sincopados</li>
+<li>Vocal chops</li>
+<li>Snares complejos</li>
+<li>Samples cortados</li></ul>
+
+<h3>9.2 Kicks Footwork</h3>
+
+<pre><code>-- Pattern sincopado
+<p>
+d1 $ s "bd*<4 8 16 4>"
+  # gain (range 0.9 1.2 rand)
+  # lpf 400
+</p>
+
+<p>
+-- Con variaciones
+d1 $ s "bd(7,16)"
+  # n (irand 3)
+  # gain 1.0</code></pre>
+</p>
+
+<h3>9.3 Vocal Chops</h3>
+
+<pre><code>-- Chops rápidos
+<p>
+d2 $ chop 32 $ s "bev"
+  # speed (range 0.8 1.5 rand)
+  # pan (rand)
+  # crush (irand 8)
+</p>
+
+<p>
+-- Con stutter
+d2 $ stut 4 0.8 0.0625 $ s "bev"
+  # begin (rand)
+  # speed (range 0.9 1.1 rand)</code></pre>
+</p>
+
+<h3>9.4 Snares Complejos</h3>
+
+<pre><code>-- Pattern irregular
+<p>
+d3 $ s "sd(5,16,3)"
+  # room 0.3
+  # gain (range 0.7 1.0 rand)
+  # pan (rand)</code></pre>
+</p>
+
+<h2>10. TABLA DE REFERENCIA DE GÉNEROS</h2>
+
+<p>
+| Género | BPM | Kick Pattern | Elementos Clave |
+|--------|-----|--------------|-----------------|
+| Techno | 128-132 | <code>bd*4</code> | Hipnótico, minimal |
+| House | 124-128 | <code>bd*4</code> (swing) | Groovy, soulful |
+| D&B | 170-174 | Breaks | Amen, reese bass |
+| Trap | 140-150 | <code>bd(3,8)</code> | 808s, hi-hat rolls |
+| Ambient | Variable | Minimal/None | Pads, texturas |
+| Jungle | 160-175 | Breaks | Ragga, sincopado |
+| IDM | Variable | Irregular | Glitch, complejo |
+| Dubstep | 140 | Half-time | Wobble, espacioso |
+| Footwork | 160 | Sincopado | Vocal chops |
+</p>
+
+<p>
+---
+</p>
+
+<p>
+Esta guía proporciona las bases para producir en cada género. La clave está en estudiar referencias, experimentar y desarrollar tu propio estilo dentro de cada género.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

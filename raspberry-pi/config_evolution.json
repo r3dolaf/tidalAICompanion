@@ -1,0 +1,18 @@
+{
+    "weights": {
+        "density": 1.0,
+        "variety": 1.0,
+        "complexity": 1.0,
+        "euclidean": 1.0
+    },
+    "params": {
+        "temperature": 1.2,
+        "batch_size": 50,
+        "top_k": 10,
+        "strictness": 0
+    },
+    "filters": {
+        "genre": "all",
+        "instrument": "all"
+    }
+}

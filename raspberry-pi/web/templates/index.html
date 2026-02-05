@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TidalAI Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=5.5.4-final-fix">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v5-luxury.css') }}?v=5.5.4-final-fix">
+    <link rel="stylesheet" href="{{ url_for('static', filename='intelligence-sidebar.css') }}?v=5.1.8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='conductor.css') }}?v=5.1.8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v6-bento.css') }}?v=6.0.0"> <!-- NEW BENTO FRAMEWORK -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/hydra-synth"></script>
+</head>
+
+<body class="theme-techno">
+    <!-- CANVAS DE PARTÍCULAS (NUEVO) -->
+    <!-- CANVAS DE PARTÍCULAS (NUEVO) -->
+    <canvas id="hydra-bg"></canvas> <!-- Hydra Background Layer -->
+    <canvas id="bg-canvas"></canvas> <!-- Particle Layer (Foreground) -->
+    <div class="container">
+        <!-- CABECERA LUXURY v5.0 -->
+        <header>
+            <div class="brand">
+                <h1>TidalAI Studio <span class="v5-tag">v6.0</span> <span class="subtitle-inline">| Bento
+                        Edition</span></h1>
+            </div>
+        </header>
+
+        <main class="layout-bento">
+            <!-- ZONE A: CONTROL DECK (Unified) -->
+            <div class="bento-zone-controls">
+                <!-- Toggle Bar -->
+                <div class="bento-toggle-bar">
+                    <button class="bento-toggle-btn active" onclick="switchBentoPanel('knobs')" id="btn-tab-knobs">
+                        <span>🎛️</span> Visuales
+                    </button>
+                    <button class="bento-toggle-btn" onclick="switchBentoPanel('instruments')" id="btn-tab-intruments">
+                        <span>🎹</span> Instrumentos
+                    </button>
+                </div>
+
+                <div class="control-deck-scroll">
+                    <!-- LUXURY KNOBS CONTROL PANEL -->
+                    <div class="visual-knobs-grid" id="panel-knobs">
+                        <!-- Renamed for v6 grid layout -->
+                        <!-- Apply Button (at top) -->
+                        <button id="apply-visuals-btn" class="luxury-btn-xs" style="grid-column: 1 / -1;"
+                            title="Apply visual changes to Hydra">
+                            ⚡ Apply
+                        </button>
+
+                        <!-- All 10 knobs unified -->
+                        <div class="knob-wrapper" title="Gain: Overall brightness/intensity (0: Dark, 100: Bright)">
+                            <span class="knob-label">Gain</span>
+                            <div data-luxury-knob id="knob-gain" data-min="0" data-max="100" data-value="50"
+                                data-step="1">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper" title="Decay: Fading effect (0: Static, 100: Fast fade)">
+                            <span class="knob-label">Decay</span>
+                            <div data-luxury-knob id="knob-decay" data-min="0" data-max="100" data-value="30"
+                                data-step="1">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper" title="Hue: Color shift (0: Original, 100: Full spectrum cycle)">
+                            <span class="knob-label">Hue</span>
+                            <div data-luxury-knob id="knob-color" data-min="0" data-max="100" data-value="0"
+                                data-step="1">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Symmetry: Number of repetitions/mirrors (2: Normal, 12: Complex)">
+                            <span class="knob-label">Symm</span>
+                            <div data-luxury-knob id="knob-symmetry" data-min="2" data-max="12" data-value="2"
+                                data-step="1">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Brightness: Adjusts the light intensity (50: Dark, 200: Very Bright)">
+                            <span class="knob-label">Bright</span>
+                            <div data-luxury-knob id="knob-brightness" data-min="50" data-max="200" data-value="100"
+                                data-step="5"></div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Contrast: Difference between light and dark areas (50: Flat, 300: High Contrast)">
+                            <span class="knob-label">Contrast</span>
+                            <div data-luxury-knob id="knob-contrast" data-min="50" data-max="300" data-value="100"
+                                data-step="10"></div>
+                        </div>
+                        <div class="knob-wrapper" title="Blur: Softens the image (0: Sharp, 10: Very blurry)">
+                            <span class="knob-label">Blur</span>
+                            <div data-luxury-knob id="knob-blur" data-min="0" data-max="10" data-value="0"
+                                data-step="1">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper" title="Scale: Zooms in/out (50: Zoom Out, 200: Zoom In)">
+                            <span class="knob-label">Scale</span>
+                            <div data-luxury-knob id="knob-scale" data-min="50" data-max="200" data-value="100"
+                                data-step="5">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Rotate: Rotates the visual (e.g., -5: Counter-clockwise, 5: Clockwise)">
+                            <span class="knob-label">Rotate</span>
+                            <div data-luxury-knob id="knob-rotate" data-min="-5" data-max="5" data-value="0"
+                                data-step="1">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Pixelate: Creates a mosaic/retro effect (0: Off, 50: Max blocky)">
+                            <span class="knob-label">Pixelate</span>
+                            <div data-luxury-knob id="knob-pixelate" data-min="0" data-max="50" data-value="0"
+                                data-step="5">
+                            </div>
+                        </div>
+
+                        <!-- Column 3: Dramatic Effects -->
+                        <div class="knob-wrapper" title="Invert: Reverses all colors (0: Normal, 100: Negative)">
+                            <span class="knob-label">Invert</span>
+                            <div data-luxury-knob id="knob-invert" data-min="0" data-max="100" data-value="0"
+                                data-step="10">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Saturate: Color intensity (0: B/W, 100: Normal, 200: Super Vivid)">
+                            <span class="knob-label">Satur</span>
+                            <div data-luxury-knob id="knob-saturate" data-min="0" data-max="200" data-value="100"
+                                data-step="10"></div>
+                        </div>
+                        <div class="knob-wrapper" title="Posterize: Reduces colors (20: Smooth, 2: 8-bit style)">
+                            <span class="knob-label">Poster</span>
+                            <div data-luxury-knob id="knob-posterize" data-min="2" data-max="20" data-value="20"
+                                data-step="2">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Shift X: Horizontal scrolling/phase shift (-50: Left, 50: Right)">
+                            <span class="knob-label">ShiftX</span>
+                            <div data-luxury-knob id="knob-shiftx" data-min="-50" data-max="50" data-value="0"
+                                data-step="5">
+                            </div>
+                        </div>
+                        <div class="knob-wrapper"
+                            title="Modulate: Glitch/Distortion driven by noise (0: Clean, 100: Chaos)">
+                            <span class="knob-label">Modul</span>
+                            <div data-luxury-knob id="knob-modulate" data-min="0" data-max="100" data-value="0"
+                                data-step="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO PANEL IZQUIERDO (Resto de controles) -->
+                    <div class="left-panel-content" id="panel-instruments" style="flex: 1; display: none;">
+                        <!-- Modo -->
+                        <section class="card">
+                            <div class="mode-selector">
+                                <button class="mode-btn active" data-genmode="rules">📐 Reglas Fix</button>
+                                <button class="mode-btn" data-genmode="ai">🧠 IA Generativa</button>
+                            </div>
+                        </section>
+
+                        <!-- Instrumento -->
+                        <section class="card">
+                            <h2>Instrumento</h2>
+                            <div class="pattern-types">
+                                <button class="pattern-btn active" data-type="drums">🥁
+                                    Drums</button>
+                                <button class="pattern-btn" data-type="bass">🎸 Bass</button>
+                                <button class="pattern-btn" data-type="melody">🎹 Keys</button>
+                                <button class="pattern-btn" data-type="percussion">🪘
+                                    Perc</button>
+                                <button class="pattern-btn" data-type="fx">✨ FX</button>
+                            </div>
+                        </section>
+
+                        <section class="card identity-card">
+                            <h2>Identidad & Presets</h2>
+                            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                                <select id="preset-selector" class="select select-glass">
+                                    <option value="">-- Cargar Preset --</option>
+                                </select>
+                                <button onclick="savePreset()" class="btn btn-save"
+                                    title="Guardar Preset Actual">💾</button>
+                            </div>
+
+                            <!-- GENRE BLENDER INTEGRADO -->
+                            <div class="param-group">
+                                <label class="luxury-switch">
+                                    <input type="checkbox" id="blend-mode-toggle">
+                                    <span class="luxury-slider"></span>
+                                    <span class="label-text">🌀 Modo Blend</span>
+                                </label>
+                            </div>
+
+                            <div id="blend-controls"
+                                style="display:none; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                                <div
+                                    style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+                                    <div>
+                                        <label style="font-size:0.75rem; color:#aaa;">Género
+                                            A</label>
+                                        <select id="blend-genre-a" class="select select-small"
+                                            style="font-size:0.8rem;">
+                                            <option value="techno">Techno</option>
+                                            <option value="house">House</option>
+                                            <option value="ambient">Ambient</option>
+                                            <option value="drum_and_bass">Drum & Bass</option>
+                                            <option value="breakbeat">Breakbeat</option>
+                                            <option value="dub">Dub</option>
+                                            <option value="experimental">Experimental</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="font-size:0.75rem; color:#aaa;">Género
+                                            B</label>
+                                        <select id="blend-genre-b" class="select select-small"
+                                            style="font-size:0.8rem;">
+                                            <option value="ambient">Ambient</option>
+                                            <option value="techno">Techno</option>
+                                            <option value="house">House</option>
+                                            <option value="drum_and_bass">Drum & Bass</option>
+                                            <option value="breakbeat">Breakbeat</option>
+                                            <option value="dub">Dub</option>
+                                            <option value="experimental">Experimental</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="param-group" style="margin-bottom:0;">
+                                    <label style="font-size:0.75rem;">
+                                        <span id="blend-weight-a" style="color:#34d399;">50%</span> A ↔
+                                        <span id="blend-weight-b" style="color:#f59e0b;">50%</span> B
+                                    </label>
+                                    <input type="range" id="blend-slider" min="0" max="100" value="50"
+                                        class="slider slider-small">
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- PARÁMETROS -->
+                        <section class="card">
+                            <h2>Diseño Sonoro</h2>
+
+                            <div class="param-group">
+                                <label>Estilo / Género</label>
+                                <select id="style" class="select" onchange="updateTheme(this.value)">
+                                    <option value="techno">Techno</option>
+                                    <option value="house">House</option>
+                                    <option value="ambient">Ambient</option>
+                                    <option value="drum_and_bass">Drum & Bass</option>
+                                    <option value="breakbeat">Breakbeat</option>
+                                    <option value="dub">Dub</option>
+                                    <option value="experimental">Experimental</option>
+                                    <option value="trap">Trap</option>
+                                    <option value="cyberpunk">Cyberpunk</option>
+                                    <option value="industrial">Industrial</option>
+                                    <option value="deepsea">DeepSea</option>
+                                    <option value="glitch">Glitch</option>
+                                    <option value="organic">Organic</option>
+                                </select>
+                            </div>
+
+                            <div class="param-group">
+                                <label>
+                                    <span><span class="led-indicator" id="led-density"></span>
+                                        Densidad</span>
+                                    <span id="density-value">60%</span>
+                                </label>
+                                <input type="range" id="density" min="0" max="100" value="60" class="slider">
+                            </div>
+
+                            <div class="param-group">
+                                <label>
+                                    <span><span class="led-indicator" id="led-complexity"></span> Complejidad</span>
+                                    <span id="complexity-value">50%</span>
+                                </label>
+                                <input type="range" id="complexity" min="0" max="100" value="50" class="slider">
+                            </div>
+
+
+                            <div class="param-group">
+                                <label>
+                                    <span><span class="led-indicator" id="led-tempo"></span>
+                                        Tempo</span>
+                                    <span id="tempo-value">140</span> BPM
+                                </label>
+                                <input type="range" id="tempo" min="60" max="200" value="140" class="slider">
+                            </div>
+
+                            <!-- Temperatura IA (Oculto por defecto) -->
+                            <div class="param-group" id="temperature-section" style="display: none;">
+                                <label>Temperatura IA <span id="temperature-value">1.0</span></label>
+                                <input type="range" id="temperature" min="0.3" max="2.0" step="0.1" value="1.0"
+                                    class="slider">
+                            </div>
+                        </section>
+
+                    </div>
+                </div> <!-- Close control-deck-scroll -->
+            </div> <!-- Close bento-zone-controls -->
+
+
+            <!-- ZONE B: EDITOR CORE (Center) -->
+            <div class="bento-zone-editor">
+
+                <!-- Segmented Mode Selector -->
+                <div class="mode-selector-luxury">
+                    <div class="mode-slider"></div>
+                    <button class="mode-segment active" data-mode="solo" title="Generar un solo patrón">
+                        <span class="segment-icon">🎵</span> SOLO
+                    </button>
+                    <button class="mode-segment" data-mode="macro" title="Generar ensamble completo (Macro-Wave)">
+                        <span class="segment-icon">🌊</span> MACRO
+                    </button>
+                    <input type="checkbox" id="macro-mode-toggle" style="display:none;">
+                </div>
+
+                <!-- Botonazo -->
+                <button id="generate-btn">
+                    🎲 GENERAR PATRÓN
+                </button>
+
+                <!-- THEORY VALIDATION BADGE (Phase 17) -->
+                <div id="theory-badge" class="badge-theory hidden" title="Validado por The Theorist Engine">
+                    <span class="theory-icon">✅</span>
+                    <span class="theory-text">Theoretically Verified</span>
+                </div>
+
+                <!-- Display Código -->
+                <!-- CODE & DOCK CONTAINER -->
+                <!-- CODE EDITOR WRAPPER -->
+                <!-- CODE EDITOR WRAPPER (Flex Row) -->
+                <!-- CODE EDITOR WRAPPER (Flex Row) -->
+                <div class="code-editor-wrapper" style="display: flex; gap: 0; position: relative;">
+
+                    <!-- LEFT NANO DOCK (Data Flow + Edit) -->
+                    <div class="nano-vertical-dock left">
+                        <button id="send-btn" class="nano-btn nano-btn-success" disabled title="Enviar (Send)"
+                            style="color: #4ade80; border-color: rgba(74, 222, 128, 0.2);">📤</button>
+                        <button id="cycle-send-btn" class="nano-btn" disabled title="Cycle Mode">🔄</button>
+                        <button id="morph-btn" class="nano-btn" disabled title="Morph Mode">〰️</button>
+
+                        <div class="nano-spacer"></div>
+
+                        <button id="edit-mode-btn" class="nano-btn" onclick="toggleEditor()"
+                            title="Toggle Inline Editor">✏️</button>
+                        <button id="undo-btn" class="nano-btn" onclick="undoPattern()"
+                            title="Deshacer (Undo)">⏮</button>
+                        <button id="copy-btn" class="nano-btn" disabled title="Copiar (Copy)">📋</button>
+                    </div>
+
+                    <!-- Display Código (Center) -->
+                    <div class="pattern-display"
+                        style="flex: 1; border-top-right-radius: 0; border-bottom-right-radius: 0; margin-bottom: 0;">
+                        <div id="pattern-info"
+                            style="display:none; color: #888; font-size: 0.8rem; padding: 10px 15px 0 15px;">
+                            <span id="pattern-mode"></span>
+                        </div>
+                        <pre id="pattern-output" class="pattern-code"
+                            style="min-height: 140px; padding: 15px;">-- Sistema listo. v6.0 Dual Dock activo.</pre>
+                    </div>
+
+                    <!-- RIGHT NANO DOCK (System + Meta) -->
+                    <div class="nano-vertical-dock right">
+                        <button id="rec-osc-btn" class="nano-btn" onclick="toggleOSCRecording()"
+                            title="OSC Record">🔴</button>
+                        <button id="stop-btn" class="nano-btn nano-btn-danger" title="Panic Stop"
+                            style="color: #f87171; border-color: rgba(248, 113, 113, 0.2);">⏹️</button>
+
+                        <div class="nano-spacer"></div>
+
+                        <button id="add-marker-btn" class="nano-btn" onclick="addLogMarker()"
+                            title="Añadir Marca (Log Marker)">🚩</button>
+                        <button id="favorite-btn" class="nano-btn" disabled title="Favorito (Star)"
+                            onclick="toggleFavorite()"
+                            style="color: #facc15; border-color: rgba(250, 204, 21, 0.2);">⭐</button>
+                        <button id="lock-btn" class="nano-btn" onclick="toggleLock()"
+                            title="Bloquear Generación (Freeze)">🔓</button>
+                    </div>
+                </div>
+                <!-- SAMPLE SCOUT (COMPACTO) - Insertado debajo del editor -->
+                <div id="sample-scout-panel" class="card"
+                    style="display: none; border: 1px solid var(--primary); background: rgba(var(--primary-rgb), 0.05); margin-top: 5px; padding: 8px 12px; margin-bottom: 5px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3
+                            style="font-size: 0.75rem; color: var(--primary); text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 6px;">
+                            🔎 Sample Scout suggestions available</h3>
+                        <button class="btn btn-secondary btn-small" onclick="reindexSamples()"
+                            title="Re-escanear librería"
+                            style="padding: 2px 8px; font-size: 0.8rem; height: auto; min-height: 0;">🔄</button>
+                    </div>
+                    <div id="sample-suggestions" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+                        <!-- Sugerencias se cargarán aquí -->
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- Parámetros de Transformación (Movido desde sidebar) -->
+                <section class="card" style="margin-top: 15px;">
+                    <h2 style="font-size: 0.8rem; display:flex; justify-content:space-between; align-items:center;">
+                        Transformación 🧬
+                        <button id="mutate-btn" class="nano-btn" disabled title="Evolucionar Patrón"
+                            style="width:30px; height:30px; font-size:1rem; border:1px solid rgba(56, 189, 248, 0.3); color:#38bdf8;">🧬</button>
+                    </h2>
+                    <div class="param-group">
+                        <label>Fuerza Mutación <span id="mutation-value">50%</span></label>
+                        <input type="range" id="mutation-strength" min="0" max="100" value="50" class="slider"
+                            title="Controla cuánto cambia el patrón al mutar">
+                    </div>
+                    <div class="param-group" style="margin-bottom: 0;">
+                        <label>Fricción Musical <span id="friction-value">20%</span></label>
+                        <input type="range" id="musical-friction" min="0" max="100" value="20" class="slider"
+                            title="Nivel de caos/variedad en el motor de reglas">
+                    </div>
+                </section>
+            </div> <!-- Close center-panel -->
+
+            <!-- ZONE C: INTELLIGENCE STACK (Right) -->
+            <div class="bento-zone-ai">
+                <!-- Theorist Insight (TOP) -->
+                <section class="card intelligence-card">
+                    <div id="insight-panel" class="insight-glass" style="margin-top: 0;">
+                        <div class="insight-header">
+                            <span class="insight-icon">💡</span>
+                            <span class="insight-title">Theorist Insight</span>
+                        </div>
+                        <div id="insight-content" class="insight-body">
+                            Analizando rítmica y armonía...
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Pattern Timeline (MIDDLE) -->
+                <section class="card intelligence-card">
+                    <h2 style="font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
+                        <span>🎼</span> Pattern Timeline
+                    </h2>
+                    <canvas id="pattern-timeline" class="timeline-canvas"></canvas>
+                </section>
+
+                <!-- AI Reasoning Steps (BOTTOM) -->
+                <section class="card intelligence-card">
+                    <h2 style="font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
+                        <span>🧠</span> AI Reasoning
+                    </h2>
+                    <div id="thought-stream" class="thought-stream">
+                        <div class="thought-entry">Esperando generación...</div>
+                    </div>
+                </section>
+            </div> <!-- Close intelligence-sidebar -->
+        </main>
+
+
+
+    </div> <!-- Close center-panel -->
+
+    <!-- ZONE C: INTELLIGENCE STACK (Right) -->
+
+    <!-- ACTIVITY PANEL (FLOATING) -->
+    <div id="activity-panel" class="floating-panel">
+        <div class="floating-header">
+            <h3>📋 Activity Log</h3>
+            <button class="floating-close" onclick="toggleActivityPanel()">✕</button>
+        </div>
+        <div class="floating-content">
+            <div id="activity-log" class="activity-log-container"></div>
+        </div>
+    </div>
+
+    <!-- DOCK INFERIOR (HERRAMIENTAS REDISEÑADO) -->
+    <nav class="tools-dock">
+        <!-- GRUPO: CORE & ORACLE -->
+        <div class="dock-group">
+            <div id="oracle-container">
+                <input type="text" id="oracle-input" placeholder="Pregunta al Oráculo..." />
+                <button id="oracle-help-btn" onclick="openLexiconModal()">❕</button>
+            </div>
+        </div>
+
+        <!-- GRUPO: CREATIVO -->
+        <div class="dock-group">
+            <button class="dock-btn special" id="conductor-toggle-btn" title="Modo Conductor">
+                <span>🎻</span>
+                <small>Live</small>
+            </button>
+            <button class="dock-btn" onclick="openJamSessionModal()" title="Jam Session">
+                <span>🎵</span>
+                <small>Jam</small>
+            </button>
+            <button class="dock-btn" onclick="generateBatch()" title="Batch Generation">
+                <span>🎲</span>
+                <small>Batch</small>
+            </button>
+            <button class="dock-btn" onclick="toggleMorphPanel()" title="Morfador de Parámetros">
+                <span>🎛️</span>
+                <small>Morph</small>
+            </button>
+        </div>
+
+        <!-- GRUPO: DATOS & LIBRERIA -->
+        <div class="dock-group">
+            <button class="dock-btn" onclick="openPresetsModal()" title="Presets de Género">
+                <span>💾</span>
+                <small>Presets</small>
+            </button>
+            <button class="dock-btn" onclick="openHistoryModal()" title="Historial de Sesión">
+                <span>📜</span>
+                <small>History</small>
+            </button>
+            <button class="dock-btn" onclick="openFavoritesModal()" title="Favoritos">
+                <span>⭐</span>
+                <small>Favs</small>
+            </button>
+            <button class="dock-btn" onclick="openSamplesModal()" title="Explorador de Samples">
+                <span>🎹</span>
+                <small>Samples</small>
+            </button>
+        </div>
+
+        <!-- GRUPO: MOTOR & ANÁLISIS -->
+        <div class="dock-group">
+            <button onclick="openArrangerModal()" class="dock-btn" title="Compositor de Canciones">
+                <span>🎼</span>
+                <small>Arranger</small>
+            </button>
+            <button onclick="openSettingsModal()" class="dock-btn status-dock-btn" title="Estado OSC y Configuración">
+                <div class="status-dot" id="osc-status"></div>
+                <span>⚙️</span>
+                <small id="osc-status-text">Config</small>
+            </button>
+            <button class="dock-btn" onclick="openRulesModal()" title="Reglas Teóricas">
+                <span>📐</span>
+                <small>Rules</small>
+            </button>
+            <a href="/admin" class="dock-btn" style="text-decoration:none; color:inherit;"
+                title="Panel de Administración">
+                <span>🛡️</span>
+                <small>Admin</small>
+            </a>
+        </div>
+    </nav>
+    </div>
+
+    <!-- MODALES (Ocultos) -->
+    <!-- SYSTEM CONFIG MODAL -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Ajustes de Sistema</h2><button class="modal-close"
+                    onclick="closeSettingsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="param-group">
+                    <label>IP de tu Ordenador (Target PC)</label>
+                    <input type="text" id="target-ip" class="select" placeholder="Ej: 192.168.1.139">
+                    <small style="color:#888;">Aquí es donde corre TidalCycles</small>
+                </div>
+                <div class="param-group">
+                    <label>Puerto OSC</label>
+                    <input type="number" id="target-port" class="select" value="6010">
+                </div>
+                <button onclick="saveSystemConfig()" class="btn btn-primary" style="width:100%; margin-top:15px;">💾
+                    Guardar Configuración</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Samples Modal -->
+    <div id="samples-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎹 Samples Config</h2>
+                <button class="modal-close" onclick="closeSamplesModal()">&times;</button>
+            </div>
+            <!-- Controls -->
+            <div style="margin-bottom: 15px; display:flex; gap:10px;">
+                <button class="btn btn-secondary btn-small" onclick="showSampleList()">Sonidos</button>
+                <button class="btn btn-info btn-small" onclick="showSCConfig()">Setup SC</button>
+                <button id="save-samples-btn" onclick="saveSamples()" class="btn btn-primary btn-small"
+                    style="margin-left:auto;">Guardar</button>
+            </div>
+
+            <div id="samples-list-container"></div>
+
+            <div id="samples-sc-config" style="display: none;">
+                <p style="color:#aaa; font-size:0.9rem; margin-bottom:10px;">Copia esto en tu
+                    startup.scd:</p>
+                <input type="text" id="samples-path-input" class="select" placeholder="Ruta: C:\Samples..."
+                    style="margin-bottom:10px;">
+                <pre id="sc-startup-code"
+                    style="background:#000; padding:10px; color:#4ec9b0; font-family:monospace; font-size:0.85rem; border-radius:6px; overflow-x:auto;"></pre>
+                <button class="btn btn-success" style="width:100%; margin-top:10px;"
+                    onclick="copySCCode()">Copiar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History items -->
+    <div id="history-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📜 Historial</h2><button class="modal-close" onclick="closeHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="history-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="presets-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💾 Presets</h2><button class="modal-close" onclick="closePresetsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="presets-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="favorites-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⭐ Favoritos</h2><button class="modal-close" onclick="closeFavoritesModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="favorites-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="batch-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎲 Batch Gen</h2><button class="modal-close" onclick="closeBatchModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="batch-progress" style="display:none; padding:10px; text-align:center; color:var(--primary);">
+                    Generando...</div>
+                <div id="batch-list" style="max-height: 400px; overflow-y: auto;"></div>
+                <div style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px;">
+                    <button class="btn btn-success" onclick="addSelectedToFavorites()" style="width:100%">⭐ Añadir
+                        seleccionados a Favoritos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RULES EDITOR MODAL (Phase 17b) -->
+    <div id="rules-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>📐 The Theorist Rules</h2><button class="modal-close" onclick="closeRulesModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:#aaa; font-size:0.9rem; margin-bottom:15px;">
+                    Define qué está permitido musicalmente. Desactiva reglas para experimentación.
+                </p>
+                <div id="rules-list-container" style="max-height: 400px; overflow-y: auto;">
+                    <!-- JS Injected Rules -->
+                </div>
+
+                <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px;">
+                    <h3 style="font-size:1rem; margin-bottom:10px;">Añadir Regla Custom (Regex)</h3>
+                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                        <input type="text" id="new-rule-genre" placeholder="Genre (e.g. techno)" class="input-text"
+                            style="width:100px;">
+                        <input type="text" id="new-rule-id" placeholder="ID (e.g. no_claps)" class="input-text">
+                    </div>
+                    <input type="text" id="new-rule-regex"
+                        placeholder="Regex (e.g. 'cp' to forbid claps, use ! for negate logic later)" class="input-text"
+                        style="width:100%; margin-bottom:10px;">
+                    <input type="text" id="new-rule-msg" placeholder="Error Message" class="input-text"
+                        style="width:100%; margin-bottom:10px;">
+                    <button class="btn btn-secondary" onclick="addNewRuleAPI()" style="width:100%">➕
+                        Añadir
+                        Regla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAM SESSION MODAL (FIXED) -->
+    <div id="jam-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎵 Jam Session</h2><button class="modal-close" onclick="closeJamSessionModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Controles Jam con Checkboxes Recuperados -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div>
+                        <label style="display:block; margin-bottom:5px; color:#aaa; font-size:0.8rem;">Duración
+                            (min)</label>
+                        <input type="number" id="jam-duration" value="5" class="select" style="width:100%">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; color:#aaa; font-size:0.8rem;">Intervalo
+                            (s)</label>
+                        <input type="number" id="jam-interval" value="8" class="select" style="width:100%">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label
+                        style="display:block; margin-bottom:10px; color:#fff; font-weight:bold; font-size:0.9rem;">Canales
+                        Activos</label>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <label class="checkbox-label"><input type="checkbox" class="jam-channel" value="d1" checked>
+                            d1</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-channel" value="d2" checked>
+                            d2</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-channel" value="d3">
+                            d3</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-channel" value="d4">
+                            d4</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-channel" value="d5">
+                            d5</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-channel" value="d6">
+                            d6</label>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label
+                        style="display:block; margin-bottom:10px; color:#fff; font-weight:bold; font-size:0.9rem;">Tipos
+                        Permitidos</label>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                        <label class="checkbox-label"><input type="checkbox" class="jam-type" value="drums" checked>
+                            🥁 Drums</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-type" value="bass" checked>
+                            🎸 Bass</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-type" value="melody" checked> 🎹
+                            Keys</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-type" value="percussion"> 🪘
+                            Perc</label>
+                        <label class="checkbox-label"><input type="checkbox" class="jam-type" value="fx"> ✨
+                            FX</label>
+                    </div>
+                </div>
+
+                <button onclick="startJamSession()" class="btn btn-success"
+                    style="width:100%; padding:12px; font-size:1.1rem; margin-top:10px;">🚀 INICIAR
+                    JAM</button>
+
+                <div id="jam-status"
+                    style="margin-top:15px; display:none; padding:10px; background:rgba(16, 185, 129, 0.1); border-radius:8px; text-align:center;">
+                    <span id="jam-status-text"
+                        style="color:#10b981; font-weight:bold; display:block; margin-bottom:5px;">Ejecutando...</span>
+                    <button onclick="stopJamSession()" class="btn btn-danger btn-small" style="width:100%">PARAR
+                        ⏹️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="song-templates-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎼 Templates</h2><button class="modal-close" onclick="closeSongTemplatesModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="templates-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="comparator-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔄 Comparador</h2><button class="modal-close" onclick="closeComparatorModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div>
+                        <select id="comparator-select-a" class="select"
+                            onchange="selectPatternForComparison('A')"></select>
+                        <div id="pattern-a" class="pattern-display"
+                            style="min-height:80px; font-size:0.8rem; margin-top:10px;"></div>
+                        <div id="metrics-a" style="font-size:0.7rem; color:#aaa; margin-top:5px;"></div>
+                        <button onclick="usePatternFromComparator('A')" class="btn btn-primary btn-small"
+                            style="width:100%; margin-top:5px;">Usar
+                            A</button>
+                    </div>
+                    <div>
+                        <select id="comparator-select-b" class="select"
+                            onchange="selectPatternForComparison('B')"></select>
+                        <div id="pattern-b" class="pattern-display"
+                            style="min-height:80px; font-size:0.8rem; margin-top:10px;"></div>
+                        <div id="metrics-b" style="font-size:0.7rem; color:#aaa; margin-top:5px;"></div>
+                        <button onclick="usePatternFromComparator('B')" class="btn btn-primary btn-small"
+                            style="width:100%; margin-top:5px;">Usar
+                            B</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="visualizer-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Visual</h2><button class="modal-close" onclick="closeVisualizerModal()">&times;</button>
+            </div>
+            <div class="modal-body"><canvas id="visualizer-canvas" width="600" height="300" style="width:100%"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- BRAIN PANEL (MODIFICADO A FLOTANTE NO BLOQUEANTE) -->
+    <div id="brain-panel" class="floating-panel">
+        <div class="floating-header" id="brain-header">
+            <h3>🕸️ Mapa Mental de la IA</h3>
+            <button class="floating-close" onclick="closeBrainPanel()">&times;</button>
+        </div>
+        <div class="floating-content">
+            <div id="brain-viz"
+                style="width: 100%; height: 500px; background: #0b0f1a; position: relative; border-radius: 12px; overflow: hidden;">
+                <svg id="brain-svg" style="width: 100%; height: 100%;"></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- MORPH PANEL (NUEVO) -->
+    <div id="morph-panel" class="floating-panel" style="width: 450px;">
+        <div class="floating-header" id="morph-header">
+            <h3>🎛️ Morfador de Riffs</h3>
+            <button class="floating-close" onclick="closeMorphPanel()">&times;</button>
+        </div>
+        <div class="floating-content">
+            <div class="param-group">
+                <label>Patrón A (0%)</label>
+                <select id="morph-select-a" class="select"></select>
+            </div>
+            <div class="param-group">
+                <label>Patrón B (100%)</label>
+                <select id="morph-select-b" class="select"></select>
+            </div>
+            <div class="param-group" style="margin-top: 20px;">
+                <label>Mezcla (Morph Ratio): <span id="morph-ratio-val">50%</span></label>
+                <input type="range" id="morph-ratio-slider" class="slider" min="0" max="100" value="50">
+            </div>
+            <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button class="btn btn-primary" onclick="generateMorph()">✨ Generar</button>
+                <button class="btn btn-success" id="morph-send-btn" disabled onclick="sendMorphedPattern()">▶️
+                    Enviar</button>
+            </div>
+            <div id="morph-preview"
+                style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #a5b4fc; min-height: 40px; word-break: break-all;">
+                Selecciona dos patrones y genera...
+            </div>
+        </div>
+    </div>
+
+    <!-- LEXICON MODAL (NUEVO) -->
+    <div id="lexicon-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>📖 Guía del Oráculo</h2><button class="modal-close" onclick="closeLexiconModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 15px; font-size: 0.9rem; color: #aaa;">El Oráculo traduce tus
+                    palabras en
+                    parámetros técnicos. Puedes combinar varias.</p>
+                <table class="lexicon-table" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border);">
+                            <th style="text-align: left; padding: 10px;">Categoría</th>
+                            <th style="text-align: left; padding: 10px;">Palabras Clave</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px; font-weight: bold;">Atmósfera</td>
+                            <td style="padding: 10px; color: var(--primary);">oscuro, brillante,
+                                espacial, sucio,
+                                limpio</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px; font-weight: bold;">Energía</td>
+                            <td style="padding: 10px; color: var(--primary);">agresivo, relajado,
+                                minimal, caótico,
+                                denso</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px; font-weight: bold;">Estilo</td>
+                            <td style="padding: 10px; color: var(--primary);">tribal, industrial, acid,
+                                dub, hard
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; font-weight: bold;">Dinámica</td>
+                            <td style="padding: 10px; color: var(--primary);">más, menos, sube, baja,
+                                calma</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div
+                    style="margin-top:20px; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px; font-style:italic; font-size:0.8rem;">
+                    Ejemplo: "Hazlo sonar algo más agresivo e industrial"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL CONDUCTOR (Timeline) -->
+    <div id="conductor-panel" class="conductor-panel hidden">
+        <div class="conductor-header">
+            <h3>🎻 Director de Orquesta</h3>
+            <div class="conductor-controls">
+                <select id="conductor-template-select" class="select"
+                    style="min-width:150px; height:32px; padding:2px;">
+                    <option value="standard">Standard Structure</option>
+                </select>
+                <button id="conductor-play" class="btn btn-success">▶ Play Song</button>
+                <button id="conductor-stop" class="btn btn-danger">⏹ Stop</button>
+                <button id="conductor-close" class="btn btn-secondary">✖</button>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <div id="timeline-track" class="timeline-track">
+                <!-- Secciones dinámicas renderizadas por JS -->
+                <div class="timeline-cursor" id="timeline-cursor"></div>
+            </div>
+            <div class="timeline-labels">
+                <span>0:00</span>
+                <span id="song-duration">3:00</span>
+            </div>
+        </div>
+
+        <!-- MODAL: BRAIN TERMINAL (Review Thoughts) -->
+        <div id="brain-terminal-modal" class="modal-overlay hidden">
+            <div class="modal-content terminal-style">
+                <div class="modal-header terminal-header">
+                    <h2>🧠 NEURAL_LOG_V5.0</h2>
+                    <button class="close-modal-btn" onclick="closeBrainModal()">×</button>
+                </div>
+                <div class="modal-body terminal-body" id="brain-terminal-output">
+                    <span class="blink">_Esperando conexión neural...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="conductor-status">
+            <span id="conductor-section-name">INTRO</span>
+            <span id="conductor-params">Modulando: Densidad 20% | Complejidad 20%</span>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- MODAL: SONG BUILDER (Arranger) -->
+    <div id="arranger-modal" class="modal-overlay hidden">
+        <div class="modal-content luxury-modal" style="width: 800px; max-width: 95vw;">
+            <div class="modal-header">
+                <h2>🎹 Compositor de Estructuras (Arranger)</h2>
+                <button class="close-modal-btn" onclick="closeArrangerModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="arranger-top-bar"
+                    style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <div>
+                        <button class="btn btn-secondary" onclick="addArrangerSection()">+ Añadir Sección</button>
+                        <button class="btn btn-info" onclick="loadArrangerTemplate('standard')">Cargar Standard</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-success" onclick="playCustomSong()">▶ Reproducir Canción</button>
+                        <button class="btn btn-danger" onclick="stopConductor()">⏹ Stop</button>
+                    </div>
+                </div>
+
+                <div class="arranger-workspace"
+                    style="max-height: 400px; overflow-y: auto; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px;">
+                    <table class="arranger-table" style="width:100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="text-align:left; color:#aaa; border-bottom:1px solid #333;">
+                                <th style="padding:8px;">Orden</th>
+                                <th style="padding:8px;">Nombre</th>
+                                <th style="padding:8px;">Duración (Compases)</th>
+                                <th style="padding:8px;">Densidad (0-1)</th>
+                                <th style="padding:8px;">Complejidad (0-1)</th>
+                                <th style="padding:8px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="arranger-sections-list">
+                            <!-- JS Generated Rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="arranger-footer" style="margin-top:15px; color:#666; font-size:0.9rem;">
+                    <p>💡 Define bloque a bloque. El Conductor transitará automáticamente entre ellos y generará Fills
+                        al final de cada sección.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <!-- SCRIPTS (Cache Busting v5.2.0-arranger) -->
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}?v=5.2.0-arranger"></script>
+    <script type="module" src="{{ url_for('static', filename='advanced-features.js') }}?v=5.2.0-arranger"></script>
+    <script type="module" src="{{ url_for('static', filename='phase2-features.js') }}?v=5.2.0-arranger"></script>
+    <script type="module" src="{{ url_for('static', filename='phase3-features.js') }}?v=5.2.0-arranger"></script>
+    <script src="{{ url_for('static', filename='particles.js') }}?v=5.2.0-arranger"></script>
+
+    <!-- Fix para asegurar que openFavoritesModal exista si no estaba definido -->
+    <script>
+        window.openFavoritesModal = function () {
+            // Reutilizar la lógica existente si es posible, o abrir el modal manualmens o fase2 tienen la lógica de llenado, si no, abrimos vacío
+            const modal = document.getElementById('favorites-modal');
+            if (modal) {
+                modal.style.display = 'block';
+                // Trigger refresh event if needed
+                if (window.loadFavorites) window.loadFavorites();
+            }
+        };
+        window.closeFavoritesModal = function () { document.getElementById('favorites-modal').style.display = 'none'; }
+    </script>
+    <script>
+        // BENTO PANEL SWITCHER
+        function switchBentoPanel(panelName) {
+            // Panels
+            const pKnobs = document.getElementById('panel-knobs');
+            const pInstruments = document.getElementById('panel-instruments');
+
+            // Buttons
+            const bKnobs = document.getElementById('btn-tab-knobs');
+            const bInstruments = document.getElementById('btn-tab-intruments');
+
+            // Reset animations
+            pKnobs.classList.remove('bento-anim-enter');
+            pInstruments.classList.remove('bento-anim-enter');
+
+            // Force reflow
+            void pKnobs.offsetWidth;
+            void pInstruments.offsetWidth;
+
+            if (panelName === 'knobs') {
+                pKnobs.style.display = 'grid';
+                pInstruments.style.display = 'none';
+                bKnobs.classList.add('active');
+                bInstruments.classList.remove('active');
+                pKnobs.classList.add('bento-anim-enter');
+            } else {
+                pKnobs.style.display = 'none';
+                pInstruments.style.display = 'flex';
+                bKnobs.classList.remove('active');
+                bInstruments.classList.add('active');
+                pInstruments.classList.add('bento-anim-enter');
+            }
+        }
+    </script>
+</body>
+
+</html>

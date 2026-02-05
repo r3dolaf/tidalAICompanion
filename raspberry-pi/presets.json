@@ -1,0 +1,134 @@
+[
+    {
+        "name": "Techno: Warehouse Rave",
+        "genMode": "ai",
+        "patternType": "drums",
+        "density": 0.85,
+        "complexity": 0.4,
+        "tempo": 138,
+        "style": "techno",
+        "temperature": 0.9,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Ambient: Ethereal Clouds",
+        "genMode": "ai",
+        "patternType": "melody",
+        "density": 0.25,
+        "complexity": 0.3,
+        "tempo": 72,
+        "style": "ambient",
+        "temperature": 0.7,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "DnB: Liquid Electric",
+        "genMode": "ai",
+        "patternType": "drums",
+        "density": 0.75,
+        "complexity": 0.6,
+        "tempo": 174,
+        "style": "drum_and_bass",
+        "temperature": 1.1,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Dub: Echo Chamber",
+        "genMode": "rules",
+        "patternType": "bass",
+        "density": 0.4,
+        "complexity": 0.5,
+        "tempo": 90,
+        "style": "dub",
+        "temperature": 1.0,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Trap: Dark 808",
+        "genMode": "ai",
+        "patternType": "percussion",
+        "density": 0.8,
+        "complexity": 0.5,
+        "tempo": 145,
+        "style": "trap",
+        "temperature": 1.2,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Industrial: Steel Mill",
+        "genMode": "ai",
+        "patternType": "drums",
+        "density": 0.9,
+        "complexity": 0.7,
+        "tempo": 155,
+        "style": "industrial",
+        "temperature": 1.3,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Cyberpunk: Neon City",
+        "genMode": "ai",
+        "patternType": "melody",
+        "density": 0.6,
+        "complexity": 0.8,
+        "tempo": 128,
+        "style": "cyberpunk",
+        "temperature": 1.5,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "DeepSea: Abyssal",
+        "genMode": "ai",
+        "patternType": "fx",
+        "density": 0.35,
+        "complexity": 0.9,
+        "tempo": 65,
+        "style": "deepsea",
+        "temperature": 1.6,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Glitch: IDM Chaos",
+        "genMode": "ai",
+        "patternType": "percussion",
+        "density": 0.7,
+        "complexity": 1.0,
+        "tempo": 105,
+        "style": "glitch",
+        "temperature": 2.0,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Organic: Tribal Rhythm",
+        "genMode": "rules",
+        "patternType": "percussion",
+        "density": 0.65,
+        "complexity": 0.4,
+        "tempo": 115,
+        "style": "organic",
+        "temperature": 1.0,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "House: Deep Velvet",
+        "genMode": "rules",
+        "patternType": "drums",
+        "density": 0.7,
+        "complexity": 0.3,
+        "tempo": 124,
+        "style": "house",
+        "temperature": 1.0,
+        "timestamp": 1706378800
+    },
+    {
+        "name": "Experimental: Void",
+        "genMode": "ai",
+        "patternType": "fx",
+        "density": 0.3,
+        "complexity": 0.85,
+        "tempo": 85,
+        "style": "experimental",
+        "temperature": 1.8,
+        "timestamp": 1706378800
+    }
+]

@@ -1,0 +1,51 @@
+/* Estilos para favoritos */
+
+.favorites-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.pattern-input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+.pattern-input:focus {
+    outline: none;
+    border-color: rgba(139, 92, 246, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.favorites-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.favorite-active {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+    color: #000 !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+}
+
+#favorites-count {
+    padding: 8px 12px;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid #8b5cf6;
+}

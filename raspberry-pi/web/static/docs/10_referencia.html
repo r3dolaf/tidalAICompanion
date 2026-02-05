@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referencia Completa - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Referencia Completa</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>REFERENCIA COMPLETA: TIDALCYCLES</h1>
+
+<h2>1. ÍNDICE ALFABÉTICO DE FUNCIONES</h2>
+
+<h3>A</h3>
+<ul><li><strong>accelerate</strong> - Cambia gradualmente el pitch durante la reproducción</li>
+<li><strong>almostAlways</strong> - Aplica función el 90% del tiempo</li>
+<li><strong>almostNever</strong> - Aplica función el 10% del tiempo</li>
+<li><strong>always</strong> - Aplica función siempre (equivalente a identidad)</li>
+<li><strong>amp</strong> - Amplitud (similar a gain)</li>
+<li><strong>append</strong> - Concatena dos patrones secuencialmente</li>
+<li><strong>arpeggiate</strong> - Convierte acordes en arpegios</li>
+<li><strong>attack</strong> - Tiempo de ataque de la envolvente</li>
+<li><strong>average</strong> - Promedia valores numéricos de un patrón</li>
+
+<h3>B</h3>
+<li><strong>bandf</strong> - Filtro paso banda (frecuencia central)</li>
+<li><strong>bandq</strong> - Filtro paso banda (Q/ancho de banda)</li>
+<li><strong>begin</strong> - Punto de inicio de reproducción del sample (0-1)</li>
+<li><strong>binaryN</strong> - Genera patrón binario de N bits</li>
+<li><strong>binshift</strong> - Desplazamiento de bins FFT</li>
+<li><strong>bite</strong> - Divide y reorganiza un patrón</li>
+<li><strong>bpf</strong> - Filtro paso banda</li>
+<li><strong>bpm</strong> - Establece BPM (convierte a CPS)</li>
+<li><strong>brak</strong> - Aplica patrón de breakbeat</li>
+<li><strong>brf</strong> - Filtro rechazo de banda (notch)</li>
+
+<h3>C</h3>
+<li><strong>cat</strong> - Concatena patrones (equivalente a <code>fastcat</code>)</li>
+<li><strong>ccn</strong> - Número de control MIDI CC</li>
+<li><strong>ccv</strong> - Valor de control MIDI CC</li>
+<li><strong>channel</strong> - Canal MIDI</li>
+<li><strong>chop</strong> - Divide sample en N partes iguales</li>
+<li><strong>choose</strong> - Selecciona aleatoriamente de una lista</li>
+<li><strong>chooseBy</strong> - Selecciona de lista usando patrón</li>
+<li><strong>chunk</strong> - Aplica función a chunks del patrón</li>
+<li><strong>coarse</strong> - Reducción de sample rate (aliasing)</li>
+<li><strong>comb</strong> - Combina dos patrones con función</li>
+<li><strong>compress</strong> - Comprime patrón en ventana temporal</li>
+<li><strong>control</strong> - Envía patrón de control</li>
+<li><strong>cos</strong> - Función coseno</li>
+<li><strong>cosine</strong> - Onda coseno (LFO)</li>
+<li><strong>cps</strong> - Ciclos por segundo (tempo)</li>
+<li><strong>crush</strong> - Bit crushing (reducción de bits)</li>
+<li><strong>cut</strong> - Grupo de corte (para hi-hats)</li>
+<li><strong>cutoff</strong> - Frecuencia de corte (alias de lpf)</li>
+
+<h3>D</h3>
+<li><strong>decay</strong> - Tiempo de decay (envolvente ADSR)</li>
+<li><strong>degrade</strong> - Elimina eventos aleatoriamente</li>
+<li><strong>degradeBy</strong> - Elimina eventos con probabilidad N</li>
+<li><strong>delay</strong> - Cantidad de delay/eco</li>
+<li><strong>delayfeedback</strong> - Retroalimentación del delay</li>
+<li><strong>delaytime</strong> - Tiempo entre ecos del delay</li>
+<li><strong>delta</strong> - Delta de tiempo entre eventos</li>
+<li><strong>density</strong> - Densidad de eventos (alias de fast)</li>
+<li><strong>detune</strong> - Desafinación en cents</li>
+<li><strong>distort</strong> - Distorsión</li>
+<li><strong>djf</strong> - DJ filter (combinado low/high pass)</li>
+<li><strong>double</strong> - Duplica el patrón (equivalente a <code>fast 2</code>)</li>
+<li><strong>draw</strong> - Dibuja patrón en ASCII</li>
+<li><strong>dry</strong> - Cantidad de señal seca (sin procesar)</li>
+
+<h3>E</h3>
+<li><strong>echo</strong> - Eco (similar a stut)</li>
+<li><strong>echoWith</strong> - Eco con función de transformación</li>
+<li><strong>end</strong> - Punto final de reproducción del sample (0-1)</li>
+<li><strong>euclid</strong> - Ritmo euclidiano (pulsos, pasos)</li>
+<li><strong>euclidFull</strong> - Ritmo euclidiano con rotación</li>
+<li><strong>euclidInv</strong> - Ritmo euclidiano invertido</li>
+<li><strong>every</strong> - Aplica función cada N ciclos</li>
+<li><strong>every'</strong> - Versión con offset de every</li>
+<li><strong>exp</strong> - Función exponencial</li>
+
+<h3>F</h3>
+<li><strong>fast</strong> - Acelera patrón por factor N</li>
+<li><strong>fastAppend</strong> - Concatena y acelera</li>
+<li><strong>fastcat</strong> - Concatena patrones rápidamente</li>
+<li><strong>fastCat</strong> - Alias de fastcat</li>
+<li><strong>fastFromList</strong> - Crea patrón rápido desde lista</li>
+<li><strong>fastGap</strong> - Concatena con gaps</li>
+<li><strong>fastRepeat</strong> - Repite patrón N veces</li>
+<li><strong>fastSqueeze</strong> - Comprime patrón</li>
+<li><strong>fill</strong> - Rellena con patrón</li>
+<li><strong>filter</strong> - Filtra eventos por condición</li>
+<li><strong>fit</strong> - Ajusta valores a lista</li>
+<li><strong>fit'</strong> - Versión extendida de fit</li>
+<li><strong>fix</strong> - Aplica función si condición se cumple</li>
+<li><strong>floor</strong> - Redondea hacia abajo</li>
+<li><strong>foldEvery</strong> - Fold con every</li>
+<li><strong>formant</strong> - Formantes vocales</li>
+<li><strong>freq</strong> - Frecuencia en Hz</li>
+<li><strong>fromIntegral</strong> - Convierte entero a double</li>
+<li><strong>fromList</strong> - Crea patrón desde lista</li>
+<li><strong>fromMaybe</strong> - Extrae valor de Maybe</li>
+
+<h3>G</h3>
+<li><strong>gain</strong> - Ganancia/volumen (0.0-2.0 típicamente)</li>
+<li><strong>gap</strong> - Crea gaps entre eventos</li>
+<li><strong>grain</strong> - Granulación</li>
+<li><strong>grainsize</strong> - Tamaño de grano</li>
+
+<h3>H</h3>
+<li><strong>harmonic</strong> - Multiplica frecuencia por armónico</li>
+<li><strong>hbrick</strong> - Filtro brick wall paso alto</li>
+<li><strong>hold</strong> - Tiempo de sostenimiento (envolvente)</li>
+<li><strong>hpf</strong> - Filtro paso alto (high-pass filter)</li>
+<li><strong>hresonance</strong> - Resonancia de filtro paso alto</li>
+<li><strong>hurry</strong> - Acelera y aumenta pitch</li>
+
+<h3>I</h3>
+<li><strong>id</strong> - Función identidad</li>
+<li><strong>ifp</strong> - If pattern (condicional)</li>
+<li><strong>inside</strong> - Aplica función "dentro" del patrón</li>
+<li><strong>int</strong> - Convierte a entero</li>
+<li><strong>irand</strong> - Entero aleatorio (0 a N-1)</li>
+<li><strong>iter</strong> - Itera/rota patrón</li>
+<li><strong>iter'</strong> - Versión inversa de iter</li>
+<li><strong>iterBack</strong> - Itera hacia atrás</li>
+
+<h3>J</h3>
+<li><strong>jux</strong> - Yuxtapone patrón (L/R)</li>
+<li><strong>juxBy</strong> - Yuxtapone con cantidad específica</li>
+<li><strong>jux4</strong> - Yuxtapone en 4 canales</li>
+
+<h3>K</h3>
+<li><strong>krush</strong> - Bit crushing extremo</li>
+
+<h3>L</h3>
+<li><strong>lag</strong> - Retrasa patrón</li>
+<li><strong>lbrick</strong> - Filtro brick wall paso bajo</li>
+<li><strong>legato</strong> - Duración relativa de eventos</li>
+<li><strong>leslie</strong> - Efecto Leslie (rotary speaker)</li>
+<li><strong>lfo</strong> - Velocidad de LFO</li>
+<li><strong>linger</strong> - Extiende último evento</li>
+<li><strong>lock</strong> - Sincroniza delay con tempo</li>
+<li><strong>loop</strong> - Número de loops del sample</li>
+<li><strong>loopAt</strong> - Hace que sample dure N ciclos</li>
+<li><strong>lpf</strong> - Filtro paso bajo (low-pass filter)</li>
+<li><strong>lrate</strong> - Velocidad de Leslie</li>
+<li><strong>lsize</strong> - Tamaño de Leslie</li>
+
+<h3>M</h3>
+<li><strong>mask</strong> - Enmascara patrón con otro</li>
+<li><strong>max</strong> - Máximo de dos valores</li>
+<li><strong>maxDur</strong> - Duración máxima</li>
+<li><strong>midichan</strong> - Canal MIDI</li>
+<li><strong>midinote</strong> - Nota MIDI (0-127)</li>
+<li><strong>min</strong> - Mínimo de dos valores</li>
+<li><strong>mono</strong> - Convierte a mono</li>
+<li><strong>mute</strong> - Silencia canal</li>
+<li><strong>mux</strong> - Multiplexor de patrones</li>
+
+<h3>N</h3>
+<li><strong>n</strong> - Número de sample o nota</li>
+<li><strong>never</strong> - Nunca aplica función</li>
+<li><strong>note</strong> - Nota musical (formato musical)</li>
+<li><strong>nudge</strong> - Micro-desplazamiento temporal</li>
+<li><strong>nTake</strong> - Toma N elementos</li>
+
+<h3>O</h3>
+<li><strong>octave</strong> - Octava musical</li>
+<li><strong>off</strong> - Copia patrón con offset y transformación</li>
+<li><strong>often</strong> - Aplica función frecuentemente (75%)</li>
+<li><strong>once</strong> - Ejecuta patrón una sola vez</li>
+<li><strong>orbit</strong> - Órbita/bus de audio (0-11)</li>
+<li><strong>outside</strong> - Aplica función "fuera" del patrón</li>
+<li><strong>overlay</strong> - Superpone dos patrones</li>
+
+<h3>P</h3>
+<li><strong>palindrome</strong> - Crea palíndromo del patrón</li>
+<li><strong>pan</strong> - Panorama estéreo (0=L, 1=R)</li>
+<li><strong>panspan</strong> - Amplitud de paneo</li>
+<li><strong>pansplay</strong> - Distribuye en campo estéreo</li>
+<li><strong>pattern</strong> - Crea patrón desde string</li>
+<li><strong>perlin</strong> - Ruido Perlin</li>
+<li><strong>phaser</strong> - Efecto phaser</li>
+<li><strong>phaserdepth</strong> - Profundidad de phaser</li>
+<li><strong>phaserrate</strong> - Velocidad de phaser</li>
+<li><strong>ply</strong> - Repite cada evento N veces</li>
+<li><strong>press</strong> - Comprime patrón temporalmente</li>
+<li><strong>pure</strong> - Crea patrón constante</li>
+
+<h3>Q</h3>
+<li><strong>qtrigger</strong> - Cuantiza trigger</li>
+<li><strong>quad</strong> - Cuadruplica patrón</li>
+<li><strong>quantise</strong> - Cuantiza valores</li>
+
+<h3>R</h3>
+<li><strong>rand</strong> - Número aleatorio (0.0-1.0)</li>
+<li><strong>randcat</strong> - Concatena aleatoriamente</li>
+<li><strong>range</strong> - Mapea patrón a rango</li>
+<li><strong>rangex</strong> - Mapea exponencialmente a rango</li>
+<li><strong>rarely</strong> - Aplica función raramente (25%)</li>
+<li><strong>rate</strong> - Ratio de modulación (FM)</li>
+<li><strong>release</strong> - Tiempo de release (envolvente)</li>
+<li><strong>repeatCycles</strong> - Repite N ciclos</li>
+<li><strong>resonance</strong> - Resonancia de filtro</li>
+<li><strong>rev</strong> - Invierte patrón</li>
+<li><strong>revArc</strong> - Invierte arco temporal</li>
+<li><strong>room</strong> - Cantidad de reverberación</li>
+<li><strong>rotate</strong> - Rota patrón N pasos</li>
+<li><strong>run</strong> - Genera secuencia 0 a N-1</li>
+
+<h3>S</h3>
+<li><strong>s</strong> - Sample o sintetizador</li>
+<li><strong>sample</strong> - Alias de s</li>
+<li><strong>samples</strong> - Múltiples samples</li>
+<li><strong>saw</strong> - Onda diente de sierra (LFO)</li>
+<li><strong>sawwave</strong> - Alias de saw</li>
+<li><strong>scale</strong> - Escala musical</li>
+<li><strong>scramble</strong> - Mezcla aleatoriamente</li>
+<li><strong>segment</strong> - Segmenta patrón</li>
+<li><strong>select</strong> - Selecciona de lista</li>
+<li><strong>selectF</strong> - Selecciona con float</li>
+<li><strong>seqP</strong> - Secuencia temporal</li>
+<li><strong>seqPLoop</strong> - Secuencia temporal en loop</li>
+<li><strong>shape</strong> - Distorsión/saturación</li>
+<li><strong>shift</strong> - Desplaza patrón</li>
+<li><strong>shuffle</strong> - Mezcla orden</li>
+<li><strong>silence</strong> - Silencio</li>
+<li><strong>sine</strong> - Onda seno (LFO)</li>
+<li><strong>sinewave</strong> - Alias de sine</li>
+<li><strong>size</strong> - Tamaño de reverb</li>
+<li><strong>slice</strong> - Corta sample en slices</li>
+<li><strong>slow</strong> - Ralentiza patrón por factor N</li>
+<li><strong>slowAppend</strong> - Concatena lentamente</li>
+<li><strong>slowcat</strong> - Concatena patrones lentamente</li>
+<li><strong>slowCat</strong> - Alias de slowcat</li>
+<li><strong>slowSqueeze</strong> - Comprime lentamente</li>
+<li><strong>smash</strong> - Efecto de smash</li>
+<li><strong>smooth</strong> - Suaviza transiciones</li>
+<li><strong>sometimes</strong> - Aplica función a veces (50%)</li>
+<li><strong>sometimesBy</strong> - Aplica con probabilidad N</li>
+<li><strong>someCycles</strong> - Aplica a algunos ciclos</li>
+<li><strong>someCyclesBy</strong> - Aplica a ciclos con probabilidad</li>
+<li><strong>sound</strong> - Alias de s</li>
+<li><strong>speed</strong> - Velocidad de reproducción</li>
+<li><strong>splice</strong> - Splice de samples</li>
+<li><strong>spread</strong> - Distribuye función sobre lista</li>
+<li><strong>spreadChoose</strong> - Spread con choose</li>
+<li><strong>square</strong> - Onda cuadrada (LFO)</li>
+<li><strong>squarewave</strong> - Alias de square</li>
+<li><strong>squiz</strong> - Pitch shifting extremo</li>
+<li><strong>stack</strong> - Apila patrones (polifonía)</li>
+<li><strong>striate</strong> - Granulación con solapamiento</li>
+<li><strong>striateBy</strong> - Granulación con factor</li>
+<li><strong>struct</strong> - Estructura booleana</li>
+<li><strong>stut</strong> - Stutter/eco</li>
+<li><strong>stut'</strong> - Stutter con transformación</li>
+<li><strong>stutWith</strong> - Stutter con función</li>
+<li><strong>superimpose</strong> - Superpone con transformación</li>
+<li><strong>sustain</strong> - Duración total del sonido</li>
+<li><strong>swingBy</strong> - Aplica swing con cantidad</li>
+<li><strong>synth</strong> - Sintetizador</li>
+
+<h3>T</h3>
+<li><strong>tanh</strong> - Función tangente hiperbólica</li>
+<li><strong>tempo</strong> - Tempo en BPM</li>
+<li><strong>timeCat</strong> - Concatena con tiempos</li>
+<li><strong>timecat</strong> - Alias de timeCat</li>
+<li><strong>toArg</strong> - Convierte a argumento</li>
+<li><strong>toScale</strong> - Convierte a escala</li>
+<li><strong>tri</strong> - Onda triangular (LFO)</li>
+<li><strong>trigger</strong> - Trigger de evento</li>
+<li><strong>triwave</strong> - Alias de tri</li>
+<li><strong>trunc</strong> - Trunca patrón</li>
+<li><strong>truncate</strong> - Trunca a longitud</li>
+
+<h3>U</h3>
+<li><strong>uncollect</strong> - Descolecta eventos</li>
+<li><strong>unDegradeBy</strong> - Inverso de degradeBy</li>
+<li><strong>unit</strong> - Unidad de medida (c/s)</li>
+<li><strong>unwrap</strong> - Desenvuelve patrón</li>
+<li><strong>up</strong> - Transposición en semitonos</li>
+<li><strong>ur</strong> - Ultra-patrón (estructura compleja)</li>
+
+<h3>V</h3>
+<li><strong>velocity</strong> - Velocidad MIDI</li>
+<li><strong>voice</strong> - Voz/algoritmo de synth</li>
+<li><strong>vowel</strong> - Filtro de vocales (a,e,i,o,u)</li>
+
+<h3>W</h3>
+<li><strong>wait</strong> - Espera N ciclos</li>
+<li><strong>warp</strong> - Deforma patrón</li>
+<li><strong>waveloss</strong> - Pérdida de forma de onda</li>
+<li><strong>weave</strong> - Entrelaza patrones</li>
+<li><strong>weaveWith</strong> - Entrelaza con función</li>
+<li><strong>wedge</strong> - Divide patrón en cuña</li>
+<li><strong>when</strong> - Aplica función cuando condición</li>
+<li><strong>whenmod</strong> - Aplica cuando módulo</li>
+<li><strong>while</strong> - Aplica mientras condición</li>
+<li><strong>within</strong> - Aplica dentro de ventana temporal</li>
+<li><strong>wrand</strong> - Aleatorio ponderado</li>
+<li><strong>wrandcat</strong> - Concatena aleatoriamente ponderado</li>
+
+<h3>X</h3>
+<li><strong>xfade</strong> - Crossfade entre patrones</li>
+<li><strong>xfadeIn</strong> - Crossfade con duración</li>
+
+<h3>Z</h3>
+<li><strong>zoom</strong> - Hace zoom en ventana temporal</li>
+
+<p>
+---
+</p>
+
+<h2>2. FUNCIONES POR CATEGORÍA</h2>
+
+<h3>Generación de Patrones</h3>
+<li><code>pure</code>, <code>silence</code>, <code>run</code>, <code>scan</code>, <code>segment</code></li>
+
+<h3>Transformación Temporal</h3>
+<li><code>fast</code>, <code>slow</code>, <code>hurry</code>, <code>density</code>, <code>sparsity</code></li>
+<li><code>compress</code>, <code>zoom</code>, <code>within</code></li>
+<li><code>rev</code>, <code>palindrome</code>, <code>iter</code>, <code>rotate</code></li>
+
+<h3>Combinación</h3>
+<li><code>stack</code>, <code>cat</code>, <code>fastcat</code>, <code>slowcat</code>, <code>timeCat</code></li>
+<li><code>append</code>, <code>overlay</code>, <code>superimpose</code></li>
+<li><code>jux</code>, <code>juxBy</code>, <code>off</code></li>
+
+<h3>Condicionales</h3>
+<li><code>every</code>, <code>when</code>, <code>whenmod</code>, <code>sometimes</code></li>
+<li><code>often</code>, <code>rarely</code>, <code>almostAlways</code>, <code>almostNever</code></li>
+<li><code>someCycles</code>, <code>someCyclesBy</code></li>
+
+<h3>Aleatoriedad</h3>
+<li><code>rand</code>, <code>irand</code>, <code>choose</code>, <code>wchoose</code></li>
+<li><code>degrade</code>, <code>degradeBy</code>, <code>scramble</code>, <code>shuffle</code></li>
+<li><code>randcat</code>, <code>wrandcat</code></li>
+
+<h3>Samples</h3>
+<li><code>s</code>, <code>n</code>, <code>begin</code>, <code>end</code>, <code>loop</code>, <code>loopAt</code></li>
+<li><code>chop</code>, <code>slice</code>, <code>striate</code>, <code>gap</code></li>
+
+<h3>Síntesis</h3>
+<li><code>note</code>, <code>midinote</code>, <code>freq</code>, <code>octave</code>, <code>harmonic</code></li>
+<li><code>speed</code>, <code>accelerate</code>, <code>up</code>, <code>detune</code></li>
+
+<h3>Filtros</h3>
+<li><code>lpf</code>, <code>hpf</code>, <code>bpf</code>, <code>brf</code></li>
+<li><code>resonance</code>, <code>cutoff</code>, <code>djf</code></li>
+<li><code>hbrick</code>, <code>lbrick</code></li>
+
+<h3>Efectos</h3>
+<li><code>gain</code>, <code>pan</code>, <code>room</code>, <code>size</code></li>
+<li><code>delay</code>, <code>delaytime</code>, <code>delayfeedback</code></li>
+<li><code>crush</code>, <code>shape</code>, <code>distort</code></li>
+<li><code>vowel</code>, <code>phaser</code>, <code>leslie</code></li>
+
+<h3>Envolvente</h3>
+<li><code>attack</code>, <code>decay</code>, <code>sustain</code>, <code>release</code>, <code>hold</code></li>
+<li><code>legato</code></li>
+
+<h3>Estructura</h3>
+<li><code>seqP</code>, <code>ur</code>, <code>chunk</code>, <code>bite</code></li>
+
+<p>
+---
+</p>
+
+<h2>3. OPERADORES</h2>
+
+<h3>Operadores Aritméticos</h3>
+<li><code>+</code> - Suma</li>
+<li><code>-</code> - Resta</li>
+<li><code>*</code> - Multiplicación</li>
+<li><code>/</code> - División</li>
+<li><code>**</code> - Potencia</li>
+<li><code>%</code> - Módulo</li>
+
+<h3>Operadores de Comparación</h3>
+<li><code>==</code> - Igual</li>
+<li><code>/=</code> - Diferente</li>
+<li><code><</code> - Menor que</li>
+<li><code>></code> - Mayor que</li>
+<li><code><=</code> - Menor o igual</li>
+<li><code>>=</code> - Mayor o igual</li>
+
+<h3>Operadores Lógicos</h3>
+<li><code>&&</code> - AND lógico</li>
+<li><code>||</code> - OR lógico</li>
+<li><code>not</code> - NOT lógico</li>
+
+<h3>Operadores de Patrón</h3>
+<li><code>#</code> - Aplica parámetro</li>
+<li><code>|+|</code> - Suma de patrones</li>
+<li><code>|-|</code> - Resta de patrones</li>
+<li><code>|*|</code> - Multiplicación de patrones</li>
+<li><code>|/|</code> - División de patrones</li>
+<li><code>|>|</code> - Estructura de izquierda, valores de derecha</li>
+<li><code>|<|</code> - Estructura de derecha, valores de izquierda</li>
+<li><code>|></code> - Alias de <code>|>|</code></li>
+<li><code><|</code> - Alias de <code>|<|</code></li>
+
+<h3>Operadores de Composición</h3>
+<li><code>.</code> - Composición de funciones</li>
+<li><code>$</code> - Aplicación de función</li>
+<li><code><$></code> - Fmap</li>
+<li><code><*></code> - Applicative</li>
+
+<p>
+---
+</p>
+
+<h2>4. MINI-NOTACIÓN</h2>
+
+<h3>Sintaxis Básica</h3>
+<li><code>bd sd hh cp</code> - Secuencia</li>
+<li><code>[bd sd]</code> - Grupo</li>
+<li><code>~</code> - Silencio</li>
+<li><code>_</code> - Extender evento anterior</li>
+
+<h3>Operadores</h3>
+<li><code>*N</code> - Repetir N veces</li>
+<li><code>/N</code> - Ralentizar N veces</li>
+<li><code>!N</code> - Replicar N veces</li>
+<li><code>?</code> - Aleatorizar (50%)</li>
+<li><code>?0.3</code> - Aleatorizar con probabilidad</li>
+<li><code>@N</code> - Alargar evento</li>
+
+<h3>Euclidean</h3>
+<li><code>(n,k)</code> - n pulsos en k pasos</li>
+<li><code>(n,k,r)</code> - con rotación r</li>
+
+<h3>Polimetría</h3>
+<li><code>{a b c, d e}</code> - Polimetría</li>
+
+<h3>Selección</h3>
+<li><code><a b c></code> - Selección lenta</li>
+<li><code><<a b> c></code> - Selección anidada</li>
+
+<h3>Rangos</h3>
+<li><code>[0..7]</code> - Rango 0 a 7</li>
+<li><code>[0,2..8]</code> - Rango con paso</li>
+
+<p>
+---
+</p>
+
+<h2>5. ESCALAS MUSICALES</h2>
+
+<h3>Escalas Mayores</h3>
+<li><code>major</code> - Mayor</li>
+<li><code>ionian</code> - Jónico (= mayor)</li>
+<li><code>lydian</code> - Lidio</li>
+<li><code>mixolydian</code> - Mixolidio</li>
+
+<h3>Escalas Menores</h3>
+<li><code>minor</code> - Menor natural</li>
+<li><code>aeolian</code> - Eólico (= menor)</li>
+<li><code>dorian</code> - Dórico</li>
+<li><code>phrygian</code> - Frigio</li>
+<li><code>locrian</code> - Locrio</li>
+<li><code>harmonicMinor</code> - Menor armónica</li>
+<li><code>melodicMinor</code> - Menor melódica</li>
+
+<h3>Escalas Pentatónicas</h3>
+<li><code>majorPentatonic</code> - Pentatónica mayor</li>
+<li><code>minorPentatonic</code> - Pentatónica menor</li>
+
+<h3>Escalas de Blues</h3>
+<li><code>blues</code> - Blues</li>
+<li><code>bluesMajor</code> - Blues mayor</li>
+
+<h3>Escalas Modales</h3>
+<li><code>dorian</code>, <code>phrygian</code>, <code>lydian</code>, <code>mixolydian</code>, <code>aeolian</code>, <code>locrian</code></li>
+
+<h3>Escalas Exóticas</h3>
+<li><code>whole</code> - Tonos enteros</li>
+<li><code>chromatic</code> - Cromática</li>
+<li><code>spanish</code> - Española</li>
+<li><code>gypsy</code> - Gitana</li>
+<li><code>arabic</code> - Árabe</li>
+<li><code>japanese</code> - Japonesa</li>
+<li><code>indian</code> - India</li>
+
+<p>
+---
+</p>
+
+<h2>6. ACORDES</h2>
+
+<h3>Acordes Mayores</h3>
+<li><code>maj</code> - Mayor (1 3 5)</li>
+<li><code>maj7</code> - Mayor séptima (1 3 5 7)</li>
+<li><code>maj9</code> - Mayor novena (1 3 5 7 9)</li>
+<li><code>maj11</code> - Mayor oncena</li>
+<li><code>maj13</code> - Mayor trecena</li>
+
+<h3>Acordes Menores</h3>
+<li><code>min</code> - Menor (1 ♭3 5)</li>
+<li><code>min7</code> - Menor séptima (1 ♭3 5 ♭7)</li>
+<li><code>min9</code> - Menor novena</li>
+<li><code>min11</code> - Menor oncena</li>
+<li><code>min13</code> - Menor trecena</li>
+
+<h3>Acordes de Séptima</h3>
+<li><code>dom7</code> - Séptima dominante (1 3 5 ♭7)</li>
+<li><code>dom9</code> - Novena dominante</li>
+<li><code>dom11</code> - Oncena dominante</li>
+<li><code>dom13</code> - Trecena dominante</li>
+
+<h3>Acordes Disminuidos y Aumentados</h3>
+<li><code>dim</code> - Disminuido (1 ♭3 ♭5)</li>
+<li><code>dim7</code> - Disminuido séptima</li>
+<li><code>aug</code> - Aumentado (1 3 #5)</li>
+
+<h3>Acordes Suspendidos</h3>
+<li><code>sus2</code> - Suspendido segunda (1 2 5)</li>
+<li><code>sus4</code> - Suspendido cuarta (1 4 5)</li>
+
+<p>
+---
+</p>
+
+<h2>7. SAMPLES INCLUIDOS</h2>
+
+<h3>Percusión Electrónica</h3>
+<strong>808 Series:</strong>
+<li><code>808bd</code>, <code>808sd</code>, <code>808oh</code>, <code>808ch</code>, <code>808cy</code>, <code>808lc</code>, <code>808mc</code>, <code>808hc</code></li>
+
+<strong>909 Series:</strong>
+<li><code>909bd</code>, <code>909sd</code>, <code>909oh</code>, <code>909ch</code>, <code>909cy</code></li>
+
+<strong>Genéricos:</strong>
+<li><code>bd</code>, <code>sd</code>, <code>hh</code>, <code>oh</code>, <code>ch</code>, <code>cp</code>, <code>clap</code>, <code>rim</code>, <code>rs</code></li>
+
+<h3>Breaks</h3>
+<li><code>amen</code>, <code>break</code>, <code>jungle</code>, <code>drumtraks</code></li>
+
+<h3>Tonales</h3>
+<li><code>bass</code>, <code>arpy</code>, <code>feel</code>, <code>future</code>, <code>gab</code></li>
+
+<h3>Sintetizadores</h3>
+<li><code>superpiano</code>, <code>superfm</code>, <code>supersaw</code>, <code>superpwm</code>, <code>superchip</code></li>
+<li><code>superzow</code>, <code>supergong</code>, <code>superhammond</code>, <code>supervibe</code></li>
+<li><code>supermandolin</code>, <code>superhoover</code></li>
+
+<h3>Efectos</h3>
+<li><code>glitch</code>, <code>metal</code>, <code>noise</code>, <code>wind</code>, <code>breath</code></li>
+
+<h3>Vocales</h3>
+<li><code>bev</code>, <code>mouth</code>, <code>alphabet</code></li>
+
+<h3>Instrumentos</h3>
+<li><code>sax</code>, <code>trump</code>, <code>flick</code>, <code>tabla</code></li>
+
+<p>
+---
+</p>
+
+<h2>8. CONFIGURACIÓN</h2>
+
+<h3>CPS (Ciclos Por Segundo)</h3>
+<pre><code>setcps 0.5      -- 120 BPM (0.5 * 60 * 2)
+<p>
+setcps 0.55     -- 132 BPM
+setcps (130/60/2)  -- 130 BPM exacto</code></pre>
+</p>
+
+<h3>Órbitas</h3>
+<pre><code>d1 $ s "bd" # orbit 0   -- Órbita 0 (canales 0-1)
+<p>
+d2 $ s "sd" # orbit 1   -- Órbita 1 (canales 2-3)</code></pre>
+</p>
+
+<h3>Transiciones</h3>
+<pre><code>xfade 1 $ s "sd*4"          -- Crossfade en 4 ciclos
+<p>
+xfadeIn 1 1 $ s "hh*8"      -- Crossfade en 1 ciclo
+clutch 1 $ s "bd*4"         -- Cambio inmediato</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<h2>9. ATAJOS DE TECLADO (Atom/VS Code)</h2>
+
+<h3>Evaluación</h3>
+<li><code>Ctrl+Enter</code> - Evaluar línea/selección</li>
+<li><code>Ctrl+Shift+Enter</code> - Evaluar bloque</li>
+<li><code>Ctrl+.</code> - Silenciar todo (hush)</li>
+
+<h3>Navegación</h3>
+<li><code>Ctrl+/</code> - Comentar/descomentar</li>
+<li><code>Ctrl+D</code> - Seleccionar siguiente ocurrencia</li>
+<li><code>Ctrl+F</code> - Buscar</li></ul>
+
+<p>
+---
+</p>
+
+<h2>10. COMANDOS ÚTILES</h2>
+
+<h3>Control de Canales</h3>
+<pre><code>hush            -- Silenciar todo
+<p>
+d1 silence      -- Silenciar d1
+solo 1          -- Solo d1
+unsolo 1        -- Quitar solo de d1
+mute 1          -- Mutear d1
+unmute 1        -- Desmutear d1</code></pre>
+</p>
+
+<h3>Información</h3>
+<pre><code>:t function     -- Tipo de función
+<p>
+:i function     -- Información de función
+:browse         -- Listar funciones disponibles</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<p>
+Esta referencia completa cubre todos los aspectos esenciales de TidalCycles. Úsala como guía rápida durante tus sesiones de live coding.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

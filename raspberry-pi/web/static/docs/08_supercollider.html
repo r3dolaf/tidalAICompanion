@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperCollider Integration - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 SuperCollider Integration</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>SUPERCOLLIDER INTEGRATION: GUÍA COMPLETA</h1>
+
+<h2>1. Arquitectura de TidalCycles + SuperCollider</h2>
+
+<h3>1.1 Flujo de Datos</h3>
+
+<pre><code>TidalCycles (Haskell)
+<p>
+        ↓
+    OSC Messages
+        ↓
+SuperDirt (SuperCollider)
+        ↓
+    Audio Output</code></pre>
+</p>
+
+<strong>Componentes:</strong>
+<ul><li><strong>TidalCycles</strong>: Genera patrones y eventos</li>
+<li><strong>OSC (Open Sound Control)</strong>: Protocolo de comunicación</li>
+<li><strong>SuperDirt</strong>: Motor de audio en SuperCollider</li>
+<li><strong>SuperCollider</strong>: Síntesis y procesamiento de audio</li>
+
+<h3>1.2 Configuración de SuperDirt</h3>
+
+<strong>Startup Básico (startup.scd):</strong>
+<pre><code>(
+<p>
+// Configuración del servidor
+s.options.numBuffers = 1024 * 256;
+s.options.memSize = 8192 * 64;
+s.options.sampleRate = 48000;
+s.options.numOutputBusChannels = 12;  // 6 órbitas estéreo
+s.options.numInputBusChannels = 2;
+</p>
+
+<p>
+// Esperar a que el servidor arranque
+s.waitForBoot {
+    // Cargar SuperDirt
+    ~dirt = SuperDirt(2, s);
+</p>
+    
+<p>
+    // Cargar samples
+    ~dirt.loadSoundFiles;
+</p>
+    
+<p>
+    // Iniciar SuperDirt
+    s.sync;
+    ~dirt.start(57120, 0 ! 12);  // Puerto 57120, 12 canales
+</p>
+    
+<p>
+    // Configuración adicional
+    ~dirt.startSendRMS;
+};
+)</code></pre>
+</p>
+
+<strong>Configuración Avanzada:</strong>
+<pre><code>(
+<p>
+s.options.numBuffers = 1024 * 512;      // Más buffers
+s.options.memSize = 8192 * 128;         // Más memoria
+s.options.sampleRate = 96000;           // Sample rate más alto
+s.options.numOutputBusChannels = 24;    // 12 órbitas estéreo
+s.options.maxNodes = 2048;              // Más nodos simultáneos
+s.options.numWireBufs = 256;            // Más wire buffers
+</p>
+
+<p>
+// Configuración de latencia
+s.latency = 0.2;
+</p>
+
+<p>
+s.waitForBoot {
+    ~dirt = SuperDirt(2, s);
+</p>
+    
+<p>
+    // Cargar samples desde múltiples directorios
+    ~dirt.loadSoundFiles("C:/Dirt-Samples/*");
+    ~dirt.loadSoundFiles("C:/MisSamples/*");
+</p>
+    
+<p>
+    s.sync;
+    ~dirt.start(57120, 0 ! 24);
+</p>
+    
+<p>
+    // Configuración de órbitas
+    ~dirt.orbits.do { |x|
+        x.outBus = x.outBus + 0;  // Routing personalizado
+    };
+</p>
+    
+<p>
+    ~dirt.startSendRMS;
+</p>
+    
+<p>
+    "SuperDirt iniciado correctamente".postln;
+};
+)</code></pre>
+</p>
+
+<h2>2. Órbitas y Routing</h2>
+
+<h3>2.1 Concepto de Órbitas</h3>
+
+<p>
+Las órbitas son buses de audio independientes que permiten:
+</p>
+<li>Procesamiento individual</li>
+<li>Routing a diferentes salidas</li>
+<li>Mezcla separada</li></ul>
+
+<strong>Configuración de Órbitas:</strong>
+<pre><code>// 12 órbitas (24 canales)
+<p>
+~dirt.start(57120, 0 ! 12);
+</p>
+
+<p>
+// Routing personalizado
+~dirt.orbits[0].outBus = 0;   // Órbita 0 → Canales 0-1
+~dirt.orbits[1].outBus = 2;   // Órbita 1 → Canales 2-3
+~dirt.orbits[2].outBus = 4;   // Órbita 2 → Canales 4-5</code></pre>
+</p>
+
+<strong>Uso en Tidal:</strong>
+<pre><code>-- Kick en órbita 0
+<p>
+d1 $ s "bd*4" # orbit 0
+</p>
+
+<p>
+-- Snare en órbita 1
+d2 $ s "sd*2" # orbit 1
+</p>
+
+<p>
+-- Hats en órbita 2
+d3 $ s "hh*16" # orbit 2</code></pre>
+</p>
+
+<h3>2.2 Procesamiento por Órbita</h3>
+
+<strong>Efectos Globales por Órbita:</strong>
+<pre><code>// Añadir reverb a órbita 1
+<p>
+~dirt.orbits[1].globalEffects = ~dirt.orbits[1].globalEffects
+    .addFirst(\reverb -> { |signal|
+        FreeVerb.ar(signal, 0.5, 0.8, 0.5)
+    });
+</p>
+
+<p>
+// Añadir compresión a órbita 0
+~dirt.orbits[0].globalEffects = ~dirt.orbits[0].globalEffects
+    .addFirst(\compressor -> { |signal|
+        Compander.ar(signal, signal, 0.5, 1, 0.5, 0.01, 0.1)
+    });</code></pre>
+</p>
+
+<h2>3. Sintetizadores Personalizados</h2>
+
+<h3>3.1 Crear Sintetizadores</h3>
+
+<strong>Sintetizador Básico:</strong>
+<pre><code>(
+<p>
+SynthDef(\mysynth, {
+    |out, sustain = 1, freq = 440, speed = 1, begin = 0, end = 1, pan = 0.5, accelerate = 0, offset|
+</p>
+    
+<p>
+    var env, sound, panned;
+</p>
+    
+<p>
+    // Envolvente
+    env = EnvGen.ar(Env.linen(0.01, sustain, 0.1), doneAction: Done.freeSelf);
+</p>
+    
+<p>
+    // Oscilador
+    sound = Saw.ar(freq * speed);
+</p>
+    
+<p>
+    // Filtro
+    sound = LPF.ar(sound, 2000);
+</p>
+    
+<p>
+    // Aplicar envolvente
+    sound = sound * env;
+</p>
+    
+<p>
+    // Paneo
+    panned = Pan2.ar(sound, pan * 2 - 1);
+</p>
+    
+<p>
+    // Salida
+    Out.ar(out, panned);
+}).add;
+)</code></pre>
+</p>
+
+<strong>Usar en Tidal:</strong>
+<pre><code>d1 $ n "60 64 67" # s "mysynth"</code></pre>
+
+<strong>Sintetizador con Parámetros Personalizados:</strong>
+<pre><code>(
+<p>
+SynthDef(\acidbass, {
+    |out, sustain = 1, freq = 440, cutoff = 1000, resonance = 0.5, 
+     distortion = 0, pan = 0.5, accelerate = 0, offset|
+</p>
+    
+<p>
+    var env, sound, filterEnv, panned;
+</p>
+    
+<p>
+    // Envolvente de amplitud
+    env = EnvGen.ar(Env.linen(0.001, sustain, 0.1), doneAction: Done.freeSelf);
+</p>
+    
+<p>
+    // Oscilador
+    sound = Saw.ar(freq);
+</p>
+    
+<p>
+    // Envolvente de filtro
+    filterEnv = EnvGen.ar(Env.perc(0.01, 0.3));
+</p>
+    
+<p>
+    // Filtro resonante
+    sound = RLPF.ar(sound, cutoff * filterEnv, resonance);
+</p>
+    
+<p>
+    // Distorsión
+    sound = (sound * (1 + (distortion * 10))).tanh;
+</p>
+    
+<p>
+    // Aplicar envolvente
+    sound = sound * env;
+</p>
+    
+<p>
+    // Paneo
+    panned = Pan2.ar(sound, pan * 2 - 1);
+</p>
+    
+<p>
+    // Salida
+    Out.ar(out, panned * 0.5);
+}).add;
+)</code></pre>
+</p>
+
+<strong>Usar con Parámetros:</strong>
+<pre><code>d1 $ n "0 ~ 0 ~" # s "acidbass"
+<p>
+  # cutoff (range 200 4000 (slow 4 saw))
+  # resonance 0.8
+  # distortion 0.6</code></pre>
+</p>
+
+<h3>3.2 Sintetizadores Complejos</h3>
+
+<strong>FM Synth Personalizado:</strong>
+<pre><code>(
+<p>
+SynthDef(\customfm, {
+    |out, sustain = 1, freq = 440, modfreq = 2, moddepth = 1, 
+     pan = 0.5, accelerate = 0, offset|
+</p>
+    
+<p>
+    var env, carrier, modulator, sound, panned;
+</p>
+    
+<p>
+    // Envolvente
+    env = EnvGen.ar(Env.linen(0.01, sustain, 0.2), doneAction: Done.freeSelf);
+</p>
+    
+<p>
+    // Modulador
+    modulator = SinOsc.ar(freq * modfreq) * (freq * moddepth);
+</p>
+    
+<p>
+    // Portadora
+    carrier = SinOsc.ar(freq + modulator);
+</p>
+    
+<p>
+    sound = carrier * env;
+</p>
+    
+<p>
+    // Paneo
+    panned = Pan2.ar(sound, pan * 2 - 1);
+</p>
+    
+<p>
+    // Salida
+    Out.ar(out, panned * 0.3);
+}).add;
+)</code></pre>
+</p>
+
+<strong>Granular Synth:</strong>
+<pre><code>(
+<p>
+SynthDef(\granular, {
+    |out, sustain = 1, freq = 440, grainsize = 0.1, density = 10, 
+     pan = 0.5, buffer = 0, offset|
+</p>
+    
+<p>
+    var env, sound, panned;
+</p>
+    
+<p>
+    // Envolvente
+    env = EnvGen.ar(Env.linen(0.01, sustain, 0.1), doneAction: Done.freeSelf);
+</p>
+    
+<p>
+    // Granulador
+    sound = GrainBuf.ar(
+        numChannels: 2,
+        trigger: Impulse.ar(density),
+        dur: grainsize,
+        sndbuf: buffer,
+        rate: freq / 440,
+        pos: LFNoise1.kr(10).range(0, 1),
+        pan: LFNoise1.kr(10)
+    );
+</p>
+    
+<p>
+    sound = sound * env;
+</p>
+    
+<p>
+    // Salida
+    Out.ar(out, sound * 0.5);
+}).add;
+)</code></pre>
+</p>
+
+<h2>4. Efectos Personalizados</h2>
+
+<h3>4.1 Crear Efectos Globales</h3>
+
+<strong>Delay Personalizado:</strong>
+<pre><code>(
+<p>
+~dirt.addModule('delay', { |dirtEvent|
+    dirtEvent.sendSynth('delay' ++ dirtEvent.numChannels,
+        [
+            delay: ~delay,
+            delaytime: ~delaytime,
+            delayfeedback: ~delayfeedback,
+            out: ~out
+        ]
+    )
+}, { ~delay.notNil });
+</p>
+
+<p>
+SynthDef("delay" ++ 2, { |out, delay = 0, delaytime = 0.25, delayfeedback = 0.5|
+    var signal, delayed;
+    signal = In.ar(out, 2);
+    delayed = CombC.ar(signal, 2, delaytime, delayfeedback * 4);
+    ReplaceOut.ar(out, signal + (delayed * delay));
+}).add;
+)</code></pre>
+</p>
+
+<strong>Chorus Personalizado:</strong>
+<pre><code>(
+<p>
+~dirt.addModule('chorus', { |dirtEvent|
+    dirtEvent.sendSynth('chorus' ++ dirtEvent.numChannels,
+        [
+            chorus: ~chorus,
+            chorusrate: ~chorusrate,
+            chorusdepth: ~chorusdepth,
+            out: ~out
+        ]
+    )
+}, { ~chorus.notNil });
+</p>
+
+<p>
+SynthDef("chorus" ++ 2, { |out, chorus = 0, chorusrate = 2, chorusdepth = 0.01|
+    var signal, modulated;
+    signal = In.ar(out, 2);
+    modulated = signal + DelayC.ar(
+        signal,
+        0.1,
+        SinOsc.kr(chorusrate).range(0, chorusdepth)
+    );
+    ReplaceOut.ar(out, XFade2.ar(signal, modulated, chorus * 2 - 1));
+}).add;
+)</code></pre>
+</p>
+
+<h3>4.2 Efectos por Órbita</h3>
+
+<strong>Sidechain Compressor:</strong>
+<pre><code>(
+<p>
+// En órbita 0: kick (trigger)
+// En órbita 1: bass (comprimido)
+</p>
+
+<p>
+~dirt.orbits[1].globalEffects = ~dirt.orbits[1].globalEffects
+    .addFirst(\sidechain -> { |signal|
+        var trigger = In.ar(~dirt.orbits[0].dryBus, 2);
+        var env = Amplitude.kr(trigger);
+        signal * (1 - (env * 0.7));
+    });
+)</code></pre>
+</p>
+
+<h2>5. Samples Personalizados</h2>
+
+<h3>5.1 Cargar Samples</h3>
+
+<strong>Cargar Directorio:</strong>
+<pre><code>// Cargar todos los samples
+<p>
+~dirt.loadSoundFiles("C:/MisSamples/*");
+</p>
+
+<p>
+// Cargar banco específico
+~dirt.loadSoundFiles("C:/MisSamples/kicks/*");</code></pre>
+</p>
+
+<strong>Cargar Sample Individual:</strong>
+<pre><code>(
+<p>
+~dirt.soundLibrary.addSynth(\mysample,
+    (
+        instrument: \dirt_sample,
+        bufnum: Buffer.read(s, "C:/path/to/sample.wav")
+    )
+);
+)</code></pre>
+</p>
+
+<h3>5.2 Procesamiento de Samples</h3>
+
+<strong>Pre-procesamiento:</strong>
+<pre><code>(
+<p>
+// Cargar y procesar sample
+b = Buffer.read(s, "C:/path/to/sample.wav");
+</p>
+
+<p>
+// Aplicar normalización
+b.normalize;
+</p>
+
+<p>
+// Añadir a SuperDirt
+~dirt.soundLibrary.addBuffer(\processed, b);
+)</code></pre>
+</p>
+
+<h2>6. Análisis y Visualización</h2>
+
+<h3>6.1 RMS Monitoring</h3>
+
+<strong>Activar Monitoreo:</strong>
+<pre><code>~dirt.startSendRMS;</code></pre>
+
+<strong>Recibir en Tidal:</strong>
+<pre><code>-- Los valores RMS están disponibles en Tidal
+<p>
+d1 $ s "bd*4" # gain (cF 0 "rms")</code></pre>
+</p>
+
+<h3>6.2 Análisis Espectral</h3>
+
+<strong>FFT Analysis:</strong>
+<pre><code>(
+<p>
+{
+    var signal, chain, fft;
+    signal = SoundIn.ar(0);
+    chain = FFT(LocalBuf(2048), signal);
+</p>
+    
+<p>
+    // Análisis
+    SendReply.kr(Impulse.kr(10), '/spectrum', 
+        [
+            SpecCentroid.kr(chain),
+            SpecFlatness.kr(chain)
+        ]
+    );
+</p>
+    
+<p>
+    signal;
+}.play;
+)</code></pre>
+</p>
+
+<h2>7. Optimización y Performance</h2>
+
+<h3>7.1 Configuración de Latencia</h3>
+
+<strong>Ajustar Latencia:</strong>
+<pre><code>// Latencia del servidor
+<p>
+s.latency = 0.2;  // 200ms
+</p>
+
+<p>
+// Latencia de SuperDirt
+~dirt.latency = 0.02;  // 20ms</code></pre>
+</p>
+
+<h3>7.2 Gestión de Recursos</h3>
+
+<strong>Liberar Recursos:</strong>
+<pre><code>// Liberar samples
+<p>
+~dirt.freeSoundFiles;
+</p>
+
+<p>
+// Liberar buffers
+Buffer.freeAll;
+</p>
+
+<p>
+// Liberar synths
+s.freeAll;</code></pre>
+</p>
+
+<strong>Monitoreo de CPU:</strong>
+<pre><code>// Ver uso de CPU
+<p>
+s.avgCPU;
+s.peakCPU;
+</p>
+
+<p>
+// Número de synths activos
+s.numSynths;</code></pre>
+</p>
+
+<h3>7.3 Optimización de Synths</h3>
+
+<strong>Usar LocalBuf:</strong>
+<pre><code>(
+<p>
+SynthDef(\optimized, {
+    |out, freq = 440|
+    var env, sound;
+</p>
+    
+<p>
+    // Usar LocalBuf en lugar de Buffer global
+    var buf = LocalBuf(2048);
+</p>
+    
+<p>
+    env = EnvGen.ar(Env.perc, doneAction: Done.freeSelf);
+    sound = SinOsc.ar(freq) * env;
+</p>
+    
+<p>
+    Out.ar(out, Pan2.ar(sound, 0));
+}).add;
+)</code></pre>
+</p>
+
+<h2>8. Casos de Uso Avanzados</h2>
+
+<h3>8.1 Multi-canal Output</h3>
+
+<strong>Configuración para 8 Canales:</strong>
+<pre><code>(
+<p>
+s.options.numOutputBusChannels = 8;
+</p>
+
+<p>
+s.waitForBoot {
+    ~dirt = SuperDirt(2, s);
+    ~dirt.loadSoundFiles;
+    s.sync;
+</p>
+    
+<p>
+    // 4 órbitas, cada una en par estéreo
+    ~dirt.orbits[0].outBus = 0;  // Canales 0-1
+    ~dirt.orbits[1].outBus = 2;  // Canales 2-3
+    ~dirt.orbits[2].outBus = 4;  // Canales 4-5
+    ~dirt.orbits[3].outBus = 6;  // Canales 6-7
+</p>
+    
+<p>
+    ~dirt.start(57120, 0 ! 4);
+};
+)</code></pre>
+</p>
+
+<h3>8.2 Integración con Hardware</h3>
+
+<strong>MIDI Output:</strong>
+<pre><code>(
+<p>
+MIDIClient.init;
+~midiOut = MIDIOut(0);  // Primer puerto MIDI
+</p>
+
+<p>
+// Synth que envía MIDI
+SynthDef(\midisynth, {
+    |out, freq = 440, gate = 1|
+    var note = freq.cpsmidi.round;
+    SendTrig.kr(Impulse.kr(0), 0, note);
+    FreeSelf.kr(gate);
+}).add;
+</p>
+
+<p>
+OSCdef(\midiTrigger, { |msg|
+    ~midiOut.noteOn(0, msg[3], 100);
+}, '/tr');
+)</code></pre>
+</p>
+
+<h3>8.3 Grabación</h3>
+
+<strong>Grabar Salida:</strong>
+<pre><code>// Iniciar grabación
+<p>
+s.record;
+</p>
+
+<p>
+// Detener grabación
+s.stopRecording;</code></pre>
+</p>
+
+<strong>Grabar Órbita Específica:</strong>
+<pre><code>(
+<p>
+// Grabar órbita 0
+~recorder = Recorder(s);
+~recorder.record(
+    path: "~/Desktop/recording.wav",
+    bus: ~dirt.orbits[0].outBus,
+    numChannels: 2
+);
+)
+</p>
+
+<p>
+// Detener
+~recorder.stopRecording;</code></pre>
+</p>
+
+<h2>9. Troubleshooting</h2>
+
+<h3>9.1 Problemas Comunes</h3>
+
+<strong>SuperDirt no arranca:</strong>
+<pre><code>// Verificar que el servidor esté corriendo
+<p>
+s.boot;
+</p>
+
+<p>
+// Reiniciar SuperDirt
+~dirt.free;
+~dirt = SuperDirt(2, s);
+~dirt.start(57120, 0 ! 12);</code></pre>
+</p>
+
+<strong>Samples no se cargan:</strong>
+<pre><code>// Verificar ruta
+<p>
+~dirt.soundLibrary.postln;
+</p>
+
+<p>
+// Recargar
+~dirt.freeSoundFiles;
+~dirt.loadSoundFiles;</code></pre>
+</p>
+
+<strong>Latencia alta:</strong>
+<pre><code>// Reducir buffer size
+<p>
+s.options.blockSize = 64;  // Default: 64
+</p>
+
+<p>
+// Ajustar latencia
+s.latency = 0.1;</code></pre>
+</p>
+
+<h3>9.2 Debugging</h3>
+
+<strong>Ver Mensajes OSC:</strong>
+<pre><code>OSCFunc.trace(true);   // Activar
+<p>
+OSCFunc.trace(false);  // Desactivar</code></pre>
+</p>
+
+<strong>Ver Synths Activos:</strong>
+<pre><code>s.queryAllNodes;</code></pre>
+
+<h2>10. Referencia Rápida</h2>
+
+<strong>Comandos Esenciales:</strong>
+<pre><code>// Iniciar servidor
+<p>
+s.boot;
+</p>
+
+<p>
+// Iniciar SuperDirt
+~dirt.start(57120, 0 ! 12);
+</p>
+
+<p>
+// Cargar samples
+~dirt.loadSoundFiles;
+</p>
+
+<p>
+// Liberar samples
+~dirt.freeSoundFiles;
+</p>
+
+<p>
+// Ver CPU
+s.avgCPU;
+</p>
+
+<p>
+// Grabar
+s.record;
+s.stopRecording;
+</p>
+
+<p>
+// Reiniciar todo
+s.reboot;</code></pre>
+</p>
+
+<p>
+---
+</p>
+
+<p>
+Esta guía cubre los aspectos fundamentales y avanzados de la integración entre TidalCycles y SuperCollider. Dominar SuperCollider te permite extender TidalCycles con sintetizadores y efectos personalizados ilimitados.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

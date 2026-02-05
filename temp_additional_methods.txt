@@ -1,0 +1,114 @@
+    
+    # --- ADDITIONAL GENRE RULES ---
+    
+    # BREAKBEAT (additional)
+    def _rule_breakbeat_varied_rhythm(self, pattern):
+        """Breakbeat debe tener ritmo variado"""
+        import re
+        if re.search(r'(\w+\*\d+)\s+\1\s+\1', pattern):
+            return False, "Breakbeat should have varied rhythm (too repetitive)"
+        return True, ""
+    
+    # DUB (additional)
+    def _rule_dub_bass_focus(self, pattern):
+        """Dub debe enfocarse en el bajo"""
+        import re
+        has_bass = bool(re.search(r'bass|sub|808', pattern))
+        if not has_bass:
+            return False, "Dub requires bass focus"
+        return True, ""
+    
+    # EXPERIMENTAL (additional)
+    def _rule_experimental_complexity(self, pattern):
+        """Experimental debe tener estructuras complejas"""
+        import re
+        complexity_markers = len(re.findall(r'\[|\(|\{|<', pattern))
+        if complexity_markers < 2:
+            return False, "Experimental should have complex structures"
+        return True, ""
+    
+    # CYBERPUNK
+    def _rule_cyberpunk_digital_sounds(self, pattern):
+        """Cyberpunk requiere sonidos digitales"""
+        import re
+        digital_sounds = bool(re.search(r'synth|digital|cyber|glitch|chip', pattern))
+        if not digital_sounds:
+            return False, "Cyberpunk requires digital sounds"
+        return True, ""
+    
+    def _rule_cyberpunk_aggressive(self, pattern):
+        """Cyberpunk requiere ritmo agresivo"""
+        import re
+        has_aggression = bool(re.search(r'\*[6-9]|\*1[0-6]|bd.*sn', pattern))
+        if not has_aggression:
+            return False, "Cyberpunk requires aggressive rhythm"
+        return True, ""
+    
+    # INDUSTRIAL
+    def _rule_industrial_harsh_sounds(self, pattern):
+        """Industrial requiere sonidos duros"""
+        import re
+        harsh_sounds = bool(re.search(r'metal|industrial|harsh|noise|clank', pattern))
+        if not harsh_sounds:
+            return False, "Industrial requires harsh sounds"
+        return True, ""
+    
+    def _rule_industrial_distortion(self, pattern):
+        """Industrial usa distorsión"""
+        import re
+        has_distortion = bool(re.search(r'distort|crush|noise|gain\s+[2-9]', pattern))
+        if not has_distortion:
+            return False, "Industrial should include distortion"
+        return True, ""
+    
+    # DEEPSEA
+    def _rule_deepsea_atmospheric(self, pattern):
+        """DeepSea requiere atmósfera fluida"""
+        import re
+        atmospheric = bool(re.search(r'pad|reverb|room|ocean|water|wave', pattern))
+        if not atmospheric:
+            return False, "DeepSea requires atmospheric sounds"
+        return True, ""
+    
+    def _rule_deepsea_low_tempo(self, pattern):
+        """DeepSea debe ser lento"""
+        import re
+        if re.search(r'\*[8-9]|\*1[0-6]', pattern):
+            return False, "DeepSea should be slow"
+        if '~' not in pattern:
+            return False, "DeepSea requires space"
+        return True, ""
+    
+    # GLITCH
+    def _rule_glitch_fragmented(self, pattern):
+        """Glitch requiere fragmentación"""
+        import re
+        fragments = len(re.findall(r'~|\[.*~.*\]', pattern))
+        if fragments < 2:
+            return False, "Glitch requires fragmented patterns"
+        return True, ""
+    
+    def _rule_glitch_digital_artifacts(self, pattern):
+        """Glitch debe tener artefactos digitales"""
+        import re
+        artifacts = bool(re.search(r'glitch|stutter|chop|cut|bit', pattern))
+        if not artifacts:
+            return False, "Glitch requires digital artifacts"
+        return True, ""
+    
+    # ORGANIC
+    def _rule_organic_natural_sounds(self, pattern):
+        """Organic requiere sonidos naturales"""
+        import re
+        natural = bool(re.search(r'field|nature|wood|bird|wind|rain|organic', pattern))
+        if not natural:
+            return False, "Organic requires natural sounds"
+        return True, ""
+    
+    def _rule_organic_irregular_rhythm(self, pattern):
+        """Organic debe tener ritmo irregular"""
+        import re
+        regular_patterns = len(re.findall(r'bd\*4|sn\*4|hh\*8', pattern))
+        if regular_patterns > 1:
+            return False, "Organic should have irregular rhythm"
+        return True, ""

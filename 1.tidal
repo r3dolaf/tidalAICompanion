@@ -1,0 +1,13 @@
+panic 
+
+d1 $ sound "glitch2* 4 "
+
+d2 $ sound "jvbass*16"
+
+d3 $ sound "supersaw"
+
+d1 $ sound "bd*6 sn*3 hh*12"
+
+d1 $ sound "sn*3 hh*12 hardkick*6" 
+
+d2 $ note "5  7  7  3  5"

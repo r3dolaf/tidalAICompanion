@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efectos y Parámetros - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Efectos y Parámetros</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>EFECTOS Y PARÁMETROS: REFERENCIA COMPLETA</h1>
+
+<h2>1. Parámetros de Sample</h2>
+
+<h3>1.1 <code>s</code> - Sample/Sintetizador</h3>
+
+<p>
+Selecciona el sample o sintetizador a reproducir.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+s :: Pattern String
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd"                             -- Bombo
+d1 $ s "bd sd hh cp"                    -- Secuencia de samples
+d1 $ s "superpiano"                     -- Sintetizador</code></pre>
+</p>
+
+<strong>Samples Comunes:</strong>
+<ul><li>Percusión: <code>bd</code>, <code>sd</code>, <code>hh</code>, <code>oh</code>, <code>ch</code>, <code>cp</code>, <code>rim</code></li>
+<li>Breaks: <code>amen</code>, <code>break</code>, <code>jungle</code></li>
+<li>Tonales: <code>bass</code>, <code>arpy</code>, <code>feel</code>, <code>future</code></li>
+<li>Efectos: <code>glitch</code>, <code>metal</code>, <code>noise</code></li>
+<li>Sintetizadores: <code>superpiano</code>, <code>superfm</code>, <code>supersaw</code>, <code>superpwm</code></li>
+
+<h3>1.2 <code>n</code> - Número de Sample/Nota</h3>
+
+<p>
+Selecciona variación del sample o nota MIDI.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+n :: Pattern Int / Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd" # n "0 1 2 3"               -- Diferentes variaciones de bombo
+d1 $ n "60 64 67" # s "superpiano"      -- Notas MIDI (Do, Mi, Sol)
+d1 $ n (run 8) # s "arpy"               -- Secuencia 0-7</code></pre>
+</p>
+
+<strong>Rangos Típicos:</strong>
+<li>Samples: 0-15 (depende del banco)</li>
+<li>Notas MIDI: 0-127 (60 = Do central)</li>
+
+<h3>1.3 <code>note</code> - Nota Musical</h3>
+
+<p>
+Especifica nota en formato musical.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+note :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ note "c d e f" # s "superpiano"    -- Do Re Mi Fa
+d1 $ note "c'maj" # s "superpiano"      -- Acorde de Do mayor
+d1 $ note "a'min7" # s "superpiano"     -- Acorde de La menor 7</code></pre>
+</p>
+
+<strong>Notación:</strong>
+<li>Notas: <code>c</code>, <code>d</code>, <code>e</code>, <code>f</code>, <code>g</code>, <code>a</code>, <code>b</code></li>
+<li>Alteraciones: <code>cs</code> (sostenido), <code>df</code> (bemol)</li>
+<li>Octavas: <code>c5</code>, <code>c6</code> (Do en octava 5, 6)</li>
+
+<h2>2. Parámetros de Amplitud</h2>
+
+<h3>2.1 <code>gain</code> - Ganancia/Volumen</h3>
+
+<p>
+Controla el volumen del evento.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+gain :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # gain 1.2                -- Más fuerte
+d1 $ s "bd*4" # gain 0.8                -- Más suave
+d1 $ s "bd*4" # gain "1 0.8 0.9 0.7"    -- Volumen variable
+d1 $ s "bd*4" # gain (range 0.5 1.2 sine)  -- Volumen oscilante</code></pre>
+</p>
+
+<strong>Rango Típico:</strong> 0.0 - 2.0 (1.0 = volumen original)
+
+<h3>2.2 <code>amp</code> - Amplitud</h3>
+
+<p>
+Similar a gain pero con comportamiento ligeramente diferente.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+amp :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # amp 0.8</code></pre>
+</p>
+
+<h3>2.3 <code>velocity</code> - Velocidad MIDI</h3>
+
+<p>
+Controla la velocidad MIDI (para sintetizadores).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+velocity :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ n "60 64 67" # s "superpiano" # velocity 0.8
+d1 $ n "60 64 67" # s "superpiano" # velocity "0.5 0.8 1.0"</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0
+
+<h2>3. Parámetros de Tono y Afinación</h2>
+
+<h3>3.1 <code>speed</code> - Velocidad de Reproducción</h3>
+
+<p>
+Controla la velocidad de reproducción del sample (afecta pitch y duración).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+speed :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd" # speed 1                   -- Velocidad normal
+d1 $ s "bd" # speed 2                   -- Doble velocidad (octava arriba)
+d1 $ s "bd" # speed 0.5                 -- Mitad velocidad (octava abajo)
+d1 $ s "bd" # speed "-1"                -- Reproducción inversa
+d1 $ s "bd*4" # speed (range 0.5 2 sine)  -- Velocidad oscilante</code></pre>
+</p>
+
+<strong>Valores Especiales:</strong>
+<li><code>1.0</code>: Normal</li>
+<li><code>2.0</code>: Octava arriba</li>
+<li><code>0.5</code>: Octava abajo</li>
+<li><code>-1.0</code>: Reversa</li>
+<li><code>0.0</code>: Pausa</li>
+
+<h3>3.2 <code>accelerate</code> - Aceleración/Glissando</h3>
+
+<p>
+Cambia gradualmente el pitch durante la reproducción.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+accelerate :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd" # accelerate 1              -- Sube el pitch
+d1 $ s "bd" # accelerate "-1"           -- Baja el pitch
+d1 $ s "bd" # accelerate 12             -- Glissando de una octava</code></pre>
+</p>
+
+<strong>Aplicaciones:</strong>
+<li>Efectos de "caída" (kick drops)</li>
+<li>Glissandos</li>
+<li>Efectos de "laser"</li></ul>
+
+<h3>3.3 <code>up</code> - Transposición en Semitonos</h3>
+
+<p>
+Transpone el pitch sin afectar la velocidad.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+up :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ n "60 64 67" # s "superpiano" # up 12    -- Octava arriba
+d1 $ n "60 64 67" # s "superpiano" # up "-12" -- Octava abajo
+d1 $ n "60 64 67" # s "superpiano" # up 7     -- Quinta arriba</code></pre>
+</p>
+
+<h3>3.4 <code>freq</code> - Frecuencia Directa</h3>
+
+<p>
+Especifica la frecuencia en Hz.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+freq :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # freq 440          -- La 440Hz
+d1 $ s "superpiano" # freq "220 440 880"  -- Octavas</code></pre>
+</p>
+
+<h3>3.5 <code>midinote</code> - Nota MIDI</h3>
+
+<p>
+Especifica nota en formato MIDI (0-127).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+midinote :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # midinote 60       -- Do central
+d1 $ s "superpiano" # midinote "60 64 67"  -- Do Mi Sol</code></pre>
+</p>
+
+<h3>3.6 <code>octave</code> - Octava</h3>
+
+<p>
+Especifica la octava.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+octave :: Pattern Int
+</p>
+
+<p>
+-- Ejemplos
+d1 $ note "c d e f" # s "superpiano" # octave 5
+d1 $ note "c d e f" # s "superpiano" # octave "<4 5 6>"</code></pre>
+</p>
+
+<h3>3.7 <code>harmonic</code> - Armónico</h3>
+
+<p>
+Multiplica la frecuencia por un factor (armónicos naturales).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+harmonic :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bass" # harmonic 2              -- Octava arriba
+d1 $ s "bass" # harmonic 3              -- Quinta + octava
+d1 $ s "bass" # harmonic "1 2 3 4"      -- Serie armónica</code></pre>
+</p>
+
+<h3>3.8 <code>detune</code> - Desafinación</h3>
+
+<p>
+Desafina ligeramente (en cents).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+detune :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # n "60" # detune 10     -- 10 cents arriba
+d1 $ s "supersaw" # detune 0.2               -- Chorus effect</code></pre>
+</p>
+
+<h2>4. Filtros</h2>
+
+<h3>4.1 <code>lpf</code> - Filtro Paso Bajo (Low-Pass Filter)</h3>
+
+<p>
+Atenúa frecuencias por encima del cutoff.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+lpf :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # lpf 1000                -- Cutoff a 1000Hz
+d1 $ s "bd*4" # lpf (range 200 4000 sine)  -- Barrido
+d1 $ s "supersaw" # lpf 800             -- Sonido más oscuro</code></pre>
+</p>
+
+<strong>Rango Típico:</strong> 20 - 20000 Hz
+
+<h3>4.2 <code>hpf</code> - Filtro Paso Alto (High-Pass Filter)</h3>
+
+<p>
+Atenúa frecuencias por debajo del cutoff.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+hpf :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # hpf 200                 -- Elimina graves
+d1 $ s "hh*16" # hpf 8000               -- Solo brillos
+d1 $ s "bd*4" # hpf (range 100 2000 sine)  -- Barrido inverso</code></pre>
+</p>
+
+<h3>4.3 <code>bpf</code> - Filtro Paso Banda (Band-Pass Filter)</h3>
+
+<p>
+Solo deja pasar frecuencias en un rango.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+bpf :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "noise" # bpf 1000               -- Solo alrededor de 1000Hz
+d1 $ s "noise" # bpf (range 200 4000 sine)  -- Barrido de banda</code></pre>
+</p>
+
+<h3>4.4 <code>brf</code> - Filtro Rechazo de Banda (Band-Reject Filter)</h3>
+
+<p>
+Atenúa frecuencias en un rango (notch filter).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+brf :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "noise" # brf 1000               -- Elimina 1000Hz</code></pre>
+</p>
+
+<h3>4.5 <code>resonance</code> - Resonancia del Filtro</h3>
+
+<p>
+Controla la resonancia (Q) del filtro.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+resonance :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "supersaw" # lpf 800 # resonance 0.3   -- Resonancia moderada
+d1 $ s "supersaw" # lpf 800 # resonance 0.8   -- Resonancia alta (ácido)
+d1 $ s "supersaw" # lpf (range 200 4000 sine) # resonance 0.5</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0
+
+<h3>4.6 <code>djf</code> - DJ Filter</h3>
+
+<p>
+Filtro combinado (low-pass y high-pass).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+djf :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # djf 0.5                 -- Centro (sin filtro)
+d1 $ s "bd*4" # djf 0.0                 -- Low-pass extremo
+d1 $ s "bd*4" # djf 1.0                 -- High-pass extremo
+d1 $ s "bd*4" # djf (slow 4 sine)       -- Barrido automático</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0 (0.5 = sin filtro)
+
+<h2>5. Efectos de Tiempo</h2>
+
+<h3>5.1 <code>delay</code> - Delay/Eco</h3>
+
+<p>
+Añade un eco al sonido.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+delay :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd cp" # delay 0.5              -- 50% de mezcla
+d1 $ s "bd cp" # delay 0.8              -- 80% de mezcla</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0 (cantidad de mezcla)
+
+<h3>5.2 <code>delaytime</code> - Tiempo de Delay</h3>
+
+<p>
+Controla el tiempo entre ecos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+delaytime :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd cp" # delay 0.5 # delaytime 0.25    -- Eco cada 1/4 ciclo
+d1 $ s "bd cp" # delay 0.5 # delaytime 0.125   -- Eco cada 1/8 ciclo
+d1 $ s "bd cp" # delay 0.5 # delaytime (1/3)   -- Eco en tresillo</code></pre>
+</p>
+
+<h3>5.3 <code>delayfeedback</code> - Retroalimentación del Delay</h3>
+
+<p>
+Controla cuánto se retroalimenta el delay.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+delayfeedback :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd cp" # delay 0.5 # delayfeedback 0.3   -- Pocas repeticiones
+d1 $ s "bd cp" # delay 0.5 # delayfeedback 0.8   -- Muchas repeticiones
+d1 $ s "bd cp" # delay 0.5 # delayfeedback 0.95  -- Casi infinito</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0 (¡cuidado con valores > 0.9!)
+
+<h3>5.4 <code>lock</code> - Sincronizar Delay</h3>
+
+<p>
+Sincroniza el delay con el tempo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+lock :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd cp" # delay 0.5 # lock 1     -- Sincronizado</code></pre>
+</p>
+
+<h2>6. Efectos de Espacio</h2>
+
+<h3>6.1 <code>room</code> - Reverberación</h3>
+
+<p>
+Añade reverberación (tamaño de sala).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+room :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd cp" # room 0.3               -- Sala pequeña
+d1 $ s "bd cp" # room 0.7               -- Sala grande
+d1 $ s "bd cp" # room 0.95              -- Catedral
+d1 $ s "superpiano" # room (slow 4 sine)  -- Espacio variable</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0
+
+<h3>6.2 <code>size</code> - Tamaño de Reverb</h3>
+
+<p>
+Controla el tamaño de la reverberación.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+size :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd cp" # room 0.5 # size 0.3    -- Reverb corta
+d1 $ s "bd cp" # room 0.5 # size 0.9    -- Reverb larga</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0
+
+<h3>6.3 <code>dry</code> - Señal Seca</h3>
+
+<p>
+Controla la cantidad de señal sin procesar.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+dry :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd cp" # room 0.8 # dry 0.5     -- 50% señal seca
+d1 $ s "bd cp" # room 0.8 # dry 0.0     -- Solo reverb</code></pre>
+</p>
+
+<h2>7. Efectos de Distorsión</h2>
+
+<h3>7.1 <code>crush</code> - Bit Crushing</h3>
+
+<p>
+Reduce la resolución de bits (distorsión digital).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+crush :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # crush 4                 -- 4 bits (muy distorsionado)
+d1 $ s "bd*4" # crush 8                 -- 8 bits (moderado)
+d1 $ s "bd*4" # crush 16                -- 16 bits (casi limpio)
+d1 $ s "bd*4" # crush (range 2 16 sine)   -- Distorsión variable</code></pre>
+</p>
+
+<strong>Rango Típico:</strong> 1 - 16 bits
+
+<h3>7.2 <code>shape</code> - Distorsión/Saturación</h3>
+
+<p>
+Distorsión analógica (waveshaping).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+shape :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # shape 0.5               -- Saturación moderada
+d1 $ s "bd*4" # shape 0.9               -- Saturación fuerte
+d1 $ s "supersaw" # shape 0.7           -- Sonido más agresivo</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0
+
+<h3>7.3 <code>distort</code> - Distorsión</h3>
+
+<p>
+Distorsión adicional.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+distort :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # distort 0.5
+d1 $ s "supersaw" # distort 0.8</code></pre>
+</p>
+
+<h3>7.4 <code>triode</code> - Distorsión de Válvula</h3>
+
+<p>
+Emula distorsión de válvula.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+triode :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # triode 0.5
+d1 $ s "superpiano" # triode 0.3        -- Calidez vintage</code></pre>
+</p>
+
+<h3>7.5 <code>krush</code> - Crushing Extremo</h3>
+
+<p>
+Bit crushing más agresivo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+krush :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # krush 4
+d1 $ s "hh*16" # krush 2                -- Muy destruido</code></pre>
+</p>
+
+<h2>8. Efectos de Modulación</h2>
+
+<h3>8.1 <code>leslie</code> - Efecto Leslie (Rotary Speaker)</h3>
+
+<p>
+Simula un altavoz rotatorio.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+leslie :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # leslie 0.5
+d1 $ s "superpiano" # leslie 0.8        -- Rotación más rápida</code></pre>
+</p>
+
+<h3>8.2 <code>lrate</code> - Velocidad de Leslie</h3>
+
+<p>
+Controla la velocidad de rotación.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+lrate :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # leslie 0.5 # lrate 2</code></pre>
+</p>
+
+<h3>8.3 <code>lsize</code> - Tamaño de Leslie</h3>
+
+<p>
+Controla el tamaño del efecto.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+lsize :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # leslie 0.5 # lsize 0.8</code></pre>
+</p>
+
+<h3>8.4 <code>phaser</code> - Phaser</h3>
+
+<p>
+Efecto de phaser.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+phaser :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # phaser 0.5
+d1 $ s "supersaw" # phaser 0.8</code></pre>
+</p>
+
+<h3>8.5 <code>phaserrate</code> - Velocidad de Phaser</h3>
+
+<pre><code>-- Sintaxis
+<p>
+phaserrate :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # phaser 0.5 # phaserrate 2</code></pre>
+</p>
+
+<h3>8.6 <code>phaserdepth</code> - Profundidad de Phaser</h3>
+
+<pre><code>-- Sintaxis
+<p>
+phaserdepth :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # phaser 0.5 # phaserdepth 0.8</code></pre>
+</p>
+
+<h2>9. Efectos de Panorama</h2>
+
+<h3>9.1 <code>pan</code> - Panorama Estéreo</h3>
+
+<p>
+Controla la posición en el campo estéreo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+pan :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # pan 0                   -- Izquierda total
+d1 $ s "bd*4" # pan 0.5                 -- Centro
+d1 $ s "bd*4" # pan 1                   -- Derecha total
+d1 $ s "bd*4" # pan (slow 4 sine)       -- Paneo automático
+d1 $ s "bd*4" # pan (rand)              -- Paneo aleatorio</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 (izquierda) - 1.0 (derecha)
+
+<h3>9.2 <code>panspan</code> - Amplitud de Paneo</h3>
+
+<p>
+Controla cuánto se extiende el paneo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+panspan :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # pan (sine) # panspan 0.5</code></pre>
+</p>
+
+<h3>9.3 <code>pansplay</code> - Paneo con Spread</h3>
+
+<p>
+Distribuye eventos en el campo estéreo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+pansplay :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd sd hh cp" # pansplay 0.8</code></pre>
+</p>
+
+<h2>10. Efectos de Envolvente</h2>
+
+<h3>10.1 <code>attack</code> - Tiempo de Ataque</h3>
+
+<p>
+Controla el tiempo de ataque de la envolvente.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+attack :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # attack 0.01       -- Ataque rápido
+d1 $ s "superpiano" # attack 0.5        -- Ataque lento (pad)
+d1 $ n "60 64 67" # s "superpiano" # attack 2  -- Muy lento</code></pre>
+</p>
+
+<h3>10.2 <code>hold</code> - Tiempo de Sostenimiento</h3>
+
+<p>
+Tiempo que se mantiene el nivel máximo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+hold :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # hold 0.5
+d1 $ n "60" # s "superpiano" # attack 0.1 # hold 1 # release 0.5</code></pre>
+</p>
+
+<h3>10.3 <code>release</code> - Tiempo de Release</h3>
+
+<p>
+Controla el tiempo de release.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+release :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # release 0.1       -- Release corto (staccato)
+d1 $ s "superpiano" # release 2         -- Release largo (legato)
+d1 $ n "60 64 67" # s "superpiano" # release 4  -- Muy largo</code></pre>
+</p>
+
+<h3>10.4 <code>sustain</code> - Duración Total</h3>
+
+<p>
+Controla la duración total del sonido.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+sustain :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd" # sustain 0.1               -- Muy corto
+d1 $ s "bd" # sustain 1                 -- Duración de 1 ciclo
+d1 $ s "bd" # sustain 4                 -- Duración de 4 ciclos</code></pre>
+</p>
+
+<h3>10.5 <code>decay</code> - Tiempo de Decay</h3>
+
+<p>
+Tiempo de decay en envolvente ADSR.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+decay :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "superpiano" # decay 0.5</code></pre>
+</p>
+
+<h2>11. Efectos Espectrales</h2>
+
+<h3>11.1 <code>vowel</code> - Filtro de Vocales</h3>
+
+<p>
+Aplica filtros que simulan vocales.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+vowel :: Pattern String
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # vowel "a"               -- Vocal "a"
+d1 $ s "bd*4" # vowel "e i o u"         -- Secuencia de vocales
+d1 $ s "supersaw" # vowel "a e i o u"   -- Efecto de "habla"</code></pre>
+</p>
+
+<strong>Vocales Disponibles:</strong> <code>a</code>, <code>e</code>, <code>i</code>, <code>o</code>, <code>u</code>
+
+<h3>11.2 <code>formant</code> - Formantes</h3>
+
+<p>
+Control directo de formantes.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+formant :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # formant 0.5</code></pre>
+</p>
+
+<h3>11.3 <code>spectraldelay</code> - Delay Espectral</h3>
+
+<p>
+Delay que opera en el dominio de frecuencias.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+spectraldelay :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # spectraldelay 0.5
+d1 $ s "amen" # spectraldelay 0.8       -- Efecto de "congelación"</code></pre>
+</p>
+
+<h3>11.4 <code>binshift</code> - Desplazamiento de Bins FFT</h3>
+
+<p>
+Desplaza los bins de frecuencia.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+binshift :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # binshift 0.5
+d1 $ s "amen" # binshift (range 0 2 sine)  -- Efecto de "alien"</code></pre>
+</p>
+
+<h3>11.5 <code>hbrick</code> - Brick Wall High-Pass</h3>
+
+<p>
+Filtro paso alto de pared de ladrillo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+hbrick :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # hbrick 1000</code></pre>
+</p>
+
+<h3>11.6 <code>lbrick</code> - Brick Wall Low-Pass</h3>
+
+<p>
+Filtro paso bajo de pared de ladrillo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+lbrick :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # lbrick 2000</code></pre>
+</p>
+
+<h2>12. Efectos de Granulación</h2>
+
+<h3>12.1 <code>coarse</code> - Reducción de Sample Rate</h3>
+
+<p>
+Reduce la tasa de muestreo (aliasing).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+coarse :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # coarse 4                -- Muy reducido
+d1 $ s "bd*4" # coarse 16               -- Moderado
+d1 $ s "bd*4" # coarse (range 2 32 sine)  -- Variable</code></pre>
+</p>
+
+<h3>12.2 <code>cut</code> - Cortar Grupo</h3>
+
+<p>
+Corta eventos del mismo grupo (para hi-hats).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+cut :: Pattern Int
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "oh*8" # cut 1                   -- Solo un hi-hat a la vez
+d1 $ s "oh*8 ch*8" # cut 1              -- Ambos comparten grupo</code></pre>
+</p>
+
+<h3>12.3 <code>cutoff</code> - Cutoff de Filtro</h3>
+
+<p>
+Alias para lpf.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+cutoff :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "supersaw" # cutoff 800</code></pre>
+</p>
+
+<h2>13. Efectos de Compresión y Dinámica</h2>
+
+<h3>13.1 <code>squiz</code> - Pitch Shifting Extremo</h3>
+
+<p>
+Pitch shifting con artefactos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+squiz :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # squiz 2
+d1 $ s "bd*4" # squiz 8                 -- Muy destruido</code></pre>
+</p>
+
+<h3>13.2 <code>waveloss</code> - Pérdida de Onda</h3>
+
+<p>
+Elimina partes de la forma de onda.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+waveloss :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # waveloss 20
+d1 $ s "bd*4" # waveloss 80             -- Muy glitchy</code></pre>
+</p>
+
+<h2>14. Parámetros de Corte y Loop</h2>
+
+<h3>14.1 <code>begin</code> - Inicio de Sample</h3>
+
+<p>
+Punto de inicio de reproducción (0-1).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+begin :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "amen" # begin 0                 -- Desde el inicio
+d1 $ s "amen" # begin 0.5               -- Desde la mitad
+d1 $ s "amen" # begin (slow 4 sine)     -- Punto variable</code></pre>
+</p>
+
+<strong>Rango:</strong> 0.0 - 1.0
+
+<h3>14.2 <code>end</code> - Fin de Sample</h3>
+
+<p>
+Punto final de reproducción (0-1).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+end :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "amen" # end 1                   -- Hasta el final
+d1 $ s "amen" # end 0.5                 -- Solo primera mitad
+d1 $ s "amen" # begin 0.25 # end 0.75   -- Sección media</code></pre>
+</p>
+
+<h3>14.3 <code>loop</code> - Número de Loops</h3>
+
+<p>
+Cuántas veces hacer loop del sample.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+loop :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "amen" # loop 4</code></pre>
+</p>
+
+<h3>14.4 <code>legato</code> - Duración Relativa</h3>
+
+<p>
+Controla la duración del evento relativa al espacio disponible.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+legato :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # legato 1                -- Duración completa
+d1 $ s "bd*4" # legato 0.5              -- Mitad de duración (staccato)
+d1 $ s "bd*4" # legato 2                -- Doble duración (overlap)
+d1 $ n "60 64 67" # s "superpiano" # legato 2  -- Notas ligadas</code></pre>
+</p>
+
+<h2>15. Efectos de Ruteo</h2>
+
+<h3>15.1 <code>orbit</code> - Órbita/Bus de Audio</h3>
+
+<p>
+Rutea el patrón a un bus de audio específico.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+orbit :: Pattern Int
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # orbit 0                 -- Bus 0 (estéreo 1-2)
+d2 $ s "sd*4" # orbit 1                 -- Bus 1 (estéreo 3-4)
+d3 $ s "hh*16" # orbit 2                -- Bus 2 (estéreo 5-6)</code></pre>
+</p>
+
+<strong>Rango:</strong> 0 - 11 (12 órbitas por defecto)
+
+<h3>15.2 <code>channel</code> - Canal MIDI</h3>
+
+<p>
+Especifica el canal MIDI.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+channel :: Pattern Int
+</p>
+
+<p>
+-- Ejemplos
+d1 $ n "60 64 67" # s "midi" # channel 1</code></pre>
+</p>
+
+<h2>16. Efectos de Análisis y Control</h2>
+
+<h3>16.1 <code>nudge</code> - Micro-desplazamiento</h3>
+
+<p>
+Desplaza ligeramente el timing (en segundos).
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+nudge :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # nudge 0.01              -- 10ms adelante
+d1 $ s "bd*4" # nudge "-0.01"           -- 10ms atrás
+d1 $ s "hh*16" # nudge (rand * 0.02)    -- Humanización</code></pre>
+</p>
+
+<h3>16.2 <code>delta</code> - Delta de Tiempo</h3>
+
+<p>
+Controla el delta de tiempo entre eventos.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+delta :: Pattern Double
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # delta 0.5</code></pre>
+</p>
+
+<h3>16.3 <code>unit</code> - Unidad de Medida</h3>
+
+<p>
+Especifica la unidad para parámetros de tiempo.
+</p>
+
+<pre><code>-- Sintaxis
+<p>
+unit :: Pattern String
+</p>
+
+<p>
+-- Ejemplos
+d1 $ s "bd*4" # unit "c"                -- Ciclos
+d1 $ s "bd*4" # unit "s"                -- Segundos</code></pre>
+</p>
+
+<h2>17. Efectos Combinados</h2>
+
+<h3>17.1 Cadenas de Efectos Comunes</h3>
+
+<pre><code>-- Techno kick
+<p>
+d1 $ s "bd*4" 
+  # lpf 800 
+  # resonance 0.3 
+  # shape 0.5 
+  # gain 1.2
+</p>
+
+<p>
+-- Acid bass
+d1 $ n "0 ~ 0 ~" # s "supersaw" 
+  # lpf (range 200 4000 (slow 4 saw)) 
+  # resonance 0.8 
+  # shape 0.6
+</p>
+
+<p>
+-- Ambient pad
+d1 $ n "60 64 67" # s "superpiano" 
+  # attack 2 
+  # release 4 
+  # room 0.8 
+  # size 0.9 
+  # lpf 2000
+</p>
+
+<p>
+-- Glitch drums
+d1 $ s "bd*4" 
+  # crush (range 2 16 (slow 2 sine)) 
+  # delay 0.5 
+  # delaytime 0.125 
+  # delayfeedback 0.6
+</p>
+
+<p>
+-- Vocal chops
+d1 $ s "bev" 
+  # begin (rand) 
+  # end (rand) 
+  # speed (range 0.5 2 rand) 
+  # vowel "a e i o u" 
+  # room 0.3</code></pre>
+</p>
+
+<h3>17.2 Efectos con Modulación</h3>
+
+<pre><code>-- Filtro modulado por LFO
+<p>
+d1 $ s "supersaw" 
+  # lpf (range 200 4000 (slow 4 sine)) 
+  # resonance 0.5
+</p>
+
+<p>
+-- Paneo automático
+d1 $ s "bd*4" 
+  # pan (slow 2 sine)
+</p>
+
+<p>
+-- Delay con feedback variable
+d1 $ s "cp" 
+  # delay 0.5 
+  # delayfeedback (slow 8 (range 0.3 0.9 sine))
+</p>
+
+<p>
+-- Distorsión dinámica
+d1 $ s "bd*4" 
+  # shape (slow 4 (range 0 0.9 saw))</code></pre>
+</p>
+
+<h2>18. Tabla de Referencia Rápida</h2>
+
+<p>
+| Parámetro | Función | Rango Típico |
+|-----------|---------|--------------|
+| <code>gain</code> | Volumen | 0.0 - 2.0 |
+| <code>speed</code> | Velocidad/Pitch | 0.5 - 2.0 |
+| <code>pan</code> | Panorama | 0.0 - 1.0 |
+| <code>lpf</code> | Filtro paso bajo | 20 - 20000 |
+| <code>hpf</code> | Filtro paso alto | 20 - 20000 |
+| <code>resonance</code> | Resonancia | 0.0 - 1.0 |
+| <code>delay</code> | Delay | 0.0 - 1.0 |
+| <code>room</code> | Reverb | 0.0 - 1.0 |
+| <code>crush</code> | Bit crushing | 1 - 16 |
+| <code>shape</code> | Distorsión | 0.0 - 1.0 |
+| <code>attack</code> | Ataque | 0.0 - 2.0 |
+| <code>release</code> | Release | 0.0 - 4.0 |
+| <code>begin</code> | Inicio sample | 0.0 - 1.0 |
+| <code>end</code> | Fin sample | 0.0 - 1.0 |
+| <code>orbit</code> | Bus de audio | 0 - 11 |
+</p>
+
+<h2>19. Consejos de Uso</h2>
+
+<p>
+1. <strong>Menos es más</strong>: No sobrecargues con efectos
+2. <strong>Automatización</strong>: Usa osciladores (<code>sine</code>, <code>saw</code>, <code>rand</code>) para modular
+3. <strong>Cadenas lógicas</strong>: Orden típico: Filtro → Distorsión → Delay → Reverb
+4. <strong>CPU</strong>: Los efectos espectrales consumen más CPU
+5. <strong>Mezcla</strong>: Usa <code>orbit</code> para separar elementos y mezclar mejor
+6. <strong>Experimentación</strong>: Combina efectos de formas inesperadas
+</p>
+
+<p>
+---
+</p>
+
+<p>
+Esta es la referencia completa de efectos y parámetros en TidalCycles. Dominar estos parámetros te permite esculpir el sonido con precisión quirúrgica y crear texturas únicas.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

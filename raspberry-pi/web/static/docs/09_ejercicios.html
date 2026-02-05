@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios Prácticos - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Ejercicios Prácticos</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>EJERCICIOS PRÁCTICOS: DEL PRINCIPIANTE AL EXPERTO</h1>
+
+<h2>NIVEL 1: PRINCIPIANTE</h2>
+
+<h3>Ejercicio 1.1: Primer Patrón</h3>
+<strong>Objetivo:</strong> Crear tu primer patrón de batería básico.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un kick en cada beat
+2. Añade un snare en los beats 2 y 4
+3. Añade hi-hats en cada octavo
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "bd*4"
+<p>
+d2 $ s "~ sd ~ sd"
+d3 $ s "hh*8"</code></pre>
+</p>
+
+<strong>Desafío:</strong> Añade un clap en el tercer beat de cada ciclo.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 1.2: Variaciones de Sample</h3>
+<strong>Objetivo:</strong> Usar diferentes variaciones de samples.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón con 4 kicks diferentes
+2. Usa la notación <code>:n</code> para seleccionar variaciones
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "bd:0 bd:1 bd:2 bd:3"
+<p>
+-- o equivalentemente:
+d1 $ s "bd" # n "0 1 2 3"</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea una secuencia aleatoria de variaciones usando <code>irand</code>.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 1.3: Control de Volumen</h3>
+<strong>Objetivo:</strong> Controlar el volumen de eventos individuales.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón de hi-hats
+2. Haz que los hi-hats tengan volumen variable (acentos)
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "hh*8" # gain "1.0 0.7 0.9 0.6 1.0 0.7 0.9 0.6"</code></pre>
+
+<strong>Desafío:</strong> Usa <code>range</code> y <code>sine</code> para crear un volumen oscilante.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 1.4: Filtros Básicos</h3>
+<strong>Objetivo:</strong> Aplicar filtros a tus patrones.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón de synth
+2. Aplica un filtro paso bajo
+3. Modula el filtro con un LFO
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "supersaw" # n "60"
+<p>
+  # lpf 1000
+</p>
+
+<p>
+-- Con modulación:
+d1 $ s "supersaw" # n "60"
+  # lpf (range 200 4000 (slow 4 sine))</code></pre>
+</p>
+
+<strong>Desafío:</strong> Añade resonancia al filtro.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 1.5: Euclidean Rhythms</h3>
+<strong>Objetivo:</strong> Crear ritmos euclidianos básicos.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un ritmo euclidiano de 3 pulsos en 8 pasos
+2. Combina múltiples ritmos euclidianos
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "bd(3,8)"
+<p>
+d2 $ s "sd(5,8)"
+d3 $ s "hh(7,16)"</code></pre>
+</p>
+
+<strong>Desafío:</strong> Añade rotación al ritmo euclidiano.
+
+<p>
+---
+</p>
+
+<h2>NIVEL 2: INTERMEDIO</h2>
+
+<h3>Ejercicio 2.1: Mini-notación Avanzada</h3>
+<strong>Objetivo:</strong> Dominar la mini-notación.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón con grupos anidados
+2. Usa subdivisiones y silencios
+3. Aplica operadores de repetición
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "[bd sd] [hh hh hh] [cp ~] [bd [sd sd]]"
+<p>
+d1 $ s "bd*4 sd!3 hh/2"</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea un patrón que use todos los operadores: <code>*</code>, <code>/</code>, <code>!</code>, <code>?</code>, <code>@</code>.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 2.2: Transformaciones de Patrón</h3>
+<strong>Objetivo:</strong> Usar funciones de transformación.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón base
+2. Aplica <code>fast</code>, <code>slow</code>, <code>rev</code>
+3. Usa <code>every</code> para variaciones periódicas
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "bd sd hh cp"
+<p>
+d1 $ fast 2 $ s "bd sd hh cp"
+d1 $ rev $ s "bd sd hh cp"
+d1 $ every 4 (fast 2) $ s "bd sd hh cp"</code></pre>
+</p>
+
+<strong>Desafío:</strong> Combina múltiples transformaciones con <code>every</code>.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 2.3: Escalas y Melodías</h3>
+<strong>Objetivo:</strong> Crear melodías usando escalas.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea una melodía en escala menor
+2. Usa <code>scale</code> para transponer
+3. Añade acordes
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ n (scale "minor" "0 2 4 5 7") # s "superpiano"
+<p>
+d1 $ n "c'min e'min g'maj" # s "superpiano"</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea una progresión de acordes completa (I-IV-V-I).
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 2.4: Efectos Encadenados</h3>
+<strong>Objetivo:</strong> Crear cadenas de efectos complejas.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón de synth
+2. Aplica filtro, distorsión, delay y reverb
+3. Modula los parámetros
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "supersaw" # n "60"
+<p>
+  # lpf (range 200 4000 (slow 4 sine))
+  # resonance 0.5
+  # shape 0.6
+  # delay 0.5
+  # delaytime 0.25
+  # room 0.4</code></pre>
+</p>
+
+<strong>Desafío:</strong> Añade modulación a todos los parámetros de efectos.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 2.5: Layering</h3>
+<strong>Objetivo:</strong> Crear capas de sonido complejas.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea 4 capas diferentes (kick, snare, hats, bass)
+2. Procesa cada capa independientemente
+3. Usa <code>stack</code> para combinarlas
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ stack [
+<p>
+  s "bd*4" # lpf 200 # gain 1.2,
+  s "~ sd ~ sd" # room 0.3,
+  s "hh*16" # hpf 8000 # gain 0.7,
+  n "0 ~ 0 ~" # s "bass" # lpf 400
+]</code></pre>
+</p>
+
+<strong>Desafío:</strong> Añade una quinta capa con atmósfera.
+
+<p>
+---
+</p>
+
+<h2>NIVEL 3: AVANZADO</h2>
+
+<h3>Ejercicio 3.1: Polimetría Compleja</h3>
+<strong>Objetivo:</strong> Crear estructuras polimétricas.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón de 3 beats contra 4
+2. Añade una tercera capa de 5 beats
+3. Encuentra el punto de convergencia
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "bd*3"
+<p>
+d2 $ s "sd*4"
+d3 $ s "hh*5"
+-- Convergen cada 60 beats (MCM de 3, 4, 5)</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea una polimetría de 7 contra 11.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 3.2: Generación Algorítmica</h3>
+<strong>Objetivo:</strong> Usar aleatoriedad controlada.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea un patrón con elementos aleatorios
+2. Usa <code>rand</code>, <code>irand</code>, <code>choose</code>
+3. Combina aleatoriedad con estructura
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "bd*4" # n (irand 4)
+<p>
+d2 $ s "hh*8" # gain (rand)
+d3 $ s "sd*2" # speed (choose [0.5, 1, 1.5, 2])</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea un patrón que evolucione aleatoriamente pero mantenga coherencia musical.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 3.3: Granulación Avanzada</h3>
+<strong>Objetivo:</strong> Crear texturas granulares complejas.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Usa <code>striate</code> para granular un sample
+2. Modula la velocidad y el paneo
+3. Añade procesamiento adicional
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ striate 128 $ s "bev"
+<p>
+  # speed (range 0.1 0.5 (slow 16 sine))
+  # pan (slow 2 sine)
+  # room 0.9
+  # lpf (range 500 2000 (slow 8 sine))</code></pre>
+</p>
+
+<strong>Desafío:</strong> Combina <code>striate</code> con <code>chop</code> para efectos híbridos.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 3.4: Live Coding Performance</h3>
+<strong>Objetivo:</strong> Crear una estructura de canción completa.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea una intro (8 ciclos)
+2. Añade un buildup (4 ciclos)
+3. Crea un drop (16 ciclos)
+4. Añade un breakdown (8 ciclos)
+</p>
+
+<strong>Solución:</strong>
+<pre><code>-- Intro
+<p>
+do
+  d1 $ s "hh*8" # gain 0.6
+  d2 $ slow 4 $ n "60 64 67" # s "supersaw" # gain 0.4
+</p>
+
+<p>
+-- Buildup
+do
+  d1 $ s "hh*<8 16 32 64>" # gain (slow 4 (range 0.6 1.0 saw))
+  d2 $ slow 4 $ n "60 64 67" # s "supersaw" 
+    # lpf (slow 4 (range 500 4000 saw))
+</p>
+
+<p>
+-- Drop
+do
+  d1 $ s "bd*4" # gain 1.2
+  d2 $ s "hh*16" # gain 0.7
+  d3 $ s "~ sd ~ sd" # room 0.3
+  d4 $ n "0 ~ 0 ~" # s "bass" # lpf 400
+</p>
+
+<p>
+-- Breakdown
+do
+  d1 silence
+  d2 silence
+  d3 $ s "~ sd ~ sd" # room 0.7
+  d4 $ slow 2 $ n "60 64 67" # s "superpiano" # room 0.5</code></pre>
+</p>
+
+<strong>Desafío:</strong> Añade transiciones suaves entre secciones usando <code>xfade</code>.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 3.5: Síntesis FM Avanzada</h3>
+<strong>Objetivo:</strong> Crear sonidos complejos con FM.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Usa <code>superfm</code> con diferentes algoritmos
+2. Modula los parámetros FM
+3. Procesa con filtros y efectos
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ n "0 ~ [0 7] ~" # s "superfm"
+<p>
+  # voice 2
+  # lfo (range 1 16 (slow 4 sine))
+  # rate (range 0.5 4 (slow 8 sine))
+  # lpf (range 100 2000 (slow 4 saw))
+  # resonance 0.8
+  # shape 0.6</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea un bassline FM completo con modulación dinámica.
+
+<p>
+---
+</p>
+
+<h2>NIVEL 4: EXPERTO</h2>
+
+<h3>Ejercicio 4.1: Microtonalidad</h3>
+<strong>Objetivo:</strong> Trabajar con escalas microtonales.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea una escala microtonal personalizada
+2. Usa <code>freq</code> para control directo de frecuencias
+3. Crea una melodía microtonal
+</p>
+
+<strong>Solución:</strong>
+<pre><code>-- Escala de cuartos de tono
+<p>
+let microScale = [220, 233, 247.5, 261.6, 277.2, 293.3, 311.1, 329.6]
+d1 $ s "superpiano" # freq (choose microScale)
+</p>
+
+<p>
+-- Usando 'up' con valores fraccionarios
+d1 $ n "60" # s "superpiano" # up "0 0.5 1 1.5 2 2.5 3"</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea una composición completa en 24-TET (cuartos de tono).
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 4.2: Autómatas Celulares</h3>
+<strong>Objetivo:</strong> Implementar un autómata celular simple.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Crea una función que evolucione un patrón
+2. Usa <code>every</code> para aplicar la evolución
+3. Observa cómo el patrón cambia con el tiempo
+</p>
+
+<strong>Solución:</strong>
+<pre><code>let evolve p = every 4 (rev) $ every 3 (fast 2) $ p
+<p>
+    pattern = s "bd sd hh cp"
+</p>
+
+<p>
+d1 $ evolve pattern</code></pre>
+</p>
+
+<strong>Desafío:</strong> Implementa la Regla 30 de Wolfram en TidalCycles.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 4.3: Síntesis Espectral</h3>
+<strong>Objetivo:</strong> Manipular el espectro de frecuencias.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Usa efectos espectrales (<code>binshift</code>, <code>spectraldelay</code>)
+2. Combina con filtros tradicionales
+3. Crea texturas espectrales únicas
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "amen"
+<p>
+  # binshift (slow 4 (range 0 2 sine))
+  # spectraldelay 0.8
+  # lpf (range 500 4000 (slow 8 sine))
+  # room 0.9</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea un "congelador" espectral usando <code>spectraldelay</code>.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 4.4: Control Externo</h3>
+<strong>Objetivo:</strong> Integrar control MIDI/OSC.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Mapea un controlador MIDI a parámetros
+2. Usa <code>cF</code> para recibir valores de control
+3. Crea un setup de performance interactivo
+</p>
+
+<strong>Solución:</strong>
+<pre><code>d1 $ s "supersaw"
+<p>
+  # lpf (cF 0 "1")              -- CC 1 controla filtro
+  # resonance (cF 0 "2")        -- CC 2 controla resonancia
+  # gain (cF 0 "7")             -- CC 7 controla volumen</code></pre>
+</p>
+
+<strong>Desafío:</strong> Crea un set completo controlable por MIDI.
+
+<p>
+---
+</p>
+
+<h3>Ejercicio 4.5: Composición Generativa</h3>
+<strong>Objetivo:</strong> Crear un sistema generativo completo.
+
+<strong>Instrucciones:</strong>
+<p>
+1. Define reglas de composición
+2. Usa aleatoriedad controlada
+3. Crea un sistema que evolucione por sí mismo
+</p>
+
+<strong>Solución:</strong>
+<pre><code>let melody = n (scale "minor" (irand 8)) # s "superpiano"
+<p>
+    rhythm = s "bd(3,8) sd(5,8,2) hh(7,16)"
+    bass = n (choose [0, 7, 5, 3]) # s "bass" # lpf 400
+    texture = slow 8 $ striate 128 $ s "metal"
+      # speed 0.1 # room 0.9
+</p>
+
+<p>
+do
+  d1 $ every 4 (fast 2) $ every 3 (rev) $ rhythm
+  d2 $ every 8 (# speed 2) $ melody
+  d3 $ every 16 (degradeBy 0.5) $ bass
+  d4 $ texture</code></pre>
+</p>
+
+<strong>Desafío:</strong> Añade reglas de interacción entre las capas.
+
+<p>
+---
+</p>
+
+<h2>PROYECTOS FINALES</h2>
+
+<h3>Proyecto 1: Track de Techno Completo</h3>
+<strong>Objetivo:</strong> Crear un track de techno de 4 minutos.
+
+<strong>Requisitos:</strong>
+<ul><li>Intro (16 ciclos)</li>
+<li>Buildup (8 ciclos)</li>
+<li>Drop 1 (32 ciclos)</li>
+<li>Breakdown (16 ciclos)</li>
+<li>Drop 2 (32 ciclos)</li>
+<li>Outro (16 ciclos)</li>
+
+<strong>Elementos Mínimos:</strong>
+<li>Kick 4/4</li>
+<li>Hi-hats</li>
+<li>Bassline</li>
+<li>Atmósfera</li>
+<li>Efectos de transición</li>
+
+<p>
+---
+</p>
+
+<h3>Proyecto 2: Pieza Ambient Generativa</h3>
+<strong>Objetivo:</strong> Crear una pieza ambient que evolucione sola.
+
+<strong>Requisitos:</strong>
+<li>Duración: 10+ minutos</li>
+<li>Sin intervención manual</li>
+<li>Uso de aleatoriedad controlada</li>
+<li>Texturas granulares</li>
+<li>Evolución gradual</li>
+
+<p>
+---
+</p>
+
+<h3>Proyecto 3: Live Set de 30 Minutos</h3>
+<strong>Objetivo:</strong> Preparar un set de live coding.
+
+<strong>Requisitos:</strong>
+<li>5-6 "escenas" diferentes</li>
+<li>Transiciones suaves</li>
+<li>Variedad de géneros/estilos</li>
+<li>Improvisación estructurada</li>
+<li>Uso de variables y funciones reutilizables</li>
+
+<p>
+---
+</p>
+
+<h3>Proyecto 4: Sistema Interactivo</h3>
+<strong>Objetivo:</strong> Crear un sistema controlable en tiempo real.
+
+<strong>Requisitos:</strong>
+<li>Control MIDI mapeado</li>
+<li>Múltiples "presets"</li>
+<li>Efectos controlables</li>
+<li>Mezcla en vivo</li>
+<li>Visualización (opcional)</li>
+
+<p>
+---
+</p>
+
+<h2>EJERCICIOS DE PRÁCTICA DIARIA</h2>
+
+<h3>Día 1-7: Fundamentos</h3>
+<li>Día 1: Crear 10 patrones de batería diferentes</li>
+<li>Día 2: Experimentar con todas las funciones de transformación</li>
+<li>Día 3: Crear melodías en diferentes escalas</li>
+<li>Día 4: Practicar mini-notación avanzada</li>
+<li>Día 5: Experimentar con efectos</li>
+<li>Día 6: Crear ritmos euclidianos complejos</li>
+<li>Día 7: Combinar todo en un track corto</li>
+
+<h3>Día 8-14: Intermedio</h3>
+<li>Día 8: Polimetría</li>
+<li>Día 9: Granulación</li>
+<li>Día 10: Síntesis FM</li>
+<li>Día 11: Layering complejo</li>
+<li>Día 12: Estructuras de canción</li>
+<li>Día 13: Live coding performance</li>
+<li>Día 14: Proyecto de track completo</li>
+
+<h3>Día 15-21: Avanzado</h3>
+<li>Día 15: Técnicas espectrales</li>
+<li>Día 16: Generación algorítmica</li>
+<li>Día 17: Microtonalidad</li>
+<li>Día 18: Control externo</li>
+<li>Día 19: Optimización y performance</li>
+<li>Día 20: Composición generativa</li>
+<li>Día 21: Live set completo</li>
+
+<p>
+---
+</p>
+
+<h2>RECURSOS ADICIONALES</h2>
+
+<h3>Desafíos Semanales</h3>
+<p>
+1. <strong>Semana 1:</strong> Crea un track usando solo samples de batería
+2. <strong>Semana 2:</strong> Crea una pieza usando solo sintetizadores
+3. <strong>Semana 3:</strong> Crea un track sin usar kick
+4. <strong>Semana 4:</strong> Crea una pieza microtonal
+5. <strong>Semana 5:</strong> Crea un sistema generativo
+6. <strong>Semana 6:</strong> Crea un live set de 15 minutos
+7. <strong>Semana 7:</strong> Colabora con otro live coder
+8. <strong>Semana 8:</strong> Crea un track en un género que no conoces
+</p>
+
+<h3>Ejercicios de Improvisación</h3>
+<li>Improvisa 5 minutos sin parar</li>
+<li>Crea un track en 10 minutos</li>
+<li>Transforma un patrón simple en algo complejo</li>
+<li>Crea variaciones infinitas de un patrón base</li></ul>
+
+<p>
+---
+</p>
+
+<p>
+Esta guía de ejercicios te llevará desde los conceptos más básicos hasta técnicas expertas en TidalCycles. La clave es la práctica constante y la experimentación sin miedo.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

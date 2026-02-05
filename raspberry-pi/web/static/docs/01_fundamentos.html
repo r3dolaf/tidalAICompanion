@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos - TidalCycles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0e27; 
+            color: #e0e0e0; 
+            line-height: 1.8; 
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .back-link { 
+            display: inline-block; 
+            background: rgba(255,255,255,0.2); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: white; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            transition: all 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+        .content { 
+            background: #1a1f3a; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        }
+        .content h1 { 
+            color: #8b9dff; 
+            margin: 30px 0 20px 0; 
+            font-size: 2rem; 
+        }
+        .content h2 { 
+            color: #a78bfa; 
+            margin: 25px 0 15px 0; 
+            font-size: 1.7rem; 
+            border-bottom: 2px solid #2d3555; 
+            padding-bottom: 10px; 
+        }
+        .content h3 { 
+            color: #8b9dff; 
+            margin: 20px 0 10px 0; 
+            font-size: 1.4rem; 
+        }
+        .content h4 { 
+            color: #a78bfa; 
+            margin: 15px 0 10px 0; 
+            font-size: 1.2rem; 
+        }
+        .content p { margin: 15px 0; color: #d0d0d0; }
+        .content code { 
+            background: #2d3555; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-family: 'Courier New', monospace; 
+            color: #ff79c6; 
+            border: 1px solid #3d4566;
+        }
+        .content pre { 
+            background: #0d1117; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            margin: 20px 0; 
+            border: 1px solid #2d3555;
+        }
+        .content pre code { 
+            background: none; 
+            color: #f8f8f2; 
+            padding: 0; 
+            border: none;
+        }
+        .content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0; 
+        }
+        .content th, .content td { 
+            padding: 12px; 
+            text-align: left; 
+            border: 1px solid #2d3555; 
+        }
+        .content th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+        }
+        .content tr:nth-child(even) { background: #242b4a; }
+        .content tr:nth-child(odd) { background: #1a1f3a; }
+        .content strong { color: #8b9dff; font-weight: 600; }
+        .content ul, .content ol { margin: 15px 0 15px 30px; }
+        .content li { margin: 8px 0; color: #d0d0d0; }
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #a0a0a0;
+            font-style: italic;
+            background: #242b4a;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Fundamentos</h1>
+            <p>Documentación Completa de TidalCycles</p>
+            <a href="index.html" class="back-link">← Volver al Índice</a>
+        </header>
+        <div class="content">
+            <h1>FUNDAMENTOS DE TIDALCYCLES: ARQUITECTURA Y CONCEPTOS CORE</h1>
+
+<h2>1. ¿Qué es TidalCycles?</h2>
+
+<p>
+TidalCycles es un lenguaje de dominio específico (DSL) embebido en Haskell, diseñado para la composición musical algorítmica en tiempo real. A diferencia de los DAWs tradicionales, Tidal opera mediante la descripción de patrones temporales que se evalúan de forma perezosa (lazy evaluation).
+</p>
+
+<h3>1.1 Arquitectura del Sistema</h3>
+
+<pre><code>[Editor de Código (VS Code/Atom)]
+<p>
+         ↓
+[TidalCycles (Haskell)]
+         ↓ (OSC vía UDP)
+[SuperCollider (scsynth)]
+         ↓
+[SuperDirt (Motor de Audio)]
+         ↓
+[Interfaz de Audio (ASIO/WASAPI)]</code></pre>
+</p>
+
+<strong>Componentes Clave:</strong>
+
+<p>
+1. <strong>TidalCycles</strong>: Interpreta el código Haskell y genera eventos temporales
+2. <strong>SuperCollider</strong>: Motor de síntesis de audio en tiempo real
+3. <strong>SuperDirt</strong>: Biblioteca de samples y sintetizadores para Tidal
+4. <strong>OSC (Open Sound Control)</strong>: Protocolo de comunicación entre Tidal y SC
+</p>
+
+<h3>1.2 El Concepto de Ciclo</h3>
+
+<p>
+El <strong>ciclo</strong> es la unidad fundamental de tiempo en Tidal. Por defecto, un ciclo dura el tiempo equivalente a un compás de 4/4 a 120 BPM, pero esto es completamente configurable.
+</p>
+
+<strong>Características del Ciclo:</strong>
+<ul><li>Es una estructura temporal circular (toroide)</li>
+<li>Se divide proporcionalmente según el patrón</li>
+<li>No tiene una duración fija en segundos, sino en "unidades de ciclo"</li>
+<li>Permite operaciones matemáticas (multiplicación, división, desplazamiento)</li>
+
+<pre><code>-- Un ciclo con 4 eventos equidistantes
+<p>
+d1 $ s "bd sd bd sd"
+</p>
+
+<p>
+-- Un ciclo con 8 eventos (doble densidad)
+d1 $ s "bd*8"
+</p>
+
+<p>
+-- Un evento cada 2 ciclos (mitad de velocidad)
+d1 $ s "bd/2"</code></pre>
+</p>
+
+<h3>1.3 Evaluación Perezosa (Lazy Evaluation)</h3>
+
+<p>
+Tidal hereda de Haskell la evaluación perezosa, lo que significa que los patrones no se calculan hasta que son necesarios. Esto permite:
+</p>
+
+<li><strong>Patrones infinitos</strong>: Puedes definir secuencias que nunca terminan</li>
+<li><strong>Eficiencia computacional</strong>: Solo se calcula lo que se va a reproducir</li>
+<li><strong>Composición funcional</strong>: Puedes encadenar transformaciones sin penalización</li>
+
+<pre><code>-- Este patrón es infinito, pero solo se evalúa lo necesario
+<p>
+d1 $ slow 4 $ s "bd sd" # n (run 100)</code></pre>
+</p>
+
+<h3>1.4 Patrones como Funciones</h3>
+
+<p>
+En Tidal, todo es un patrón. Un patrón es una función que mapea el tiempo a eventos:
+</p>
+
+<pre><code>Pattern a :: Time -> [Event a]</code></pre>
+
+<p>
+Donde:
+</p>
+<li><code>Time</code> es un valor racional que representa la posición en el ciclo</li>
+<li><code>Event a</code> es un evento que contiene un valor de tipo <code>a</code> y metadatos temporales</li>
+
+<strong>Tipos de Patrones:</strong>
+
+<p>
+1. <strong>Patrones Discretos</strong>: Eventos puntuales (samples, notas)
+2. <strong>Patrones Continuos</strong>: Valores que cambian suavemente (osciladores)
+3. <strong>Patrones de Control</strong>: Modifican otros patrones
+</p>
+
+<h3>1.5 El Operador <code>$</code> y la Composición</h3>
+
+<p>
+El operador <code>$</code> es fundamental en Haskell y Tidal. Permite aplicar una función a un argumento sin necesidad de paréntesis:
+</p>
+
+<pre><code>-- Sin $
+<p>
+d1 (slow 2 (s "bd sd"))
+</p>
+
+<p>
+-- Con $ (más legible)
+d1 $ slow 2 $ s "bd sd"</code></pre>
+</p>
+
+<strong>Precedencia y Asociatividad:</strong>
+<li><code>$</code> tiene la precedencia más baja</li>
+<li>Es asociativo por la derecha</li>
+<li>Permite encadenar funciones de forma natural</li>
+
+<h3>1.6 El Operador <code>#</code> y la Combinación de Patrones</h3>
+
+<p>
+El operador <code>#</code> combina patrones, típicamente un patrón de estructura con un patrón de parámetros:
+</p>
+
+<pre><code>d1 $ s "bd sd" # gain "1 0.8"</code></pre>
+
+<strong>Comportamiento:</strong>
+<li>La estructura temporal viene del patrón de la izquierda</li>
+<li>Los valores vienen del patrón de la derecha</li>
+<li>Si hay más eventos en la derecha, se ignoran</li>
+<li>Si hay menos, se repiten cíclicamente</li>
+
+<h3>1.7 Configuración del Tempo (CPS)</h3>
+
+<p>
+El tempo en Tidal se controla mediante CPS (Cycles Per Second):
+</p>
+
+<pre><code>-- 120 BPM en 4/4 = 0.5 CPS
+<p>
+setcps 0.5
+</p>
+
+<p>
+-- 140 BPM = 0.583 CPS
+setcps (140/60/4)
+</p>
+
+<p>
+-- Cambio gradual de tempo
+setcps (slow 8 $ range 0.4 0.6 sine)</code></pre>
+</p>
+
+<strong>Fórmula de Conversión:</strong>
+<pre><code>CPS = BPM / 60 / beats_per_cycle</code></pre>
+
+<p>
+Para 4/4: <code>CPS = BPM / 240</code>
+</p>
+
+<h3>1.8 Canales de Salida (d1-d16)</h3>
+
+<p>
+Tidal proporciona 16 canales de salida por defecto:
+</p>
+
+<pre><code>d1 $ s "bd*4"        -- Canal 1: Bombo
+<p>
+d2 $ s "sd(3,8)"     -- Canal 2: Caja
+d3 $ s "hh*16"       -- Canal 3: Hi-hat
+d4 $ s "bass:3"      -- Canal 4: Bajo</code></pre>
+</p>
+
+<strong>Operaciones con Canales:</strong>
+
+<pre><code>-- Silenciar un canal
+<p>
+d1 silence
+</p>
+
+<p>
+-- Silenciar todos
+hush
+</p>
+
+<p>
+-- Solo un canal (solo)
+solo 1
+</p>
+
+<p>
+-- Dejar de hacer solo
+unsolo 1</code></pre>
+</p>
+
+<h3>1.9 Transiciones entre Patrones</h3>
+
+<p>
+Tidal ofrece múltiples formas de transicionar entre patrones:
+</p>
+
+<pre><code>-- Transición inmediata
+<p>
+d1 $ s "bd sd"
+</p>
+
+<p>
+-- Crossfade de 4 ciclos
+xfade 1 $ s "hh*8"
+</p>
+
+<p>
+-- Transición con filtro high-pass
+anticipate 1 $ s "bass:3"
+</p>
+
+<p>
+-- Jump (corte en el siguiente ciclo)
+jump 1 $ s "arpy*4"
+</p>
+
+<p>
+-- Clutch (fundido cruzado suave)
+clutch 1 $ s "glitch*16"</code></pre>
+</p>
+
+<h3>1.10 El Sistema de Órbitas (Orbits)</h3>
+
+<p>
+Las órbitas permiten rutear diferentes patrones a buses de audio independientes:
+</p>
+
+<pre><code>d1 $ s "bd*4" # orbit 0      -- Bus 0 (estéreo 1-2)
+<p>
+d2 $ s "sd*4" # orbit 1      -- Bus 1 (estéreo 3-4)
+d3 $ s "hh*16" # orbit 2     -- Bus 2 (estéreo 5-6)</code></pre>
+</p>
+
+<strong>Ventajas:</strong>
+<li>Mezcla independiente por stem</li>
+<li>Efectos separados por órbita</li>
+<li>Grabación multicanal para post-producción</li>
+
+<h3>1.11 Estructura de un Proyecto Tidal</h3>
+
+<strong>Organización Recomendada:</strong>
+
+<pre><code>proyecto/
+<p>
+├── init.tidal          # Configuración inicial
+├── samples/            # Samples personalizados
+├── synths/             # SynthDefs custom
+├── sets/
+│   ├── set01.tidal     # Set de performance
+│   ├── set02.tidal
+│   └── ...
+└── experiments/        # Pruebas y experimentos</code></pre>
+</p>
+
+<strong>Archivo init.tidal típico:</strong>
+
+<pre><code>-- Configuración de tempo
+<p>
+setcps 0.5
+</p>
+
+<p>
+-- Importar librerías adicionales
+import Sound.Tidal.Chords
+</p>
+
+<p>
+-- Definir funciones personalizadas
+let myPattern = fast 2 . rev
+</p>
+
+<p>
+-- Cargar samples personalizados
+setS "mysamples" "c:/path/to/samples"</code></pre>
+</p>
+
+<h3>1.12 Debugging y Troubleshooting</h3>
+
+<strong>Comandos Útiles:</strong>
+
+<pre><code>-- Ver el patrón en consola
+<p>
+drawLine $ s "bd sd hh"
+</p>
+
+<p>
+-- Ver estructura temporal
+queryArc (s "bd*4") (Arc 0 1)
+</p>
+
+<p>
+-- Resetear todo
+hush
+all silence</code></pre>
+</p>
+
+<strong>Errores Comunes:</strong>
+
+<p>
+1. <strong>"No instance for (Show Pattern)"</strong>: Intentar imprimir un patrón directamente
+2. <strong>"Connection refused"</strong>: SuperCollider no está corriendo
+3. <strong>"Parse error"</strong>: Error de sintaxis en el código
+4. <strong>"Out of memory"</strong>: Patrón demasiado complejo o recursión infinita
+</p>
+
+<h3>1.13 Buenas Prácticas</h3>
+
+<p>
+1. <strong>Comentar el código</strong>: Usa <code>--</code> para comentarios de línea
+2. <strong>Modularidad</strong>: Define funciones reutilizables
+3. <strong>Versionado</strong>: Usa Git para trackear cambios
+4. <strong>Performance</strong>: Evita patrones excesivamente densos
+5. <strong>Backup</strong>: Guarda regularmente tus sets
+</p>
+
+<h3>1.14 Recursos y Comunidad</h3>
+
+<li><strong>Documentación Oficial</strong>: https://tidalcycles.org/</li>
+<li><strong>Club Tidal</strong>: https://club.tidalcycles.org/</li>
+<li><strong>Discord</strong>: Comunidad activa de live coders</li>
+<li><strong>GitHub</strong>: https://github.com/tidalcycles/Tidal</li>
+<li><strong>YouTube</strong>: Tutoriales y performances</li>
+
+<p>
+---
+</p>
+
+<h2>Próximos Pasos</h2>
+
+<p>
+Con estos fundamentos establecidos, estás listo para explorar:
+</p>
+<li>Mini-notación avanzada</li>
+<li>Funciones de transformación</li>
+<li>Efectos y parámetros</li>
+<li>Síntesis y samples</li>
+<li>Técnicas de performance</li></ul>
+
+<p>
+La clave está en la práctica constante y la experimentación. TidalCycles recompensa la curiosidad y el pensamiento algorítmico.
+</p>
+
+        </div>
+    </div>
+</body>
+</html>

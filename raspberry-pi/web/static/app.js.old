@@ -1,0 +1,1604 @@
+// TidalAI Companion - Frontend JavaScript
+// VERSIÓN CON SISTEMA DE FAVORITOS INTEGRADO
+
+// Estado de la aplicación
+const state = {
+    genMode: 'rules',  // 'rules' o 'ai'
+    patternType: 'drums',
+    config: {
+        density: 0.6,
+        complexity: 0.5,
+        tempo: 140,
+        style: 'techno',
+        temperature: 1.0
+    },
+    lastPattern: null,
+    lastLayers: [],      // Capas orquestradas
+    isHallucination: false, // Si el patrón fue auto-corregido
+    favoritesList: []  // Lista de favoritos
+};
+
+// Elementos DOM
+const elements = {
+    genModeBtns: document.querySelectorAll('[data-genmode]'),
+    genModeDescription: document.getElementById('genmode-description'),
+    temperatureSection: document.getElementById('temperature-section'),
+    temperatureSlider: document.getElementById('temperature'),
+    temperatureValue: document.getElementById('temperature-value'),
+    patternBtns: document.querySelectorAll('.pattern-btn'),
+    density: document.getElementById('density'),
+    densityValue: document.getElementById('density-value'),
+    complexity: document.getElementById('complexity'),
+    complexityValue: document.getElementById('complexity-value'),
+    tempo: document.getElementById('tempo'),
+    tempoValue: document.getElementById('tempo-value'),
+    styleSelect: document.getElementById('style'),
+    generateBtn: document.getElementById('generate-btn'),
+    sendBtn: document.getElementById('send-btn'),
+    stopBtn: document.getElementById('stop-btn'),
+    copyBtn: document.getElementById('copy-btn'),
+    favoriteBtn: document.getElementById('favorite-btn'),
+    retrainBtn: document.getElementById('retrain-btn'),
+    mutateBtn: document.getElementById('mutate-btn'),
+    mutationStrength: document.getElementById('mutation-strength'),
+    mutationValue: document.getElementById('mutation-value'),
+    oracleInput: document.getElementById('oracle-input'),
+    manualPattern: document.getElementById('manual-pattern'),
+    addManualBtn: document.getElementById('add-manual-btn'),
+    favoritesCount: document.getElementById('favorites-count'),
+    favoritesList: document.getElementById('favorites-list'),
+    viewFavoritesBtn: document.getElementById('view-favorites-btn'),
+    favoritesModal: document.getElementById('favorites-modal'),
+    closeModal: document.getElementById('close-modal'),
+    patternOutput: document.getElementById('pattern-output'),
+    patternInfo: document.getElementById('pattern-info'),
+    patternMode: document.getElementById('pattern-mode'),
+    activityLog: document.getElementById('activity-log'),
+    oscStatus: document.getElementById('osc-status'),
+    oscStatusText: document.getElementById('osc-status-text'),
+    settingsModal: document.getElementById('settings-modal'),
+    targetIpInput: document.getElementById('target-ip'),
+    targetPortInput: document.getElementById('target-port')
+};
+
+// Descripciones de modos de generación
+const genModeDescriptions = {
+    rules: 'Generación rápida y predecible usando reglas programadas',
+    ai: 'Generación creativa usando modelo de IA (Markov Chains)'
+};
+
+// Iconos para tipos de patrones
+const patternTypeIcons = {
+    drums: '🥁',
+    bass: '🔊',
+    melody: '🎹',
+    percussion: '🪘',
+    fx: '✨',
+    unknown: '🎵'
+};
+
+// Inicialización
+// Inicialización (Exportada como función para ser llamada desde el final del archivo)
+function init() {
+    console.log('🌟 Inicializando TidalAI Companion...');
+    loadSystemConfig();
+    initEventListeners();
+    loadFavorites();
+    updateTheme(state.config.style);
+    updateStatus();
+    setInterval(updateStatus, 5000);
+    logActivity('Sistema iniciado y listo 🚀');
+}
+
+// Event Listeners
+function initEventListeners() {
+    // Modo de generación (IA vs Reglas)
+    elements.genModeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const mode = btn.dataset.genmode;
+            changeGenMode(mode);
+        });
+    });
+
+    // Tipo de patrón
+    elements.patternBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const type = btn.dataset.type;
+            selectPatternType(type);
+        });
+    });
+
+    // Sliders
+    elements.density.addEventListener('input', (e) => {
+        const value = e.target.value;
+        elements.densityValue.textContent = value + '%';
+        state.config.density = value / 100;
+    });
+
+    elements.complexity.addEventListener('input', (e) => {
+        const value = e.target.value;
+        elements.complexityValue.textContent = value + '%';
+        state.config.complexity = value / 100;
+    });
+
+    elements.tempo.addEventListener('input', (e) => {
+        const value = e.target.value;
+        elements.tempoValue.textContent = value;
+        state.config.tempo = parseInt(value);
+    });
+
+    elements.temperatureSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        elements.temperatureValue.textContent = value;
+        state.config.temperature = parseFloat(value);
+    });
+
+    // Mutation Slider
+    if (elements.mutationStrength) {
+        elements.mutationStrength.addEventListener('input', (e) => elements.mutationValue.textContent = e.target.value + '%');
+    }
+
+    // Oracle Input
+    if (elements.oracleInput) {
+        elements.oracleInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleOracleInput();
+        });
+    }
+
+    // Style select
+    elements.styleSelect.addEventListener('change', (e) => {
+        state.config.style = e.target.value;
+        updateTheme(state.config.style);
+    });
+
+    // Botones de acción
+    // Botones de acción (con chequeos de seguridad)
+    if (elements.generateBtn) elements.generateBtn.addEventListener('click', generatePattern);
+    if (elements.sendBtn) elements.sendBtn.addEventListener('click', sendPattern);
+    if (elements.stopBtn) elements.stopBtn.addEventListener('click', stopAll);
+    if (elements.copyBtn) elements.copyBtn.addEventListener('click', copyPattern);
+    if (elements.favoriteBtn) elements.favoriteBtn.addEventListener('click', toggleFavorite);
+    if (elements.retrainBtn) elements.retrainBtn.addEventListener('click', retrainModel);
+    if (elements.mutateBtn) elements.mutateBtn.addEventListener('click', mutatePattern);
+
+    // Manual Pattern (puede no existir en todas las vistas)
+    if (elements.addManualBtn) {
+        elements.addManualBtn.addEventListener('click', addManualPattern);
+    }
+
+    if (elements.viewFavoritesBtn) elements.viewFavoritesBtn.addEventListener('click', openFavoritesModal);
+    if (elements.closeModal) elements.closeModal.addEventListener('click', closeFavoritesModal);
+
+    // Filtro de favoritos
+    const favoritesFilter = document.getElementById('favorites-filter');
+    if (favoritesFilter) {
+        favoritesFilter.addEventListener('change', (e) => {
+            displayFavoritesListInModal(e.target.value);
+        });
+    }
+
+    // Cerrar modal al hacer click fuera
+    window.addEventListener('click', (e) => {
+        if (e.target === elements.favoritesModal) {
+            closeFavoritesModal();
+        }
+        if (e.target === elements.settingsModal) {
+            closeSettingsModal();
+        }
+    });
+
+    // Cargar favoritos al inicio
+    loadFavorites();
+}
+
+// Cambiar modo de generación
+function changeGenMode(mode) {
+    state.genMode = mode;
+
+    // Actualizar UI
+    elements.genModeBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.genmode === mode);
+    });
+    elements.genModeDescription.textContent = genModeDescriptions[mode];
+
+    // Mostrar/ocultar temperatura
+    if (mode === 'ai') {
+        elements.temperatureSection.style.display = 'block';
+    } else {
+        elements.temperatureSection.style.display = 'none';
+    }
+
+    logActivity(`Modo de generación: ${mode === 'ai' ? 'IA' : 'Reglas'}`);
+}
+
+// Seleccionar tipo de patrón
+function selectPatternType(type) {
+    state.patternType = type;
+
+    elements.patternBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === type);
+    });
+}
+
+// Generar patrón
+// Generar patrón (Click o vía Oráculo)
+// Generar patrón (Click o vía Oráculo)
+async function generatePattern(options = {}) {
+    // Si viene de un evento click, options es un evento, ignoramos
+    const intent = (options && options.intent) ? options.intent : null;
+
+    elements.generateBtn.disabled = true;
+    elements.generateBtn.textContent = '⏳ Generando...';
+
+    const activeBtn = document.querySelector('.pattern-btn.active');
+    const activeType = activeBtn ? activeBtn.dataset.type : 'drums';
+
+    // Leer valores actuales
+    const requestData = {
+        pattern_type: activeType,
+        density: parseFloat(elements.density.value) / 100,
+        complexity: parseFloat(elements.complexity.value) / 100,
+        tempo: parseInt(elements.tempo.value),
+        style: state.config.style, // Use state.config.style as it's updated by the select
+        use_ai: state.genMode === 'ai',
+        temperature: parseFloat(elements.temperatureSlider.value),
+        intent: intent // Pasar intención al backend
+    };
+
+    console.log('Generando patrón con:', requestData);
+    logActivity(`Solicitando patrón (${requestData.use_ai ? 'IA' : 'Reglas'})...`);
+
+    try {
+        const response = await fetch('/api/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            state.lastPattern = data.pattern;
+            state.lastLayers = data.layers || [];
+            state.isHallucination = data.is_hallucination || false;
+
+            displayPattern(data.pattern, data.mode, data.temperature, state.lastLayers, state.isHallucination);
+            if (window.particleEngine) window.particleEngine.burst();
+
+            // --- ACTIVAR BOTONES PRIMERO (V3.1 Safety) ---
+            elements.sendBtn.disabled = false;
+            elements.copyBtn.disabled = false;
+            elements.mutateBtn.disabled = false;
+            elements.generateBtn.disabled = false;
+            elements.generateBtn.textContent = '🎲 GENERAR PATRÓN';
+
+            // Mostrar pensamientos si existen
+            const thoughtsPanel = document.getElementById('thoughts-panel');
+            if (data.thoughts && data.thoughts.length > 0) {
+                renderThoughts(data.thoughts);
+            } else if (thoughtsPanel) {
+                thoughtsPanel.style.display = 'none';
+            }
+
+            const modeStr = data.mode || (requestData.use_ai ? 'IA' : 'Reglas');
+            const tempStr = data.temperature ? ` (T=${data.temperature})` : '';
+            const halluMsg = state.isHallucination ? ' (⚠️ Auto-Fixed)' : '';
+            logActivity(`Patrón generado con ${modeStr}${tempStr}${halluMsg}`);
+
+            // Añadir al historial automáticamente
+            addToHistory(data.pattern, state.patternType, modeStr, data.temperature);
+        } else {
+            elements.generateBtn.disabled = false;
+            elements.generateBtn.textContent = '🎲 GENERAR PATRÓN';
+            logActivity(`Error: ${data.message}`, 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión', 'error');
+    } finally {
+        elements.generateBtn.disabled = false;
+        elements.generateBtn.textContent = '🎲 GENERAR PATRÓN';
+    }
+}
+
+// Nueva Función: Mutar patrón rítmicamente (Fase 17)
+// Nueva Función: Mutar patrón rítmicamente (Fase 17)
+// Nueva Función: Mutar patrón rítmicamente (Fase 17)
+async function mutatePattern() {
+    // DEBUG: Confirmar click visualmente
+    // alert("DEBUG: ¡Botón Mutar Activado!"); 
+
+    console.log('🖱️ Mutate Action Triggered');
+
+    // Resilience: Recuperar patrón de la UI si el estado se perdió
+    if (!state.lastPattern) {
+        const textFromUI = elements.patternOutput.textContent.trim();
+        // Limpiar prefijos visuales como "d1 $ "
+        const cleanText = textFromUI.replace(/^d\d+\s*\$\s*/, '').replace(/⚠️.*/, '').trim();
+
+        if (cleanText && cleanText.length > 5 && !cleanText.includes('...')) {
+            console.log('⚠️ State lost, recovered pattern from UI:', cleanText);
+            state.lastPattern = cleanText;
+        } else {
+            alert("❌ Error: No hay patrón para mutar. Genera uno primero.");
+            return;
+        }
+    }
+
+    elements.mutateBtn.disabled = true;
+    const originalBtnText = elements.mutateBtn.textContent;
+    elements.mutateBtn.textContent = '🧬 Mutando...';
+
+    // Usar el nuevo slider dedicado
+    const strength = elements.mutationStrength ? (parseFloat(elements.mutationStrength.value) / 100) : 0.5;
+    console.log(`🧬 Mutating with strength: ${strength}`);
+
+    try {
+        const response = await fetch('/api/mutate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                pattern: state.lastPattern,
+                strength: strength
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            state.lastPattern = data.pattern;
+            state.lastLayers = data.layers || [];
+            state.isHallucination = data.is_hallucination || false;
+
+            displayPattern(data.pattern, 'Mutación 🧬', null, state.lastLayers, state.isHallucination);
+
+            if (window.particleEngine) window.particleEngine.burst();
+            if (data.thoughts) renderThoughts(data.thoughts);
+
+            const percent = (strength * 100).toFixed(0);
+            logActivity(`Evolución aplicada (${percent}%)`);
+        } else {
+            logActivity(`Error en mutación: ${data.message}`, 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión en mutación', 'error');
+    } finally {
+        elements.mutateBtn.disabled = false;
+        elements.mutateBtn.textContent = '🧬 Mutar';
+    }
+}
+
+// Mostrar patrón
+function displayPattern(pattern, mode, temperature, layers = [], isHallu = false) {
+    let outputHtml = '';
+
+    if (layers && layers.length > 1) {
+        // Vista Multi-Pista (Orquestada)
+        layers.forEach((layer, i) => {
+            outputHtml += `<span style="color: #94a3b8;">d${i + 1} $</span> ${layer.code}\n`;
+        });
+
+        if (isHallu) {
+            outputHtml += `\n<span style="color: #fbbf24; font-size: 0.8rem;">⚠️ AUTO-FIX: La IA intentó solapar sonidos. He fragmentado el patrón para que sea válido.</span>`;
+            outputHtml += `\n<button onclick="viewOriginalCode()" style="background: none; border: none; color: #38bdf8; cursor: pointer; font-size: 0.75rem; text-decoration: underline; padding: 0;">Ver código original</button>`;
+        }
+    } else {
+        outputHtml = `<span style="color: #94a3b8;">d1 $</span> ${pattern}`;
+    }
+
+    elements.patternOutput.innerHTML = outputHtml;
+
+    // --- EFECTO VISUAL DE ACTUALIZACIÓN (FLASH) ---
+    elements.patternOutput.classList.remove('pattern-update-flash');
+    void elements.patternOutput.offsetWidth; // Trigger reflow
+    elements.patternOutput.classList.add('pattern-update-flash');
+
+    if (mode) {
+        const polyStr = (layers && layers.length > 1) ? ' | <span style="color: #00ffcc; font-weight: bold;">Polifónico 🚀</span>' : '';
+        const halluBadge = isHallu ? ' | <span style="color: #fbbf24; font-weight: bold;">Hallucination Fixed 🛠️</span>' : '';
+        const tempStr = temperature ? ` | Temperatura: ${temperature}` : '';
+        elements.patternMode.innerHTML = `Modo: ${mode}${tempStr}${polyStr}${halluBadge}`;
+        elements.patternInfo.style.display = 'block';
+    }
+
+    // --- Fase 18: Sample Scout Integration ---
+    if (!isHallu && (layers.length <= 1)) { // Solo para capas simples de momento
+        getSampleSuggestions(pattern);
+    } else {
+        const scoutPanel = document.getElementById('sample-scout-panel');
+        if (scoutPanel) scoutPanel.style.display = 'none';
+        document.getElementById('sample-suggestions').innerHTML = '';
+    }
+
+    // Actualizar botón de favorito
+    updateFavoriteButton(pattern);
+}
+
+// Nueva función para ver el código rudo sin procesar
+function viewOriginalCode() {
+    if (state.lastPattern) {
+        alert(`CÓDIGO ORIGINAL (HALLUCINATED):\n\n${state.lastPattern}\n\nNota: Este código no sonarían bien en Tidal sin divisiones.`);
+    }
+}
+
+// Enviar patrón a Tidal
+async function sendPattern() {
+    if (!state.lastPattern) {
+        logActivity('No hay patrón para enviar', 'warning');
+        return;
+    }
+
+    elements.sendBtn.disabled = true;
+    elements.sendBtn.textContent = '📤 Enviando...';
+
+    try {
+        // Obtener IP destino desde configuración local
+        const targetIp = localStorage.getItem('target_ip') || '127.0.0.1';
+        const targetPort = parseInt(localStorage.getItem('target_port') || '6010');
+
+        const response = await fetch('/api/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                channel: 'd1',
+                pattern: state.lastPattern,
+                target_ip: targetIp,
+                target_port: targetPort
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            if (data.layers && data.layers.length > 1) {
+                logActivity(`<span style="color: #00ffcc;">Orquestación Exitosa: ${data.layers.length} pistas activas</span>`);
+                data.layers.forEach((layerCode, i) => {
+                    logActivity(`&nbsp;&nbsp;[d${i + 1}] → ${layerCode}`, 'info');
+                });
+            } else {
+                logActivity('Patrón enviado a Tidal (d1)');
+            }
+        } else {
+            logActivity('Error enviando patrón', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión', 'error');
+    } finally {
+        elements.sendBtn.disabled = false;
+        elements.sendBtn.textContent = '📤 Enviar a Tidal';
+    }
+}
+
+// Detener todos los canales
+async function stopAll() {
+    try {
+        const response = await fetch('/api/stop', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ channel: 'all' })
+        });
+
+        if (response.ok) {
+            logActivity('Todos los canales detenidos');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error deteniendo canales', 'error');
+    }
+}
+
+// Copiar patrón al portapapeles
+async function copyPattern() {
+    let text = "";
+
+    if (state.lastLayers && state.lastLayers.length > 1) {
+        text = state.lastLayers.map((l, i) => `d${i + 1} $ ${l.code}`).join('\n');
+    } else {
+        text = `d1 $ ${state.lastPattern || elements.patternOutput.textContent.replace(/^d1\s*\$\s*/, '')}`;
+    }
+
+    try {
+        await navigator.clipboard.writeText(text);
+        showCopySuccess();
+        logActivity('Patrón copiado al portapapeles');
+    } catch (error) {
+        console.warn('Navigator clipboard failed, trying execCommand fallback:', error);
+
+        try {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            if (successful) {
+                showCopySuccess();
+                logActivity('Patrón copiado (vía fallback)');
+            } else {
+                throw new Error('execCommand failed');
+            }
+        } catch (err) {
+            console.error('Final copy failure:', err);
+            logActivity('Error copiando al portapapeles', 'error');
+
+            const range = document.createRange();
+            range.selectNode(elements.patternOutput);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            logActivity('Texto seleccionado (copia con Ctrl+C)');
+        }
+    }
+}
+
+function showCopySuccess() {
+    const originalText = elements.copyBtn.textContent;
+    elements.copyBtn.textContent = '✓ Copiado!';
+    elements.copyBtn.classList.add('success');
+
+    setTimeout(() => {
+        elements.copyBtn.textContent = originalText;
+        elements.copyBtn.classList.remove('success');
+    }, 2000);
+}
+
+// ============================================
+// GESTIÓN DE FAVORITOS
+// ============================================
+
+// Cargar lista de favoritos
+async function loadFavorites() {
+    try {
+        const response = await fetch('/api/favorites');
+        const data = await response.json();
+
+        if (data.success) {
+            state.favoritesList = data.favorites;
+            updateFavoritesCount();
+            displayFavoritesList();
+        }
+    } catch (error) {
+        console.error('Error cargando favoritos:', error);
+    }
+}
+
+// Mostrar lista de favoritos
+function displayFavoritesList() {
+    elements.favoritesList.innerHTML = '';
+
+    if (state.favoritesList.length === 0) {
+        elements.favoritesList.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">No hay favoritos guardados</div>';
+        return;
+    }
+
+    state.favoritesList.forEach((pattern, index) => {
+        const item = document.createElement('div');
+        item.className = 'favorite-item';
+        item.innerHTML = `
+            <div class="favorite-pattern">${pattern}</div>
+            <div class="favorite-actions">
+                <button class="btn-icon" onclick="useFavorite('${escapeHtml(pattern)}')" title="Usar este patrón">
+                    ▶️
+                </button>
+                <button class="btn-icon btn-delete" onclick="deleteFavorite('${escapeHtml(pattern)}')" title="Eliminar">
+                    🗑️
+                </button>
+            </div>
+        `;
+        elements.favoritesList.appendChild(item);
+    });
+}
+
+// Escapar HTML para evitar problemas con comillas
+function escapeHtml(text) {
+    return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// Usar favorito (cargarlo como patrón actual)
+function useFavorite(pattern) {
+    state.lastPattern = pattern;
+    displayPattern(pattern, 'Favorito', null);
+    elements.sendBtn.disabled = false;
+    elements.copyBtn.disabled = false;
+    logActivity('Patrón favorito cargado');
+}
+
+// Eliminar favorito
+async function deleteFavorite(pattern) {
+    if (!confirm('¿Eliminar este patrón de favoritos?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/favorites', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pattern })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            state.favoritesList = state.favoritesList.filter(p => p !== pattern);
+            updateFavoritesCount();
+            displayFavoritesList();
+            logActivity('Patrón eliminado de favoritos');
+
+            // Actualizar botón si es el patrón actual
+            if (state.lastPattern === pattern) {
+                updateFavoriteButton(pattern);
+            }
+        } else {
+            logActivity(data.error || 'Error eliminando favorito', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión', 'error');
+    }
+}
+
+// Actualizar contador de favoritos
+function updateFavoritesCount() {
+    if (!elements.favoritesCount) return;
+    const count = state.favoritesList.length;
+    elements.favoritesCount.textContent = `${count} patrón${count !== 1 ? 'es' : ''} favorito${count !== 1 ? 's' : ''}`;
+}
+
+// Verificar si patrón es favorito
+function isFavorite(pattern) {
+    return state.favoritesList.includes(pattern);
+}
+
+// Actualizar botón de favorito
+function updateFavoriteButton(pattern) {
+    if (isFavorite(pattern)) {
+        elements.favoriteBtn.textContent = '★ En Favoritos';
+        elements.favoriteBtn.classList.add('favorite-active');
+    } else {
+        elements.favoriteBtn.textContent = '⭐ Añadir a Favoritos';
+        elements.favoriteBtn.classList.remove('favorite-active');
+    }
+    elements.favoriteBtn.disabled = false;
+}
+
+// Toggle favorito (añadir/eliminar)
+async function toggleFavorite() {
+    if (!state.lastPattern) {
+        logActivity('No hay patrón para añadir a favoritos', 'warning');
+        return;
+    }
+
+    const pattern = state.lastPattern;
+    const isCurrentlyFavorite = isFavorite(pattern);
+
+    try {
+        const response = await fetch('/api/favorites', {
+            method: isCurrentlyFavorite ? 'DELETE' : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pattern })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            if (isCurrentlyFavorite) {
+                state.favoritesList = state.favoritesList.filter(p => p !== pattern);
+                elements.favoriteBtn.textContent = '⭐ Añadir a Favoritos';
+                elements.favoriteBtn.classList.remove('favorite-active');
+                logActivity('Patrón eliminado de favoritos');
+            } else {
+                state.favoritesList.push(pattern);
+                elements.favoriteBtn.textContent = '★ En Favoritos';
+                elements.favoriteBtn.classList.add('favorite-active');
+                logActivity('Patrón añadido a favoritos');
+            }
+            updateFavoritesCount();
+            displayFavoritesList();
+        } else {
+            logActivity(data.error || 'Error gestionando favorito', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión', 'error');
+    }
+}
+
+// Añadir patrón manual
+async function addManualPattern() {
+    const pattern = elements.manualPattern.value.trim();
+
+    if (!pattern) {
+        logActivity('Escribe un patrón primero', 'warning');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/favorites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pattern })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            state.favoritesList.push(pattern);
+            updateFavoritesCount();
+            displayFavoritesList();
+            elements.manualPattern.value = '';
+            logActivity('Patrón añadido a favoritos');
+        } else {
+            logActivity(data.error || 'Error añadiendo patrón', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión', 'error');
+    }
+}
+
+// Re-entrenar modelo
+async function retrainModel() {
+    if (state.favoritesList.length === 0) {
+        const confirm = window.confirm('No hay favoritos. ¿Re-entrenar solo con corpus base?');
+        if (!confirm) return;
+    }
+
+    elements.retrainBtn.disabled = true;
+    elements.retrainBtn.textContent = '⏳ Re-entrenando...';
+
+    logActivity('Iniciando re-entrenamiento del modelo...');
+
+    try {
+        const response = await fetch('/api/retrain', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            logActivity(`✓ Modelo re-entrenado con ${data.pattern_count} patrones`);
+
+            elements.retrainBtn.textContent = '✓ Completado';
+            setTimeout(() => {
+                elements.retrainBtn.textContent = '🔄 Re-entrenar Modelo';
+            }, 3000);
+        } else {
+            logActivity('Error re-entrenando modelo: ' + data.error, 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión', 'error');
+    } finally {
+        elements.retrainBtn.disabled = false;
+    }
+}
+
+// ============================================
+// UTILIDADES
+// ============================================
+
+// Actualizar estado de conexión
+async function updateStatus() {
+    try {
+        const response = await fetch('/api/status');
+        const data = await response.json();
+
+        if (data.success) {
+            const oscConnected = data.osc && data.osc.connected;
+            elements.oscStatus.textContent = oscConnected ? '🟢' : '🔴';
+            elements.oscStatus.className = `status-indicator ${oscConnected ? 'connected' : 'disconnected'}`;
+            elements.oscStatusText.textContent = `OSC: ${oscConnected ? 'Conectado' : 'Desconectado'}`;
+        }
+    } catch (error) {
+        console.error('Error actualizando estado:', error);
+        elements.oscStatus.textContent = '⚫';
+        elements.oscStatusText.textContent = 'OSC: Error de conexión';
+    }
+}
+
+// Añadir entrada al log
+function logActivity(message, type = 'info') {
+    const timestamp = new Date().toLocaleTimeString('es-ES');
+    const entry = `[${timestamp}] ${message}`;
+    addLogEntry(entry, type);
+}
+
+function addLogEntry(entry, type = 'info') {
+    const div = document.createElement('div');
+    div.className = `log-entry log-${type}`;
+    div.textContent = entry;
+    elements.activityLog.appendChild(div);
+
+    elements.activityLog.scrollTop = elements.activityLog.scrollHeight;
+
+    while (elements.activityLog.children.length > 50) {
+        elements.activityLog.removeChild(elements.activityLog.firstChild);
+    }
+}
+
+// ============================================
+// FUNCIONES DEL MODAL DE FAVORITOS
+// ============================================
+
+function openFavoritesModal() {
+    elements.favoritesModal.style.display = 'block';
+    displayFavoritesListInModal();
+}
+
+function closeFavoritesModal() {
+    elements.favoritesModal.style.display = 'none';
+}
+
+// Mostrar lista de favoritos en el modal (con agrupación por tipo)
+function displayFavoritesListInModal(filterType = 'all') {
+    elements.favoritesList.innerHTML = '';
+
+    if (state.favoritesList.length === 0) {
+        elements.favoritesList.innerHTML = `
+            <div style="text-align: center; color: #888; padding: 40px;">
+                <div style="font-size: 3rem; margin-bottom: 15px;">⭐</div>
+                <div>No hay favoritos guardados</div>
+                <div style="font-size: 0.9em; margin-top: 10px;">Genera patrones y añádelos a favoritos</div>
+            </div>
+        `;
+        return;
+    }
+
+    // Si los favoritos son objetos con tipo, agrupar
+    const hasTypes = state.favoritesList.length > 0 && typeof state.favoritesList[0] === 'object';
+
+    if (hasTypes) {
+        // Agrupar por tipo
+        const byType = {};
+        state.favoritesList.forEach(fav => {
+            const type = fav.type || 'unknown';
+            if (!byType[type]) byType[type] = [];
+            byType[type].push(fav);
+        });
+
+        // Filtrar si es necesario
+        const typesToShow = filterType === 'all' ? Object.keys(byType) : [filterType];
+        const filteredTypes = typesToShow.filter(t => byType[t]);
+
+        if (filteredTypes.length === 0) {
+            elements.favoritesList.innerHTML = `
+                <div style="text-align: center; color: #888; padding: 40px;">
+                    <div style="font-size: 2rem; margin-bottom: 15px;">🔍</div>
+                    <div>No hay favoritos de tipo "${filterType}"</div>
+                </div>
+            `;
+            return;
+        }
+
+        // Mostrar por tipo
+        filteredTypes.sort().forEach(type => {
+            const typeSection = document.createElement('div');
+            typeSection.className = 'favorites-type-section';
+
+            const typeHeader = document.createElement('div');
+            typeHeader.className = 'favorites-type-header';
+            const icon = patternTypeIcons[type] || '🎵';
+            typeHeader.innerHTML = `${icon} ${type.toUpperCase()} (${byType[type].length})`;
+            typeSection.appendChild(typeHeader);
+
+            byType[type].forEach(fav => {
+                const item = document.createElement('div');
+                item.className = 'favorite-item';
+                item.innerHTML = `
+                    <div class="favorite-pattern">${fav.pattern}</div>
+                    <div class="favorite-actions">
+                        <button class="btn-icon" onclick="useFavoriteFromModal('${escapeHtml(fav.pattern)}')" title="Usar este patrón">
+                            ▶️
+                        </button>
+                        <button class="btn-icon btn-delete" onclick="deleteFavoriteFromModal('${escapeHtml(fav.pattern)}')" title="Eliminar">
+                            🗑️
+                        </button>
+                    </div>
+                `;
+                typeSection.appendChild(item);
+            });
+
+            elements.favoritesList.appendChild(typeSection);
+        });
+    } else {
+        // Mostrar sin agrupar (favoritos antiguos)
+        state.favoritesList.forEach(pattern => {
+            const item = document.createElement('div');
+            item.className = 'favorite-item';
+            item.innerHTML = `
+                <div class="favorite-pattern">${pattern}</div>
+                <div class="favorite-actions">
+                    <button class="btn-icon" onclick="useFavoriteFromModal('${escapeHtml(pattern)}')" title="Usar este patrón">
+                        ▶️
+                    </button>
+                    <button class="btn-icon btn-delete" onclick="deleteFavoriteFromModal('${escapeHtml(pattern)}')" title="Eliminar">
+                        🗑️
+                    </button>
+                </div>
+            `;
+            elements.favoritesList.appendChild(item);
+        });
+    }
+}
+
+// Usar favorito desde modal
+function useFavoriteFromModal(pattern) {
+    const favorite = state.favoritesList.find(f =>
+        (typeof f === 'object' ? f.pattern : f) === pattern
+    );
+
+    if (favorite) {
+        const patternText = typeof favorite === 'object' ? favorite.pattern : favorite;
+        const type = typeof favorite === 'object' ? favorite.type : 'Favorito';
+
+        state.lastPattern = patternText;
+        displayPattern(patternText, `Favorito (${type})`, null);
+        elements.sendBtn.disabled = false;
+        elements.copyBtn.disabled = false;
+        logActivity(`Patrón favorito cargado: ${type}`);
+        closeFavoritesModal();
+    }
+}
+
+// Eliminar favorito desde modal
+async function deleteFavoriteFromModal(pattern) {
+    if (!confirm('¿Eliminar este patrón de favoritos?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/favorites', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pattern })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Eliminar del estado (soporta objetos y strings)
+            state.favoritesList = state.favoritesList.filter(f =>
+                (typeof f === 'object' ? f.pattern : f) !== pattern
+            );
+            updateFavoritesCount();
+            displayFavoritesListInModal();
+            logActivity('Patrón eliminado de favoritos');
+
+            // Actualizar botón si es el patrón actual
+            if (state.lastPattern === pattern) {
+                updateFavoriteButton(pattern);
+            }
+        } else {
+            logActivity(data.error || 'Error eliminando favorito', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        logActivity('Error de conexión', 'error');
+    }
+}
+// Renderizar pensamientos rítmicos
+function renderThoughts(thoughts) {
+    const panel = document.getElementById('thoughts-panel');
+    const content = document.getElementById('thoughts-content');
+
+    if (!panel || !content) return;
+
+    panel.style.display = 'block';
+    content.innerHTML = '';
+
+    thoughts.forEach((t, i) => {
+        const entry = document.createElement('div');
+        const prob = t.prob * 100;
+
+        // Estilo según probabilidad
+        let probClass = 'low-prob';
+        if (prob > 70) probClass = 'high-prob';
+        else if (prob > 30) probClass = 'med-prob';
+
+        entry.className = `thought-entry ${probClass}`;
+        entry.style.animationDelay = `${i * 0.05}s`;
+
+        const alternatives = t.alternatives.map(a =>
+            `<span class="alt-chip">${a.token} (${(a.prob * 100).toFixed(0)}%)</span>`
+        ).join('');
+
+        entry.innerHTML = `
+            <div class="thought-header">
+                <span class="thought-token">${t.token}</span>
+                <span class="thought-prob">${prob.toFixed(0)}% confianza</span>
+            </div>
+            ${i > 0 ? `<div class="alternatives">${alternatives}</div>` : '<div style="font-size:0.75rem; color:#64748b;">Punto de inicio del patrón</div>'}
+        `;
+
+        content.appendChild(entry);
+    });
+
+    panel.scrollTop = panel.scrollHeight;
+}
+
+// ============================================
+// BRAIN VISUALIZATION (MAPA MENTAL - NO BLOQUEANTE)
+// ============================================
+
+function toggleBrainPanel() {
+    const panel = document.getElementById('brain-panel');
+    if (panel.style.display === 'flex') {
+        closeBrainPanel();
+    } else {
+        panel.style.display = 'flex';
+        renderBrainGraph();
+        // Hacer arrastrable solo la primera vez si se desea
+        makeDraggable(panel, document.getElementById('brain-header'));
+    }
+}
+
+function closeBrainPanel() {
+    document.getElementById('brain-panel').style.display = 'none';
+}
+
+function renderBrainGraph() {
+    const container = document.getElementById('brain-viz');
+    if (!container) return;
+
+    const svg = d3.select("#brain-svg");
+    svg.selectAll("*").remove(); // Limpiar
+
+    fetch('/api/brain/graph')
+        .then(res => res.json())
+        .then(data => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const simulation = d3.forceSimulation(data.nodes)
+                .force("link", d3.forceLink(data.links).id(d => d.id).distance(80))
+                .force("charge", d3.forceManyBody().strength(-100))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+
+            const link = svg.append("g")
+                .attr("stroke", "#334155")
+                .attr("stroke-opacity", 0.6)
+                .selectAll("line")
+                .data(data.links)
+                .join("line")
+                .attr("stroke-width", d => Math.sqrt(d.value));
+
+            const node = svg.append("g")
+                .selectAll("g")
+                .data(data.nodes)
+                .join("g")
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended));
+
+            node.append("circle")
+                .attr("r", d => 4 + Math.sqrt(d.weight))
+                .attr("fill", d => {
+                    if (d.type === 'sample') return "#8b5cf6";
+                    if (d.type === 'function') return "#2dd4bf";
+                    if (d.type === 'number') return "#f59e0b";
+                    return "#94a3b8";
+                })
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 1);
+
+            node.append("text")
+                .text(d => d.label)
+                .attr("x", 8)
+                .attr("y", 4)
+                .attr("fill", "#e2e8f0")
+                .style("font-size", "10px")
+                .style("pointer-events", "none");
+
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
+                node.attr("transform", d => `translate(${d.x}, ${d.y})`);
+            });
+
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+        })
+        .catch(err => console.error("Error cargando grafo:", err));
+}
+
+// Utilidad para hacer elementos arrastrables
+function makeDraggable(element, header) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+    header.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // Obtener posición inicial
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // Calcular nueva posición
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // Establecer la nueva posición del elemento
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+        element.style.right = 'auto'; // Limpiar right fijado por CSS
+    }
+
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+
+// ============================================
+// RIFF MORPHING (EXPERIMENTAL)
+// ============================================
+
+let lastMorphedPattern = "";
+
+function toggleMorphPanel() {
+    const panel = document.getElementById('morph-panel');
+    if (panel.style.display === 'flex') {
+        closeMorphPanel();
+    } else {
+        panel.style.display = 'flex';
+        loadMorphOptions();
+        makeDraggable(panel, document.getElementById('morph-header'));
+    }
+}
+
+function closeMorphPanel() {
+    document.getElementById('morph-panel').style.display = 'none';
+}
+
+function loadMorphOptions() {
+    const selectA = document.getElementById('morph-select-a');
+    const selectB = document.getElementById('morph-select-b');
+
+    if (!selectA || !selectB) return;
+
+    selectA.innerHTML = '<option value="">Cargando...</option>';
+    selectB.innerHTML = '<option value="">Cargando...</option>';
+
+    // Cargar favoritos e historial en paralelo
+    Promise.all([
+        fetch('/api/favorites').then(r => r.json()),
+        fetch('/api/history').then(r => r.json())
+    ]).then(([favData, histData]) => {
+        let options = '<option value="">-- Selecciona un patrón --</option>';
+
+        // Añadir favoritos
+        if (favData.success && favData.favorites && favData.favorites.length > 0) {
+            options += '<optgroup label="⭐ Favoritos">';
+            favData.favorites.forEach(f => {
+                const pat = typeof f === 'string' ? f : f.pattern;
+                options += `< option value = "${escapeHtml(pat)}" > ${pat.substring(0, 50)}...</option > `;
+            });
+            options += '</optgroup>';
+        }
+
+        // Añadir historial reciente
+        if (histData.success && histData.history && histData.history.length > 0) {
+            options += '<optgroup label="🕒 Historial Reciente">';
+            histData.history.slice(0, 10).forEach(h => {
+                const pat = typeof h === 'string' ? h : h.pattern;
+                options += `< option value = "${escapeHtml(pat)}" > ${pat.substring(0, 50)}...</option > `;
+            });
+            options += '</optgroup>';
+        }
+
+        selectA.innerHTML = options;
+        selectB.innerHTML = options;
+    });
+}
+
+function generateMorph() {
+    const patternA = document.getElementById('morph-select-a').value;
+    const patternB = document.getElementById('morph-select-b').value;
+    const ratio = document.getElementById('morph-ratio-slider').value / 100;
+    const preview = document.getElementById('morph-preview');
+    const sendBtn = document.getElementById('morph-send-btn');
+
+    if (!patternA || !patternB) {
+        alert("Selecciona dos patrones para morfar");
+        return;
+    }
+
+    preview.textContent = "Generando híbrido...";
+    preview.style.opacity = "0.5";
+
+    fetch('/api/generate/morph', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pattern_a: patternA, pattern_b: patternB, ratio: ratio })
+    })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                lastMorphedPattern = data.pattern;
+                preview.textContent = data.pattern;
+                preview.style.opacity = "1";
+                sendBtn.disabled = false;
+            } else {
+                preview.textContent = "Error: " + data.error;
+                preview.style.color = "#ef4444";
+            }
+        });
+}
+
+function sendMorphedPattern() {
+    if (!lastMorphedPattern) return;
+
+    fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ channel: 'd1', pattern: lastMorphedPattern })
+    })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                showNotification("Híbrido enviado a d1 🚀", "success");
+            }
+        });
+}
+
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+}
+
+// Listener para el slider de ratio (se añade cuando el DOM esté listo o al abrir el panel)
+// Lo añadimos de forma segura
+setTimeout(() => {
+    const slider = document.getElementById('morph-ratio-slider');
+    if (slider) {
+        slider.addEventListener('input', (e) => {
+            document.getElementById('morph-ratio-val').textContent = e.target.value + "%";
+        });
+    }
+}, 1000);
+// ============================================
+// THEME SWITCHER (ADAPTIVE SKIN ENGINE)
+// ============================================
+
+function updateTheme(style) {
+    if (!style) return;
+
+    // Remover temas previos
+    document.body.classList.remove('theme-techno', 'theme-ambient', 'theme-glitch', 'theme-organic', 'theme-cyberpunk', 'theme-industrial', 'theme-deepsea', 'theme-house', 'theme-breakbeat', 'theme-experimental');
+
+    // Mapear estilos a temas
+    const styleLower = style.toLowerCase();
+    let theme = 'theme-techno'; // Default
+
+    if (['ambient', 'chill', 'soft'].some(s => styleLower.includes(s))) theme = 'theme-ambient';
+    else if (['glitch', 'noise'].some(s => styleLower.includes(s))) theme = 'theme-glitch';
+    else if (['experimental', 'avant', 'abstract'].some(s => styleLower.includes(s))) theme = 'theme-experimental';
+    else if (['organic', 'tribal', 'wood', 'nature'].some(s => styleLower.includes(s))) theme = 'theme-organic';
+    else if (['house', 'disco', 'funk'].some(s => styleLower.includes(s))) theme = 'theme-house';
+    else if (['breakbeat', 'jungle', 'dnb'].some(s => styleLower.includes(s))) theme = 'theme-breakbeat';
+    else if (['techno', 'electro', 'drums'].some(s => styleLower.includes(s))) theme = 'theme-techno';
+    else if (['cyberpunk', 'futuristic', 'neon'].some(s => styleLower.includes(s))) theme = 'theme-cyberpunk';
+    else if (['industrial', 'hard', 'metal', 'steel'].some(s => styleLower.includes(s))) theme = 'theme-industrial';
+    else if (['deepsea', 'ocean', 'darknavy', 'liquid'].some(s => styleLower.includes(s))) theme = 'theme-deepsea';
+
+    document.body.classList.add(theme);
+    logActivity(`Skin adaptativo: ${theme} `);
+
+    // Sincronizar motor de partículas
+    if (window.particleEngine) {
+        window.particleEngine.setTheme(styleLower);
+    }
+}
+
+// ============================================
+// EL ORÁCULO (INTENT CONTROL)
+// ============================================
+
+function openLexiconModal() {
+    document.getElementById('lexicon-modal').style.display = 'block';
+}
+
+function closeLexiconModal() {
+    document.getElementById('lexicon-modal').style.display = 'none';
+}
+
+async function interpretOracleIntent(text) {
+    if (!text.trim()) return;
+
+    logActivity(`Consultando al Oráculo: "${text}"...`);
+
+    try {
+        const response = await fetch('/api/oracle/interpret', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text })
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.result.detected_keywords.length > 0) {
+            applyOracleResult(data.result);
+            // Flash visual en el input
+            const input = document.getElementById('oracle-input');
+            input.style.borderColor = 'var(--success)';
+            setTimeout(() => input.style.borderColor = '', 1000);
+
+            if (window.particleEngine) window.particleEngine.burst();
+        } else {
+            logActivity('El Oráculo no comprendió tu intención', 'warning');
+        }
+    } catch (error) {
+        console.error('Error oracle:', error);
+    }
+}
+
+function applyOracleResult(result) {
+    // 1. Sliders (Offsets)
+    const newDensity = Math.max(0, Math.min(100, parseInt(elements.density.value) + (result.density_offset * 100)));
+    const newComplexity = Math.max(0, Math.min(100, parseInt(elements.complexity.value) + (result.complexity_offset * 100)));
+
+    elements.density.value = newDensity;
+    elements.complexity.value = newComplexity;
+
+    // Disparar eventos de actualización de UI
+    elements.density.dispatchEvent(new Event('input'));
+    elements.complexity.dispatchEvent(new Event('input'));
+
+    // 2. Estilo
+    if (result.style_pref) {
+        elements.style.value = result.style_pref;
+        updateTheme(result.style_pref);
+    }
+
+    // 3. Tempo
+    if (result.tempo_mod !== 0) {
+        const newTempo = Math.max(60, Math.min(200, parseInt(elements.tempo.value) + result.tempo_mod));
+        elements.tempo.value = newTempo;
+        elements.tempo.dispatchEvent(new Event('input'));
+    }
+
+    logActivity(`Oráculo: Descriptores detectados[${result.detected_keywords.join(', ')}]`);
+}
+
+// ============================================
+// PHASE 18: AI SAMPLE SCOUT
+// ============================================
+
+async function getSampleSuggestions(pattern) {
+    const scoutPanel = document.getElementById('sample-scout-panel');
+    const container = document.getElementById('sample-suggestions');
+
+    if (!pattern) return;
+
+    try {
+        const response = await fetch('/api/samples/suggest', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pattern: pattern, count: 6 })
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.suggestions && data.suggestions.length > 0) {
+            scoutPanel.style.display = 'block';
+            container.innerHTML = '';
+
+            // Extraer el sample original para el reemplazo
+            const originalSampleMatch = pattern.match(/\"(\w+)/);
+            const originalSample = originalSampleMatch ? originalSampleMatch[1] : null;
+
+            data.suggestions.forEach(sample => {
+                const tag = document.createElement('div');
+                tag.className = 'sample-tag';
+                tag.textContent = sample;
+                tag.onclick = () => replaceSample(pattern, originalSample, sample);
+                container.appendChild(tag);
+            });
+        } else {
+            scoutPanel.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error fetching suggestions:', error);
+    }
+}
+
+async function replaceSample(pattern, oldSample, newSample) {
+    if (!oldSample || !newSample) return;
+
+    logActivity(`Sample Scout: Reemplazando "${oldSample}" por "${newSample}"...`);
+
+    try {
+        const response = await fetch('/api/samples/replace', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                pattern: pattern,
+                old_sample: oldSample,
+                new_sample: newSample
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            state.lastPattern = data.pattern;
+            displayPattern(data.pattern, 'AI Scout (Swap) 🔎', null);
+            if (window.particleEngine) window.particleEngine.burst();
+            showNotification(`Sample cambiado a ${newSample} `, 'success');
+        }
+    } catch (error) {
+        console.error('Error replacing sample:', error);
+    }
+}
+
+async function reindexSamples() {
+    logActivity('Sample Scout: Re-indexando librería SuperDirt...');
+
+    try {
+        const response = await fetch('/api/samples/index', { method: 'POST' });
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Librería re-indexada con éxito', 'success');
+            logActivity('✓ Librería sincronizada');
+            // Si hay un patrón actual, refrescar sugerencias
+            if (state.lastPattern) getSampleSuggestions(state.lastPattern);
+        } else {
+            showNotification('Error indexando: ' + (data.error || 'N/A'), 'error');
+        }
+    } catch (error) {
+        console.error('Error in reindex:', error);
+    }
+}
+
+function showNotification(message, type = 'info') {
+    // Implementación simple de notificación flotante si no existe
+    const notification = document.createElement('div');
+    notification.style.position = 'fixed';
+    notification.style.bottom = '100px';
+    notification.style.left = '50%';
+    notification.style.transform = 'translateX(-50%)';
+    notification.style.padding = '10px 20px';
+    notification.style.borderRadius = '20px';
+    notification.style.background = type === 'success' ? 'var(--success)' : 'var(--primary)';
+    notification.style.color = 'white';
+    notification.style.zIndex = '1000';
+    notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    notification.textContent = message;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.5s';
+        setTimeout(() => notification.remove(), 500);
+    }, 3000);
+}
+
+// Manejar input del oráculo
+async function handleOracleInput() {
+    const intent = elements.oracleInput.value.trim();
+    if (!intent) return;
+
+    elements.oracleInput.disabled = true;
+    logActivity(`🔮 Consultando al Oráculo: "${intent}"...`);
+
+    try {
+        // Trigger generation with intent override
+        await generatePattern({ intent: intent });
+    } catch (e) {
+        logActivity('Error en oráculo', 'error');
+    } finally {
+        elements.oracleInput.disabled = false;
+        elements.oracleInput.value = '';
+        elements.oracleInput.focus();
+    }
+}
+
+// --- FUNCIONES DE AJUSTES (RESTAURADAS V3.1) ---
+
+function openSettingsModal() {
+    elements.targetIpInput.value = localStorage.getItem('target_ip') || '';
+    elements.targetPortInput.value = localStorage.getItem('target_port') || '6010';
+    elements.settingsModal.style.display = 'block';
+}
+
+function closeSettingsModal() {
+    elements.settingsModal.style.display = 'none';
+}
+
+async function saveSystemConfig() {
+    const ip = elements.targetIpInput.value;
+    const port = parseInt(elements.targetPortInput.value);
+
+    if (!ip) {
+        showNotification('IP no válida', 'error');
+        return;
+    }
+
+    localStorage.setItem('target_ip', ip);
+    localStorage.setItem('target_port', port);
+
+    logActivity(`Guardando config: ${ip}:${port}...`);
+
+    try {
+        const response = await fetch('/api/config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ target_ip: ip, target_port: port })
+        });
+        const data = await response.json();
+        if (data.success) {
+            showNotification('Configuración guardada y aplicada', 'success');
+            closeSettingsModal();
+            updateStatus();
+        } else {
+            showNotification('Error: ' + data.error, 'error');
+        }
+    } catch (e) {
+        console.error('Error saving config:', e);
+        showNotification('Error al conectar con el servidor', 'error');
+    }
+}
+
+function loadSystemConfig() {
+    const ip = localStorage.getItem('target_ip');
+    const port = localStorage.getItem('target_port');
+    if (ip && port) {
+        fetch('/api/config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ target_ip: ip, target_port: parseInt(port) })
+        }).catch(e => console.log('Syncing config...'));
+    }
+}
+
+// --- INITIALIZATION ENTRY POINT ---
+// Ensure the DOM is fully loaded before attaching listeners
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 TidalCycles Companion v3.2.3 Loaded');
+    if (typeof init === 'function') {
+        init();
+        // Expose state for debugging
+        window.tidalState = state;
+    } else {
+        console.error('❌ FATAL: init() function not found!');
+        alert('Error crítico: La aplicación no pudo iniciarse.');
+    }
+});
